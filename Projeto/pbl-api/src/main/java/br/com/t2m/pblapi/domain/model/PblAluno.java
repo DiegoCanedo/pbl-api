@@ -20,8 +20,26 @@ public class PblAluno {
 		
 		@NotNull
 		@ManyToOne
-		@JoinColumn(name= "idAluno")
+		@JoinColumn(name= "id_aluno")
 		private Aluno aluno;
+		
+		
+
+		public Long getIdPblAluno() {
+			return idPblAluno;
+		}
+
+		public void setIdPblAluno(Long idPblAluno) {
+			this.idPblAluno = idPblAluno;
+		}
+
+		public Aluno getAluno() {
+			return aluno;
+		}
+
+		public void setAluno(Aluno aluno) {
+			this.aluno = aluno;
+		}
 
 		@Override
 		public int hashCode() {

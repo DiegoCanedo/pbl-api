@@ -39,12 +39,12 @@ public class Pbl {
 	private String resumo;
 
 	// TODO pesquisar sobre datetime
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date dataInicio;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date dataConclusao;
 
 	@NotNull
@@ -53,8 +53,8 @@ public class Pbl {
 	private Professor professor;
 
 	@NotNull
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idPbl")
+	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+	@JoinColumn(name = "id_pbl")
 	private List<PblAluno> pblAlunos;
 
 	@NotNull
@@ -117,6 +117,7 @@ public class Pbl {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
+	
 	
 	public List<PblAluno> getPblAlunos() {
 		return pblAlunos;

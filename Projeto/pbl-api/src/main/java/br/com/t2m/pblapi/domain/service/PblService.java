@@ -1,5 +1,7 @@
 package br.com.t2m.pblapi.domain.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,10 @@ public class PblService {
 	
 	@Autowired
 	IPblRepository pblRepository;
+	
+	public List<Pbl> getAll(){
+		return pblRepository.findAll();
+	}
 	
 	public Pbl insert(Pbl pbl) {
 		return pblRepository.save(pbl);
