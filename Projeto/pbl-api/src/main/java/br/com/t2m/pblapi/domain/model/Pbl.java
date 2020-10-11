@@ -39,12 +39,14 @@ public class Pbl {
 	private String resumo;
 
 	// TODO pesquisar sobre datetime
+	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataInicio;
 
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
 
 	@NotNull

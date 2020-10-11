@@ -36,13 +36,7 @@ public class PblController {
 
 	@PostMapping
 	public ResponseEntity<Pbl> incluir(@Valid @RequestBody Pbl pbl) {
-
-		try {
-			Pbl p = service.insert(pbl);
-			return ResponseEntity.ok().body(p);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
+		return ResponseEntity.ok().body(this.service.insert(pbl));
 	}
 
 }
