@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Aluno {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_aluno")
 	private Long idAluno;
 
 	@NotNull
@@ -98,3 +100,4 @@ public class Aluno {
 	
 
 }
+
