@@ -2,13 +2,18 @@ package br.com.t2m.pblapi.domain.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -17,6 +22,8 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -27,9 +34,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Pbl {
 
 	@Id
-	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idPbl;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_pbl")
+	private long idPbl;
 
 	@NotBlank
 	private String titulo;
@@ -38,7 +45,7 @@ public class Pbl {
 
 	private String resumo;
 
-	// TODO pesquisar sobre datetime
+	// TODO pesquisar sobre datetim
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="dd/MM/yyyy")
@@ -48,27 +55,29 @@ public class Pbl {
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
-
+ 
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "idProfessor")
 	private Professor professor;
 
-	@NotNull
-	@OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-	@JoinColumn(name = "id_pbl")
-	private List<PblAluno> pblAlunos;
+
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable( name = "pbl_aluno", 
+		joinColumns = @JoinColumn(name="id_pbl", referencedColumnName = "id_pbl"),
+		inverseJoinColumns = @JoinColumn(name="id_aluno", referencedColumnName ="id_aluno"))
+	private Set<Aluno> aluno;
 
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "idTemaPbl")
 	private TemaPbl temaPbl;
 
-	public Long getIdPbl() {
+	public long getIdPbl() {
 		return idPbl;
 	}
 
-	public void setIdPbl(Long idPbl) {
+	public void setIdPbl(long idPbl) {
 		this.idPbl = idPbl;
 	}
 
@@ -119,14 +128,13 @@ public class Pbl {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	
-	
-	public List<PblAluno> getPblAlunos() {
-		return pblAlunos;
+
+	public Set<Aluno> getAluno() {
+		return aluno;
 	}
 
-	public void setPblAlunos(List<PblAluno> pblAlunos) {
-		this.pblAlunos = pblAlunos;
+	public void setAluno(Set<Aluno> aluno) {
+		this.aluno = aluno;
 	}
 
 	public TemaPbl getTemaPbl() {
@@ -136,30 +144,5 @@ public class Pbl {
 	public void setTemaPbl(TemaPbl temaPbl) {
 		this.temaPbl = temaPbl;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idPbl == null) ? 0 : idPbl.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pbl other = (Pbl) obj;
-		if (idPbl == null) {
-			if (other.idPbl != null)
-				return false;
-		} else if (!idPbl.equals(other.idPbl))
-			return false;
-		return true;
-	}
-
+		
 }
