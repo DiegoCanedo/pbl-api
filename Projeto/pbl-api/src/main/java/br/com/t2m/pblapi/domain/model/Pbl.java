@@ -61,12 +61,11 @@ public class Pbl {
 	@JoinColumn(name = "id_professor")
 	private Professor professor;
 
-
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable( name = "pbl_aluno", 
 		joinColumns = @JoinColumn(name="id_pbl", referencedColumnName = "id_pbl"),
 		inverseJoinColumns = @JoinColumn(name="id_aluno", referencedColumnName ="id_aluno"))
-	private Set<Aluno> aluno;
+	private List<Aluno> aluno;
 
 	@NotNull
 	@ManyToOne
@@ -129,11 +128,13 @@ public class Pbl {
 		this.professor = professor;
 	}
 
-	public Set<Aluno> getAluno() {
+	
+
+	public List<Aluno> getAluno() {
 		return aluno;
 	}
 
-	public void setAluno(Set<Aluno> aluno) {
+	public void setAluno(List<Aluno> aluno) {
 		this.aluno = aluno;
 	}
 
