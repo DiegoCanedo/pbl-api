@@ -18,7 +18,7 @@ public class Aluno {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_aluno")
-	private Long idAluno;
+	private Long id;
 
 	@NotNull
 	private String matricula;
@@ -29,15 +29,15 @@ public class Aluno {
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "IdUsuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
-	public Long getIdAluno() {
-		return idAluno;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdAluno(Long idAluno) {
-		this.idAluno = idAluno;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getMatricula() {
@@ -76,7 +76,7 @@ public class Aluno {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idAluno == null) ? 0 : idAluno.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -89,10 +89,10 @@ public class Aluno {
 		if (getClass() != obj.getClass())
 			return false;
 		Aluno other = (Aluno) obj;
-		if (idAluno == null) {
-			if (other.idAluno != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idAluno.equals(other.idAluno))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}

@@ -22,7 +22,7 @@ public class Professor {
 	
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "idUsuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
 	@NotBlank
