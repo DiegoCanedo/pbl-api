@@ -18,6 +18,7 @@ public class TemaPbl {
 	@Column(name = "id_tema_pbl")
 	private Long id;
 
+	@NotNull
 	private String nome;
 
 	
