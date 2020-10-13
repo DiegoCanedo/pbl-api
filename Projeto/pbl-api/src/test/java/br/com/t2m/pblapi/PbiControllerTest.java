@@ -9,8 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +57,7 @@ public class PbiControllerTest {
 	private Pbl mockPbl;
 	private Professor professor;
 	private TemaPbl temaPbl;
-	private List<PblAluno> alunos;
+	private Set<Aluno> alunos;
 	private Date dtInicio;
 	private Date dtFim;
 
@@ -63,7 +65,7 @@ public class PbiControllerTest {
 	void iniciarCampos() {
 		professor = new Professor();
 		temaPbl = new TemaPbl();
-		alunos = new ArrayList<PblAluno>();
+		alunos = new HashSet<Aluno>();
 		dtInicio = new Date();
 		dtFim = new Date();
 		mockPbl = new Pbl();
@@ -84,7 +86,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		String inputInJson = mapToJson(mockPbl);
@@ -113,7 +115,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		String inputInJson = mapToJson(mockPbl);
@@ -141,7 +143,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -158,7 +160,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -176,7 +178,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -194,7 +196,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -212,7 +214,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(new Date());
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -230,7 +232,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(null);
 		mockPbl.setDataConclusao(new Date());
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -248,7 +250,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(dtInicio);
 		mockPbl.setDataConclusao(null);
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -266,7 +268,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(dtInicio);
 		mockPbl.setDataConclusao(dtFim);
 		mockPbl.setProfessor(null);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -284,7 +286,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(dtInicio);
 		mockPbl.setDataConclusao(dtFim);
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(null);
+		mockPbl.setAluno(null);
 		mockPbl.setTemaPbl(temaPbl);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))
@@ -302,7 +304,7 @@ public class PbiControllerTest {
 		mockPbl.setDataInicio(dtInicio);
 		mockPbl.setDataConclusao(dtFim);
 		mockPbl.setProfessor(professor);
-		mockPbl.setPblAlunos(alunos);
+		mockPbl.setAluno(alunos);
 		mockPbl.setTemaPbl(null);
 
 		mockMvc.perform(post("/pbl").contentType("application/json").content(mapToJson(mockPbl)))

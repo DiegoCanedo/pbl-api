@@ -1,5 +1,6 @@
 package br.com.t2m.pblapi.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +16,11 @@ public class Empresa {
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_empresa")
 	private Long id;
 	
 	@NotBlank
-	private String nomeEmpresa;
+	private String nome;
 	
 	@NotBlank
 	private String cnpj;

@@ -36,7 +36,7 @@ public class Pbl {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pbl")
-	private long idPbl;
+	private Long idPbl;
 
 	@NotBlank
 	private String titulo;
@@ -58,7 +58,7 @@ public class Pbl {
  
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "idProfessor")
+	@JoinColumn(name = "id_professor")
 	private Professor professor;
 
 
@@ -70,14 +70,14 @@ public class Pbl {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "idTemaPbl")
+	@JoinColumn(name = "id_tema_pbl")
 	private TemaPbl temaPbl;
 
-	public long getIdPbl() {
+	public Long getIdPbl() {
 		return idPbl;
 	}
 
-	public void setIdPbl(long idPbl) {
+	public void setIdPbl(Long idPbl) {
 		this.idPbl = idPbl;
 	}
 
