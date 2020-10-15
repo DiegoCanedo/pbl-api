@@ -16,11 +16,11 @@ import javax.validation.constraints.NotNull;
 public class Aluno {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_aluno")
 	private Long id;
 
-	@NotNull
+	@NotNull 
 	private String matricula;
 	@NotNull
 	private String nome;

@@ -17,5 +17,10 @@ public class AlunoService {
 	public List<Aluno> getAll() {
 		return alunoRepository.findAll();
 	}
+	
+//	public Aluno insert(Aluno aluno) {
+//		var teste = alunoRepository.
+//		return alunoRepository.save(aluno);
+//	}
 
 }
