@@ -51,12 +51,12 @@ public class Pbl {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "id_professor")
+	@JoinColumn(name = "id_usuario")
 	private Professor professor;
 
-	//@ManyToMany
-	//@JoinTable(name = "pbl_aluno", joinColumns = @JoinColumn(name = "id_pbl", referencedColumnName = "id_pbl"), inverseJoinColumns = @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"))
-	//private List<Aluno> aluno;
+	@ManyToMany
+	@JoinTable(name = "pbl_aluno", joinColumns = @JoinColumn(name = "id_pbl", referencedColumnName = "id_pbl"), inverseJoinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"))
+	private List<Aluno> aluno;
 
 	@NotNull
 	@ManyToOne
