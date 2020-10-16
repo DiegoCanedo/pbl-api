@@ -54,9 +54,9 @@ public class Pbl {
 	@JoinColumn(name = "id_professor")
 	private Professor professor;
 
-	@ManyToMany
-	@JoinTable(name = "pbl_aluno", joinColumns = @JoinColumn(name = "id_pbl", referencedColumnName = "id_pbl"), inverseJoinColumns = @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"))
-	private List<Aluno> aluno;
+	//@ManyToMany
+	//@JoinTable(name = "pbl_aluno", joinColumns = @JoinColumn(name = "id_pbl", referencedColumnName = "id_pbl"), inverseJoinColumns = @JoinColumn(name = "id_aluno", referencedColumnName = "id_aluno"))
+	//private List<Aluno> aluno;
 
 	@NotNull
 	@ManyToOne
@@ -119,13 +119,13 @@ public class Pbl {
 		this.professor = professor;
 	}
 
-	public List<Aluno> getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(List<Aluno> aluno) {
-		this.aluno = aluno;
-	}
+//	public List<Aluno> getAluno() {
+//		return aluno;
+//	}
+//
+//	public void setAluno(List<Aluno> aluno) {
+//		this.aluno = aluno;
+//	}
 
 	public TemaPbl getTemaPbl() {
 		return temaPbl;
