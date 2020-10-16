@@ -2,9 +2,7 @@ package br.com.t2m.pblapi.domain.model;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,20 +12,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-//TODO Precisa definir relacionamento com empresa (falta documentação)
+//TODO Precisa definir relacionamento com empresa
 
 @Entity
 @Table(name = "pbl")
@@ -38,33 +31,31 @@ public class Pbl {
 	@Column(name = "id_pbl")
 	private Long idPbl;
 
+	@NotNull
 	@NotBlank
-	private String titulo;
-	@NotBlank
+	private String problema;
+
 	private String situacaoProblema;
 
 	private String resumo;
 
-	// TODO pesquisar sobre datetim
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataInicio;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
- 
+
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "id_professor")
+	@JoinColumn(name = "id_usuario")
 	private Professor professor;
 
 	@ManyToMany
-	@JoinTable( name = "pbl_aluno", 
-		joinColumns = @JoinColumn(name="id_pbl", referencedColumnName = "id_pbl"),
-		inverseJoinColumns = @JoinColumn(name="id_aluno", referencedColumnName ="id_aluno"))
+	@JoinTable(name = "pbl_aluno", joinColumns = @JoinColumn(name = "id_pbl", referencedColumnName = "id_pbl"), inverseJoinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"))
 	private List<Aluno> aluno;
 
 	@NotNull
@@ -80,12 +71,12 @@ public class Pbl {
 		this.idPbl = idPbl;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public String getProblema() {
+		return problema;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setProblema(String problema) {
+		this.problema = problema;
 	}
 
 	public String getSituacaoProblema() {
@@ -128,15 +119,13 @@ public class Pbl {
 		this.professor = professor;
 	}
 
-	
-
-	public List<Aluno> getAluno() {
-		return aluno;
-	}
-
-	public void setAluno(List<Aluno> aluno) {
-		this.aluno = aluno;
-	}
+//	public List<Aluno> getAluno() {
+//		return aluno;
+//	}
+//
+//	public void setAluno(List<Aluno> aluno) {
+//		this.aluno = aluno;
+//	}
 
 	public TemaPbl getTemaPbl() {
 		return temaPbl;
@@ -145,5 +134,5 @@ public class Pbl {
 	public void setTemaPbl(TemaPbl temaPbl) {
 		this.temaPbl = temaPbl;
 	}
-		
+
 }

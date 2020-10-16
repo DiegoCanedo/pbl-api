@@ -16,8 +16,12 @@ public class TemaPblService {
 
 	@Autowired
 	ITemaPblRepository temaPblRepository;
-
+	
 	public List<TemaPbl> getAll() {
 		return temaPblRepository.findAll();
+	}
+	
+	public TemaPbl insert(TemaPbl temaPbl) {
+		return temaPblRepository.save(temaPbl);
 	}
 }

@@ -1,5 +1,8 @@
 package br.com.t2m.pblapi.domain.model;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,26 +11,33 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity
 @Table(name = "perfil")
-public class Perfil {
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+public class Perfil implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idPerfil;
+	private String role;
 
 	@NotEmpty
 	private String descricao;
 
-	@NotEmpty
-	private String role;
-
-	public Long getIdPerfil() {
-		return idPerfil;
+	public String getRole() {
+		return role;
 	}
 
-	public void setIdPerfil(Long idPerfil) {
-		this.idPerfil = idPerfil;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getDescricao() {
@@ -38,38 +48,26 @@ public class Perfil {
 		this.descricao = descricao;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (!(o instanceof Perfil)) {
+			return false;
+		}
+		return Objects.equals(role, ((Perfil) o).role);
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idPerfil == null) ? 0 : idPerfil.hashCode());
-		return result;
+		return Objects.hashCode(role);
 	}
 
+	// prettier-ignore
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Perfil other = (Perfil) obj;
-		if (idPerfil == null) {
-			if (other.idPerfil != null)
-				return false;
-		} else if (!idPerfil.equals(other.idPerfil))
-			return false;
-		return true;
+	public String toString() {
+		return "Perfil{" + "role='" + role + '\'' + "}";
 	}
-	
-	
+
 }
