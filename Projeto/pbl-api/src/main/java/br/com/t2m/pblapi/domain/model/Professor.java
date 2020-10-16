@@ -1,49 +1,25 @@
 package br.com.t2m.pblapi.domain.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "professor")
-public class Professor {
-	
-	@Id
-	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idProfessor;
-	
-	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_usuario")
-	private Usuario usuario;
-	
+@PrimaryKeyJoinColumn(name = "id_usuario")
+public class Professor extends Usuario {
+
 	@NotBlank
 	private String nome;
 
-	
-	public Long getIdProfessor() {
-		return idProfessor;
-	}
-
-	public void setIdProfessor(Long idProfessor) {
-		this.idProfessor = idProfessor;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "id_disciplina")
+	private Disciplina disciplina;
 
 	public String getNome() {
 		return nome;
@@ -53,31 +29,11 @@ public class Professor {
 		this.nome = nome;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idProfessor == null) ? 0 : idProfessor.hashCode());
-		return result;
+	public Disciplina getDisciplina() {
+		return disciplina;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Professor other = (Professor) obj;
-		if (idProfessor == null) {
-			if (other.idProfessor != null)
-				return false;
-		} else if (!idProfessor.equals(other.idProfessor))
-			return false;
-		return true;
+	public void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
 	}
-	
-	
-	
 }

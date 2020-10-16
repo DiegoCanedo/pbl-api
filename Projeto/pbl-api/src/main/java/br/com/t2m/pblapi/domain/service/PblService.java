@@ -19,6 +19,7 @@ public class PblService {
 	IPblRepository pblRepository;
 
 	public List<Pbl> getAll() {
+
 		return pblRepository.findAll();
 	}
 

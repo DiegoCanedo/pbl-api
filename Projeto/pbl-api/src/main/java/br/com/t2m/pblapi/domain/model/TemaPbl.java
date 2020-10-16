@@ -1,10 +1,15 @@
 package br.com.t2m.pblapi.domain.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -13,15 +18,17 @@ import javax.validation.constraints.NotNull;
 public class TemaPbl {
 
 	@Id
-	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tema_pbl")
 	private Long id;
 
-	@NotNull
+	@NotNull 
 	private String nome;
 
-	
+	@ManyToMany
+	@JoinTable(name = "tema_disciplina", joinColumns = @JoinColumn(name = "id_tema_pbl", referencedColumnName = "id_tema_pbl"), 
+	inverseJoinColumns = @JoinColumn(name = "id_disciplina", referencedColumnName = "id_disciplina"))
+	private Set<Disciplina> disciplinas;
 
 	public Long getId() {
 		return id;
@@ -37,6 +44,14 @@ public class TemaPbl {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Set<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+
+	public void setDisciplinas(Set<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	@Override
@@ -63,6 +78,5 @@ public class TemaPbl {
 			return false;
 		return true;
 	}
-	
-	
+
 }
