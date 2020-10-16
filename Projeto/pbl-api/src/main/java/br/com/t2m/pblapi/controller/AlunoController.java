@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +30,19 @@ public class AlunoController {
 	public ResponseEntity<Iterable<Aluno>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());
 	}
-	
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Aluno> listarPorId(@PathVariable Long id) {
+		return ResponseEntity.ok().body(alunoService.getById(id));
+	}
+
 	@PostMapping
-	public ResponseEntity<Aluno> listarTodos(@Valid @RequestBody Aluno aluno) {
+	public ResponseEntity<Aluno> incluir(@Valid @RequestBody Aluno aluno) {
 		return ResponseEntity.ok().body(alunoService.insert(aluno));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Aluno> alterar(@Valid @RequestBody Aluno aluno, @PathVariable Long id ){
+		return ResponseEntity.ok().body(alunoService.update(aluno, id));
 	}
 }
