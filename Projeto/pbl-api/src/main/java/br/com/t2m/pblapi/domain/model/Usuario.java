@@ -44,7 +44,7 @@ import br.com.t2m.pblapi.config.Constants;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Usuario {
 
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario", updatable = false)
 	private Long id;
@@ -53,9 +53,9 @@ public abstract class Usuario {
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
 	private String email;
 
-	@NotBlank
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@Size(min = 8)
+	@NotNull
+	@JsonIgnore
+	@Size(min = 60, max = 60)
 	private String senha;
 
 	@NotNull
@@ -134,7 +134,5 @@ public abstract class Usuario {
 			return false;
 		return true;
 	}
-	
-	
 
 }
