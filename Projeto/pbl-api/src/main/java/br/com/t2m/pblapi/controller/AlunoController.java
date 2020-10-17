@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.service.AlunoService;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 
 @RestController
 @CrossOrigin
@@ -27,22 +28,17 @@ public class AlunoController {
 	AlunoService alunoService;
 
 	@GetMapping
-	public ResponseEntity<Iterable<Aluno>> listarTodos() {
+	public ResponseEntity<Iterable<AlunoDTO>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Aluno> listarPorId(@PathVariable Long id) {
+	public ResponseEntity<AlunoDTO> listarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(alunoService.getById(id));
 	}
 
-	@PostMapping
-	public ResponseEntity<Aluno> incluir(@Valid @RequestBody Aluno aluno) {
-		return ResponseEntity.ok().body(alunoService.insert(aluno));
-	}
-
 	@PutMapping("/{id}")
-	public ResponseEntity<Aluno> alterar(@Valid @RequestBody Aluno aluno, @PathVariable Long id ){
-		return ResponseEntity.ok().body(alunoService.update(aluno, id));
+	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno){
+		return ResponseEntity.ok().body(alunoService.update(aluno));
 	}
 }
