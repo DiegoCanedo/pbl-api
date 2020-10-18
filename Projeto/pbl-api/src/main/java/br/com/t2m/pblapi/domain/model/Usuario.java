@@ -44,7 +44,7 @@ import br.com.t2m.pblapi.config.Constants;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Usuario {
 
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_usuario", updatable = false)
 	private Long id;
@@ -53,14 +53,18 @@ public abstract class Usuario {
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
 	private String email;
 
-	@NotBlank
-	@JsonProperty(access = Access.WRITE_ONLY)
-	@Size(min = 8)
+	@NotNull
+	@JsonIgnore
+	@Size(min = 60, max = 60)
 	private String senha;
 
 	@NotNull
 	@Column(nullable = false)
 	private boolean ativo;
+	
+	@NotNull
+	@Column(nullable = false)
+	private boolean excluido;
 
 	@ManyToMany
 	@JoinTable(name = "perfil_usuario", joinColumns = {
@@ -110,6 +114,14 @@ public abstract class Usuario {
 		this.perfil = perfil;
 	}
 
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,7 +146,5 @@ public abstract class Usuario {
 			return false;
 		return true;
 	}
-	
-	
 
 }
