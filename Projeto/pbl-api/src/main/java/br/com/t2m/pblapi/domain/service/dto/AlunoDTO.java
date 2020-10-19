@@ -27,7 +27,9 @@ public class AlunoDTO {
 	@Size(min = 5, max = 254)
 	private String email;
 
-	private boolean ativo = false;
+	private boolean ativo;
+	
+	private boolean excluido;
 	
 	private Instant createdDate;
 
@@ -43,6 +45,7 @@ public class AlunoDTO {
 		this.matricula = aluno.getMatricula();
 		this.email = aluno.getEmail();
 		this.ativo = aluno.isAtivo();
+		this.excluido = aluno.isExcluido();
 		this.perfil = aluno.getPerfil().stream().map(Perfil::getRole).collect(Collectors.toSet());
 	}
 
@@ -68,6 +71,14 @@ public class AlunoDTO {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
 	}
 
 	public Set<String> getPerfil() {

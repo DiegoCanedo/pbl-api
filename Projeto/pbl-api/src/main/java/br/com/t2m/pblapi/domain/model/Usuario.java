@@ -61,6 +61,10 @@ public abstract class Usuario {
 	@NotNull
 	@Column(nullable = false)
 	private boolean ativo;
+	
+	@NotNull
+	@Column(nullable = false)
+	private boolean excluido;
 
 	@ManyToMany
 	@JoinTable(name = "perfil_usuario", joinColumns = {
@@ -108,6 +112,14 @@ public abstract class Usuario {
 
 	public void setPerfil(Set<Perfil> perfil) {
 		this.perfil = perfil;
+	}
+
+	public boolean isExcluido() {
+		return excluido;
+	}
+
+	public void setExcluido(boolean excluido) {
+		this.excluido = excluido;
 	}
 
 	@Override

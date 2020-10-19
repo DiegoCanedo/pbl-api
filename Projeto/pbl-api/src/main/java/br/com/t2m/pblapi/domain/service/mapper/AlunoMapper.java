@@ -38,6 +38,7 @@ public class AlunoMapper {
 		aluno.setNome(alunoDTO.getNome());
 		aluno.setMatricula(alunoDTO.getMatricula());
 		aluno.setAtivo(alunoDTO.isAtivo());
+		aluno.setExcluido(alunoDTO.isExcluido());
 		Set<Perfil> perfis = this.perfilsFromString(alunoDTO.getPerfil());
 		aluno.setPerfil(perfis);
 		return aluno;

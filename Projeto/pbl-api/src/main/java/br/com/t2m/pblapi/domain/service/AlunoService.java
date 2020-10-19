@@ -68,7 +68,7 @@ public class AlunoService {
 			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, alunoDTO.getId().toString());
 		});
 
-		//TODO Falta setar o array de perfil;
+		// TODO Falta setar o array de perfil;
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(aluno -> {
 			aluno.setNome(alunoDTO.getNome());
 			aluno.setEmail(alunoDTO.getEmail());
@@ -76,6 +76,18 @@ public class AlunoService {
 			aluno.setAtivo(alunoDTO.isAtivo());
 			return aluno;
 		}).map(AlunoDTO::new).get();
+	}
+
+	public void delete(Long id) {
+		Optional<Aluno> opt = alunoRepository.findById(id);
+
+		if (opt.isEmpty())
+			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, id.toString());
+
+		Aluno aluno = opt.get();
+		aluno.setExcluido(true);
+		aluno.setAtivo(false);
+		alunoRepository.save(aluno);
 	}
 
 	private void validaUsuario(Aluno antigo, AlunoDTO novo) {
