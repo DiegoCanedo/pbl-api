@@ -78,8 +78,8 @@ public class AlunoService {
 		}).map(AlunoDTO::new).get();
 	}
 	
-	public AlunoDTO updateAtivo(AlunoDTO alunoDTO) {
-		Optional<Aluno> opt = alunoRepository.findById(alunoDTO.getId());
+	public AlunoDTO updateAtivo(AlunoDTO alunoDTO, Long id) {
+		Optional<Aluno> opt = alunoRepository.findById(id);
 
 		opt.ifPresentOrElse(o -> this.validaUsuario(o, alunoDTO), () -> {
 			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, alunoDTO.getId().toString());
@@ -87,6 +87,7 @@ public class AlunoService {
 
 		// TODO Falta setar o array de perfil;
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(aluno -> {
+			aluno.setId(id);
 			aluno.setAtivo(alunoDTO.isAtivo());
 			return aluno;
 		}).map(AlunoDTO::new).get();
