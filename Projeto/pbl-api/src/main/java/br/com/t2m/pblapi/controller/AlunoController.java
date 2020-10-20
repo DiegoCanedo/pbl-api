@@ -39,8 +39,8 @@ public class AlunoController {
 		return ResponseEntity.ok().body(alunoService.getById(id));
 	}
 
-	@PutMapping
-	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno){
+	@PutMapping("/{id}")
+	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno, @PathVariable Long id){
 		return ResponseEntity.ok().body(alunoService.update(aluno));
 	}
 	
