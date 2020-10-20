@@ -39,7 +39,7 @@ public class AlunoController {
 		return ResponseEntity.ok().body(alunoService.getById(id));
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping
 	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno){
 		return ResponseEntity.ok().body(alunoService.update(aluno));
 	}
