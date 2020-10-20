@@ -3,10 +3,9 @@ package br.com.t2m.pblapi.domain.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Disciplina;
@@ -26,10 +25,12 @@ public class TemaPblService {
 	@Autowired
 	IDisciplinaRepository disciplinaRepository;
 
+	@Transactional(readOnly = true)
 	public List<TemaPbl> getAll() {
 		return temaPblRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	public TemaPbl getById(Long id) {
 		Optional<TemaPbl> opt = temaPblRepository.findById(id);
 

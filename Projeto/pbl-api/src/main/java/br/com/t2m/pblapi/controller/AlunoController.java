@@ -43,6 +43,11 @@ public class AlunoController {
 		return ResponseEntity.ok().body(alunoService.update(aluno));
 	}
 	
+	@PutMapping("/altera-status-ativo/{id}")
+	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody AlunoDTO aluno){
+		return ResponseEntity.ok().body(alunoService.update(aluno));
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deletar(@PathVariable Long id){
 		alunoService.delete(id);
