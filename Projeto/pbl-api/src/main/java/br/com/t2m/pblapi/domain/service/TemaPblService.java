@@ -40,6 +40,16 @@ public class TemaPblService {
 		return opt.get();
 	}
 
+	@Transactional(readOnly = true)
+	public List<TemaPbl> getByIdDisciplina(Long id) {
+		Optional<Disciplina> opt = disciplinaRepository.findById(id);
+
+		if (opt.isEmpty())
+			throw new ResourceNotFoundException(Constants.DISCIPLINA_NAO_ENCONTRADA, id.toString());
+
+		return temaPblRepository.findByDisciplinas_Id(opt.get().getId());
+	}
+
 	public TemaPbl insert(TemaPbl temaPbl) {
 		temaPbl.getDisciplinas().stream().forEach(item -> {
 

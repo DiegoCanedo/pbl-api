@@ -36,6 +36,11 @@ public class TemaPblController {
 	public ResponseEntity<TemaPbl> listarPorID(@PathVariable Long id) {
 		return ResponseEntity.ok().body(temaPblService.getById(id));
 	}
+	
+	@GetMapping("/disciplina/{id}")
+	public ResponseEntity<List<TemaPbl>> listarPorIDDisciplina(@PathVariable Long id) {
+		return ResponseEntity.ok().body(temaPblService.getByIdDisciplina(id));
+	}
 
 	@PostMapping
 	public ResponseEntity<TemaPbl> cadastrar(@Valid @RequestBody TemaPbl temaPbl) {

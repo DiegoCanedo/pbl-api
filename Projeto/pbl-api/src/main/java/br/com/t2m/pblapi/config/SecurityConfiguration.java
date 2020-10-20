@@ -31,7 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.csrf().disable()
 		.authorizeRequests()
 		.antMatchers(AUTH_WHITELIST).permitAll()
-		.antMatchers("/aluno/").permitAll();
+		.antMatchers("/aluno/").permitAll()
+		.antMatchers("/temaPbl/**").permitAll()
+		.antMatchers("/disciplina/").permitAll();
 	}
 	
 	@Bean 
