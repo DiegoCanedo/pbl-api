@@ -25,6 +25,7 @@ public class TemaPbl {
 	@NotNull 
 	private String nome;
 
+	@NotNull
 	@ManyToMany
 	@JoinTable(name = "tema_disciplina", joinColumns = @JoinColumn(name = "id_tema_pbl", referencedColumnName = "id_tema_pbl"), 
 	inverseJoinColumns = @JoinColumn(name = "id_disciplina", referencedColumnName = "id_disciplina"))
