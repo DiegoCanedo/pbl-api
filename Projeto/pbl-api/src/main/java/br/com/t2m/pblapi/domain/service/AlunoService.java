@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
+import br.com.t2m.pblapi.domain.service.dto.AlunoAtivoDTO;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.mapper.AlunoMapper;
 import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
@@ -78,17 +79,13 @@ public class AlunoService {
 		}).map(AlunoDTO::new).get();
 	}
 	
-	public AlunoDTO updateAtivo(AlunoDTO alunoDTO, Long id) {
+	public AlunoDTO updateAtivo(AlunoAtivoDTO alunoAtiboDTO, Long id) {
 		Optional<Aluno> opt = alunoRepository.findById(id);
-
-		opt.ifPresentOrElse(o -> this.validaUsuario(o, alunoDTO), () -> {
-			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, alunoDTO.getId().toString());
-		});
 
 		// TODO Falta setar o array de perfil;
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(aluno -> {
 			aluno.setId(id);
-			aluno.setAtivo(alunoDTO.isAtivo());
+			aluno.setAtivo(alunoAtiboDTO.isAtivo());
 			return aluno;
 		}).map(AlunoDTO::new).get();
 	}
