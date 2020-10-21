@@ -4,16 +4,16 @@ import javax.validation.constraints.NotNull;
 
 import br.com.t2m.pblapi.domain.model.Aluno;
 
-public class AlunoAtivoDTO {
+public class UsuarioIsAtivoDTO {
 
 	@NotNull
 	private boolean ativo;
 
-	public AlunoAtivoDTO() {
+	public UsuarioIsAtivoDTO() {
 
 	}
 
-	public AlunoAtivoDTO(Aluno aluno) {
+	public UsuarioIsAtivoDTO(Aluno aluno) {
 		this.ativo = aluno.isAtivo();
 	}
 
