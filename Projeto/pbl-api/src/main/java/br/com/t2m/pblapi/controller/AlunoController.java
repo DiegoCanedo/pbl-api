@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.service.AlunoService;
-import br.com.t2m.pblapi.domain.service.dto.AlunoAtivoDTO;
+import br.com.t2m.pblapi.domain.service.dto.UsuarioIsAtivoDTO;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 
 @RestController
@@ -40,13 +40,8 @@ public class AlunoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno){
+	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno, @PathVariable Long id){
 		return ResponseEntity.ok().body(alunoService.update(aluno));
-	}
-	
-	@PutMapping("/altera-status-ativo/{id}")
-	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody AlunoAtivoDTO aluno, @PathVariable Long id){
-		return ResponseEntity.ok().body(alunoService.updateAtivo(aluno, id));
 	}
 	
 	@DeleteMapping("/{id}")
