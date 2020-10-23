@@ -10,6 +10,7 @@ public final class Constants {
 	public static final String DISCIPLINA_EXCLUIDA = "Disciplina excluida com sucesso!";
 	public static final String TEMA_NAO_ENCONTRADO = "Não existe tema com o id: ";
 	public static final String TEMA_JA_EXISTE = "Já existe um tema com esse nome.";
+	public static final String PBL_NAO_ENCONTRADO = "Não existe PBL com o id: ";
 
 	private Constants() {
 	}

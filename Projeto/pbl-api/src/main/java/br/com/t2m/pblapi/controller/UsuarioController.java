@@ -17,8 +17,10 @@ import br.com.t2m.pblapi.domain.service.AlunoService;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsAtivoDTO;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsExcluidoDTO;
+import io.swagger.annotations.Api;
 
 @RestController
+@Api(description = "rest api para usuario", tags = { "Usuario" })
 public class UsuarioController {
 
 	@Autowired
@@ -29,14 +31,16 @@ public class UsuarioController {
 	public void registrarAluno(@Valid @RequestBody AlunoVM aluno) {
 		alunoService.insert(aluno, aluno.getSenha());
 	}
-	
+
 	@PutMapping("/altera-status-ativo/{id}")
-	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody UsuarioIsAtivoDTO usuario, @PathVariable Long id){
+	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody UsuarioIsAtivoDTO usuario,
+			@PathVariable Long id) {
 		return ResponseEntity.ok().body(alunoService.updateAtivo(usuario, id));
 	}
-	
+
 	@PutMapping("/altera-status-excluido/{id}")
-	public ResponseEntity<AlunoDTO> alterarStatusExcluido(@Valid @RequestBody UsuarioIsExcluidoDTO usuario, @PathVariable Long id){
+	public ResponseEntity<AlunoDTO> alterarStatusExcluido(@Valid @RequestBody UsuarioIsExcluidoDTO usuario,
+			@PathVariable Long id) {
 		return ResponseEntity.ok().body(alunoService.updateExcluido(usuario, id));
 	}
 

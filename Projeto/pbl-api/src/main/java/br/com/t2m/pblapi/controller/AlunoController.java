@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.service.AlunoService;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsAtivoDTO;
+import io.swagger.annotations.Api;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/aluno")
+@Api(description = "rest api para aluno", tags= {"Aluno"})
 public class AlunoController {
 
 	@Autowired
