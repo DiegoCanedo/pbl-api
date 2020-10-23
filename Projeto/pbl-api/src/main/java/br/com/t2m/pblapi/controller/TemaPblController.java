@@ -15,13 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.model.TemaPbl;
 import br.com.t2m.pblapi.domain.service.TemaPblService;
+import io.swagger.annotations.Api;
 
-@Controller
+@RestController
 @CrossOrigin
 @RequestMapping("/temaPbl")
+@Api(description = "rest api para tema pbl", tags= {"Tema PBL"})
 public class TemaPblController {
 
 	@Autowired
