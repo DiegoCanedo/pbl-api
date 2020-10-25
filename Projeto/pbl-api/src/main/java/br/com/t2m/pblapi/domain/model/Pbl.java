@@ -12,11 +12,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -24,10 +30,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "pbl")
+@SequenceGenerator(name = "pbl_id_seq", sequenceName = "pbl_id_seq", allocationSize = 1)
 public class Pbl {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pbl_id_seq")
 	@Column(name = "id_pbl")
 	private Long idPbl;
 
@@ -59,9 +66,11 @@ public class Pbl {
 	private List<Aluno> aluno;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "id_tema_pbl")
-	private TemaPbl temaPbl;
+	@Valid
+	@OneToOne(orphanRemoval = true)
+	@JoinColumn(name = "id_pbl")
+	@MapsId
+	private PblTemaDisciplina pblTemaDisciplina;
 
 	public Long getIdPbl() {
 		return idPbl;
@@ -119,20 +128,47 @@ public class Pbl {
 		this.professor = professor;
 	}
 
-//	public List<Aluno> getAluno() {
-//		return aluno;
-//	}
-//
-//	public void setAluno(List<Aluno> aluno) {
-//		this.aluno = aluno;
-//	}
-
-	public TemaPbl getTemaPbl() {
-		return temaPbl;
+	public List<Aluno> getAluno() {
+		return aluno;
 	}
 
-	public void setTemaPbl(TemaPbl temaPbl) {
-		this.temaPbl = temaPbl;
+	public void setAluno(List<Aluno> aluno) {
+		this.aluno = aluno;
 	}
+
+	public PblTemaDisciplina getPblTemaDisciplina() {
+		return pblTemaDisciplina;
+	}
+
+	public void setPblTemaDisciplina(PblTemaDisciplina pblTemaDisciplina) {
+		this.pblTemaDisciplina = pblTemaDisciplina;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPbl == null) ? 0 : idPbl.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pbl other = (Pbl) obj;
+		if (idPbl == null) {
+			if (other.idPbl != null)
+				return false;
+		} else if (!idPbl.equals(other.idPbl))
+			return false;
+		return true;
+	}
+
+	
 
 }

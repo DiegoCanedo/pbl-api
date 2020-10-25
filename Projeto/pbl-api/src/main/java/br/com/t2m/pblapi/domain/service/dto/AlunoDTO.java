@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.Perfil;
-import br.com.t2m.pblapi.domain.model.Usuario;
 
 public class AlunoDTO {
 

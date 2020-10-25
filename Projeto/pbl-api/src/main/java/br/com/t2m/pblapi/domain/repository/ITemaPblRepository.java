@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.model.TemaPbl;
 
 @Repository
