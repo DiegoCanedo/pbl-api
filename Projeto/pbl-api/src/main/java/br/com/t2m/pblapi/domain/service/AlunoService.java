@@ -41,7 +41,7 @@ public class AlunoService {
 	public AlunoDTO getById(Long id) {
 		Optional<AlunoDTO> opt = alunoRepository.findById(id).map(AlunoDTO::new);
 
-		if (!opt.isPresent())
+		if (opt.isEmpty())
 			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, id.toString());
 
 		return opt.get();

@@ -29,6 +29,9 @@ public class AtividadeService {
 	private IAtividadeRepository atividadeRepository;
 
 	@Autowired
+	private IAtividadePblRepository atividadePblRepository;
+
+	@Autowired
 	private IPblRepository pblRepository;
 
 	@Autowired
@@ -59,6 +62,12 @@ public class AtividadeService {
 		return atividadeRepository.findByDisciplina(optDisciplina.get());
 	}
 
+	/**
+	 * Insere uma nova atividade, faz o vinculo se existir PBLs na mesma disciplina.
+	 *
+	 * @param atividade .
+	 * @return atividade incluida.
+	 */
 	public Atividade insert(Atividade atividade) {
 
 		Optional<Disciplina> optDisciplina = disciplinaRepository.findById(atividade.getDisciplina().getId());
@@ -85,21 +94,27 @@ public class AtividadeService {
 
 		return atividadeRepository.save(atividade);
 	}
-	
-//	public Atividade bindAtividadePbl(Pbl pbl) {
-//		
-//		Set<Atividade> atividades = this.getByDisciplina((pbl.getTemaPbl().ge);
-//		
-//		if(atividades.isEmpty())
-//			return null;
-//		
-//		atividades.stream().forEach(a -> {
-//			Set<AtividadePbl> atividadePbls = new HashSet<AtividadePbl>();
-//			atividadePbls.setAtividadePbls(atividadePbls);
-//			
-//			atividadeRepository.save(a);
-//		});
-//	}
+
+	/**
+	 * Ao iniciar um PBL, faz o vinculo de atividades existentes para aquela
+	 * disciplina.
+	 *
+	 * @param pbl.
+	 * @return atividades vinculadas.
+	 */
+	public void bindPblToAtividadePBl(Pbl pbl) {
+
+		Set<Atividade> atividades = this.getByDisciplina(pbl.getPblTemaDisciplina().getDisciplina().getId());
+
+		atividades.forEach(a -> {
+			Set<AtividadePbl> atividadePbls = new HashSet<AtividadePbl>();
+			AtividadePbl atividadePbl = new AtividadePbl();
+			atividadePbl.setPbl(pbl);
+			atividadePbls.add(atividadePbl);
+			a.setAtividadePbls(atividadePbls);
+			atividadeRepository.save(a);
+		});
+	}
 
 	public Atividade update(Atividade atividade, Long id) {
 		Optional<Professor> optProfessor = professorRepository.findById(atividade.getProfessor().getId());
@@ -115,10 +130,6 @@ public class AtividadeService {
 			throw new RuntimeException("Atividade não pode ser editada, pois ja esta vinculada à um aluno");
 
 		return atividadeRepository.save(atividade);
-	}
-
-	public void createAtividadePbl(Atividade atividade) {
-
 	}
 
 }

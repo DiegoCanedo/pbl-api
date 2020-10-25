@@ -34,6 +34,9 @@ public class PblService {
 	@Autowired
 	IPblTemaDisciplinaRepository pblTemaDisciplinaRepository;
 
+	@Autowired
+	AtividadeService atividadeService;
+
 	@Transactional(readOnly = true)
 	public List<Pbl> getAll() {
 
@@ -61,7 +64,11 @@ public class PblService {
 					pbl.getPblTemaDisciplina().getDisciplina().getId().toString());
 		}
 
-		return pblRepository.save(pbl);
+		Pbl pblRetorno = pblRepository.save(pbl);
+
+		atividadeService.bindPblToAtividadePBl(pblRetorno);
+
+		return pblRetorno;
 
 	}
 
