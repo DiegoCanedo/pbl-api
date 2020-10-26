@@ -3,7 +3,10 @@ package br.com.t2m.pblapi.domain.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,47 +30,31 @@ public class Perfil implements Serializable {
 	@Id
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private String role;
+	private Long Id;
 
-	@NotEmpty
-	private String descricao;
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20)
+	private EPerfil nome;
 
-	public String getRole() {
-		return role;
+	public Long getId() {
+		return Id;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setId(Long id) {
+		Id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public EPerfil getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(EPerfil nome) {
+		this.nome = nome;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof Perfil)) {
-			return false;
-		}
-		return Objects.equals(role, ((Perfil) o).role);
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(role);
-	}
-
-	// prettier-ignore
-	@Override
-	public String toString() {
-		return "Perfil{" + "role='" + role + '\'' + "}";
-	}
 
 }

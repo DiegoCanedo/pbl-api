@@ -3,12 +3,13 @@ package br.com.t2m.pblapi.domain.repository;
 import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import br.com.t2m.pblapi.domain.model.Atividade;
+import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.model.Pbl;
 
 @Repository
-public interface IPblRepository extends JpaRepository<Pbl, Long> {
-	public Set<Pbl> findAllByPblTemaDisciplina_Disciplina_Id(@Param("id_disciplina") Long id_disciplina);
+public interface IAtividadePblRepository extends JpaRepository<AtividadePbl, Long> {
+
 }

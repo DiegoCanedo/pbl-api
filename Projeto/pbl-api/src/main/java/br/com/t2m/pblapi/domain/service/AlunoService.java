@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsAtivoDTO;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsExcluidoDTO;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.mapper.AlunoMapper;
 import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
@@ -41,7 +41,7 @@ public class AlunoService {
 	public AlunoDTO getById(Long id) {
 		Optional<AlunoDTO> opt = alunoRepository.findById(id).map(AlunoDTO::new);
 
-		if (!opt.isPresent())
+		if (opt.isEmpty())
 			throw new ResourceNotFoundException(Constants.USUARIO_NAO_ENCONTRADO, id.toString());
 
 		return opt.get();

@@ -13,9 +13,12 @@ import br.com.t2m.pblapi.domain.model.Atividade;
 import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.model.Pbl;
+import br.com.t2m.pblapi.domain.model.Professor;
+import br.com.t2m.pblapi.domain.repository.IAtividadePblRepository;
 import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
 import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblRepository;
+import br.com.t2m.pblapi.domain.repository.IProfessorRepository;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
 @Service
@@ -26,13 +29,19 @@ public class AtividadeService {
 	private IAtividadeRepository atividadeRepository;
 
 	@Autowired
+	private IAtividadePblRepository atividadePblRepository;
+
+	@Autowired
 	private IPblRepository pblRepository;
 
 	@Autowired
 	private IDisciplinaRepository disciplinaRepository;
 
+	@Autowired
+	private IProfessorRepository professorRepository;
+
 	@Transactional(readOnly = true)
-	public Set<AtividadePbl> getByPbl(Long idPbl) {
+	public Set<Atividade> getByPbl(Long idPbl) {
 		Optional<Pbl> optPbl = pblRepository.findById(idPbl);
 
 		if (optPbl.isEmpty()) {
@@ -41,7 +50,7 @@ public class AtividadeService {
 
 		return atividadeRepository.findByAtividadePbls_Pbl(optPbl.get());
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Set<Atividade> getByDisciplina(Long idDisciplina) {
 		Optional<Disciplina> optDisciplina = disciplinaRepository.findById(idDisciplina);
@@ -53,6 +62,12 @@ public class AtividadeService {
 		return atividadeRepository.findByDisciplina(optDisciplina.get());
 	}
 
+	/**
+	 * Insere uma nova atividade, faz o vinculo se existir PBLs na mesma disciplina.
+	 *
+	 * @param atividade .
+	 * @return atividade incluida.
+	 */
 	public Atividade insert(Atividade atividade) {
 
 		Optional<Disciplina> optDisciplina = disciplinaRepository.findById(atividade.getDisciplina().getId());
@@ -62,7 +77,7 @@ public class AtividadeService {
 					atividade.getDisciplina().getId().toString());
 		}
 
-		Set<Pbl> pbls = pblRepository.findAllByTemaPbl_Disciplinas_Id(atividade.getDisciplina().getId());
+		Set<Pbl> pbls = pblRepository.findAllByPblTemaDisciplina_Disciplina_Id(atividade.getDisciplina().getId());
 
 		if (pbls.isEmpty()) {
 			return atividadeRepository.save(atividade);
@@ -80,8 +95,41 @@ public class AtividadeService {
 		return atividadeRepository.save(atividade);
 	}
 
-	public void createAtividadePbl(Atividade atividade) {
+	/**
+	 * Ao iniciar um PBL, faz o vinculo de atividades existentes para aquela
+	 * disciplina.
+	 *
+	 * @param pbl.
+	 * @return atividades vinculadas.
+	 */
+	public void bindPblToAtividadePBl(Pbl pbl) {
 
+		Set<Atividade> atividades = this.getByDisciplina(pbl.getPblTemaDisciplina().getDisciplina().getId());
+
+		atividades.forEach(a -> {
+			Set<AtividadePbl> atividadePbls = new HashSet<AtividadePbl>();
+			AtividadePbl atividadePbl = new AtividadePbl();
+			atividadePbl.setPbl(pbl);
+			atividadePbls.add(atividadePbl);
+			a.setAtividadePbls(atividadePbls);
+			atividadeRepository.save(a);
+		});
+	}
+
+	public Atividade update(Atividade atividade, Long id) {
+		Optional<Professor> optProfessor = professorRepository.findById(atividade.getProfessor().getId());
+		Optional<Atividade> optAtividade = atividadeRepository.findById(id);
+
+		if (optProfessor.isEmpty())
+			throw new ResourceNotFoundException("Professor não existe");
+
+		if (optAtividade.isEmpty())
+			throw new ResourceNotFoundException("Atividade não existe");
+
+		if (atividadeRepository.existsByAtividadePbls_AlunoIsNotNull())
+			throw new RuntimeException("Atividade não pode ser editada, pois ja esta vinculada à um aluno");
+
+		return atividadeRepository.save(atividade);
 	}
 
 }
