@@ -9,5 +9,5 @@ import br.com.t2m.pblapi.domain.model.Usuario;
 @Transactional
 @Repository
 public interface IUsuarioRepository extends IUsuarioBaseRepository<Usuario> {
-
+	public Boolean existsByEmail(String email);
 }
