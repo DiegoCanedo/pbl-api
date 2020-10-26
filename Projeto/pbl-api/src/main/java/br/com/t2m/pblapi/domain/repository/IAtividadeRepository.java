@@ -14,5 +14,5 @@ public interface IAtividadeRepository extends JpaRepository<Atividade, Long> {
 
 	public Set<Atividade> findByDisciplina(Disciplina disciplina);
 
-	public boolean existsByAtividadePbls_AlunoIsNotNull();
+	public boolean existsByAtividadePbls_AlunoIsNotNullAndId(Long Id);
 }
