@@ -12,6 +12,7 @@ public final class Constants {
 	public static final String TEMA_JA_EXISTE = "Já existe um tema com esse nome.";
 	public static final String PBL_NAO_ENCONTRADO = "Não existe PBL com o id: ";
 	public static final String MENSAGEM_USUARIO_REGISTRADO_SUCESSO = "Usuario cadastrado com sucesso, aguarde confirmação do administrador para acessar o sistema.";
+	public static final String ATIVIDADE_NAO_ENCONTRADA = "Não existe atividade com o id: ";;
 
 	private Constants() {
 	}
