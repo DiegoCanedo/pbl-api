@@ -41,6 +41,17 @@ public class AtividadeService {
 	private IProfessorRepository professorRepository;
 
 	@Transactional(readOnly = true)
+	public Atividade getById(Long idAtividade) {
+		Optional<Atividade> optAtividade = atividadeRepository.findById(idAtividade);
+
+		if (optAtividade.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
+		}
+
+		return optAtividade.get();
+	}
+	
+	@Transactional(readOnly = true)
 	public Set<Atividade> getByPbl(Long idPbl) {
 		Optional<Pbl> optPbl = pblRepository.findById(idPbl);
 
@@ -126,10 +137,22 @@ public class AtividadeService {
 		if (optAtividade.isEmpty())
 			throw new ResourceNotFoundException("Atividade não existe");
 
-		if (atividadeRepository.existsByAtividadePbls_AlunoIsNotNull())
+		if (atividadeRepository.existsByAtividadePbls_AlunoIsNotNullAndId(optAtividade.get().getId()))
 			throw new RuntimeException("Atividade não pode ser editada, pois ja esta vinculada à um aluno");
 
 		return atividadeRepository.save(atividade);
 	}
+	
+	public void delete(Long idAtividade) {
+		Optional<Atividade> optAtividade = atividadeRepository.findById(idAtividade);
 
+		
+		if (optAtividade.isEmpty())
+			throw new ResourceNotFoundException("Atividade não existe");
+
+		if (atividadeRepository.existsByAtividadePbls_AlunoIsNotNullAndId(optAtividade.get().getId()))
+			throw new RuntimeException("Atividade não pode ser excluida, pois ja esta vinculada à um aluno");
+
+		atividadeRepository.delete(optAtividade.get());
+	}
 }
