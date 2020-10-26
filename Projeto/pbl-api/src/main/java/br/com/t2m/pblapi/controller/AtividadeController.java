@@ -39,6 +39,11 @@ public class AtividadeController {
 		return ResponseEntity.ok().body(atividadeService.getByDisciplina(id));
 	}
 	
+	@GetMapping("/pbl/{id}")
+	public ResponseEntity<Set<Atividade>> listarPorIdPbl(@PathVariable Long id){
+		return ResponseEntity.ok().body(atividadeService.getByPbl(id));
+	}
+	
 	
 	@PostMapping
 	public ResponseEntity<Atividade> cadastrar(@Valid @RequestBody Atividade atividade) {
