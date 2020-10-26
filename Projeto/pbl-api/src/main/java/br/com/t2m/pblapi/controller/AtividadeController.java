@@ -28,6 +28,11 @@ public class AtividadeController {
 	@Autowired
 	private AtividadeService atividadeService;
 
+	@GetMapping("/{id}")
+	public ResponseEntity<Atividade> litarPorId(@PathVariable Long id){
+		return ResponseEntity.ok().body(atividadeService.getById(id));
+	}
+	
 	@GetMapping("/disciplina/{id}")
 	public ResponseEntity<Set<Atividade>> listarPorIdDisciplina(@PathVariable Long id){
 		return ResponseEntity.ok().body(atividadeService.getByDisciplina(id));
