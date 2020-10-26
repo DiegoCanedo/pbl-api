@@ -32,7 +32,7 @@ public class AlunoDTO {
 	
 	private Instant createdDate;
 
-	private Set<String> perfil;
+	private Set<Perfil> perfis;
 
 	public AlunoDTO() {
 		// Construtor vazio, necessário para o Jackson.
@@ -45,7 +45,7 @@ public class AlunoDTO {
 		this.email = aluno.getEmail();
 		this.ativo = aluno.isAtivo();
 		this.excluido = aluno.isExcluido();
-		this.perfil = aluno.getPerfil().stream().map(Perfil::getRole).collect(Collectors.toSet());
+		this.perfis = aluno.getPerfil();
 	}
 
 	public Long getId() {
@@ -80,12 +80,13 @@ public class AlunoDTO {
 		this.excluido = excluido;
 	}
 
-	public Set<String> getPerfil() {
-		return perfil;
+
+	public Set<Perfil> getPerfis() {
+		return perfis;
 	}
 
-	public void setPerfil(Set<String> perfil) {
-		this.perfil = perfil;
+	public void setPerfis(Set<Perfil> perfis) {
+		this.perfis = perfis;
 	}
 
 	public String getNome() {

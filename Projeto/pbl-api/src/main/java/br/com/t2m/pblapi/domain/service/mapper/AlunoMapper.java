@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import br.com.t2m.pblapi.domain.model.Aluno;
+import br.com.t2m.pblapi.domain.model.EPerfil;
 import br.com.t2m.pblapi.domain.model.Perfil;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 
@@ -39,22 +40,9 @@ public class AlunoMapper {
 		aluno.setMatricula(alunoDTO.getMatricula());
 		aluno.setAtivo(alunoDTO.isAtivo());
 		aluno.setExcluido(alunoDTO.isExcluido());
-		Set<Perfil> perfis = this.perfilsFromString(alunoDTO.getPerfil());
+		Set<Perfil> perfis = alunoDTO.getPerfis();
 		aluno.setPerfil(perfis);
 		return aluno;
-	}
-
-	private Set<Perfil> perfilsFromString(Set<String> perfisAsString) {
-		Set<Perfil> perfis = new HashSet<>();
-
-		if (perfisAsString != null) {
-			perfis = perfisAsString.stream().map(string -> {
-				Perfil perfil = new Perfil();
-				perfil.setRole(string);
-				return perfil;
-			}).collect(Collectors.toSet());
-		}
-		return perfis;
 	}
 
 	public Aluno alunoFromId(Long id) {
