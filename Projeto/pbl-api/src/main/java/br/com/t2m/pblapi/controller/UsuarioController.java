@@ -30,11 +30,7 @@ public class UsuarioController {
 	@Autowired
 	private AlunoService alunoService;
 
-	@PostMapping("/aluno/registrar")
-	@ResponseStatus(HttpStatus.CREATED)
-	public void registrarAluno(@Valid @RequestBody AlunoVM aluno) {
-		alunoService.insert(aluno, aluno.getSenha());
-	}
+	
 
 	@PutMapping("/altera-status-ativo/{id}")
 	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody UsuarioIsAtivoDTO usuario,

@@ -1,14 +1,11 @@
 package br.com.t2m.pblapi.domain.model;
 
-import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,11 +14,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -31,12 +23,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import br.com.t2m.pblapi.config.Constants;
 
@@ -50,6 +37,8 @@ public abstract class Usuario {
 	private Long id;
 
 	@NotBlank
+	@Column(length = 50)
+	@Size(max = 50)
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
 	private String email;
 
@@ -61,18 +50,26 @@ public abstract class Usuario {
 	@NotNull
 	@Column(nullable = false)
 	private boolean ativo;
-	
+
 	@NotNull
 	@Column(nullable = false)
 	private boolean excluido;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "perfil_usuario", joinColumns = {
 			@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, inverseJoinColumns = {
-					@JoinColumn(name = "perfil_role", referencedColumnName = "role") })
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	@BatchSize(size = 20)
-	private Set<Perfil> perfil;
+					@JoinColumn(name = "id_perfil", referencedColumnName = "id") })
+	private Set<Perfil> perfil = new HashSet<>();
+
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Usuario(String email, String senha) {
+
+		this.email = email;
+		this.senha = senha;
+	}
 
 	public Long getId() {
 		return id;
