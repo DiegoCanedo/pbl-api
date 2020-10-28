@@ -37,6 +37,18 @@ public class AtividadePbl {
 	@ManyToOne
 	@JoinColumn(name = "id_aluno")
 	private Aluno aluno;
+	
+	public AtividadePbl(AtividadePbl atividadepbl) {
+		this.id = atividadepbl.getId();
+		this.dataEntrega = atividadepbl.getDataEntrega();
+		this.nota = atividadepbl.getNota();
+		this.pbl = atividadepbl.getPbl();
+		this.aluno = atividadepbl.getAluno();
+	}
+	
+	public AtividadePbl() {
+		
+	}
 
 	public Long getId() {
 		return id;
