@@ -3,6 +3,7 @@ package br.com.t2m.pblapi.domain.service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class AtividadeService {
 
 		return optAtividade.get();
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Set<Atividade> getByPbl(Long idPbl) {
 		Optional<Pbl> optPbl = pblRepository.findById(idPbl);
@@ -59,7 +60,14 @@ public class AtividadeService {
 			throw new ResourceNotFoundException(Constants.PBL_NAO_ENCONTRADO, idPbl.toString());
 		}
 
-		return atividadeRepository.findByAtividadePbls_Pbl(optPbl.get());
+		Set<Atividade> atividades = atividadeRepository.findByAtividadePbls_Pbl(optPbl.get());
+		
+		atividades.forEach(a -> {
+			a.setAtividadePbls(a.getAtividadePbls().stream().filter(f -> f.getPbl().getIdPbl().equals(idPbl))
+					.collect(Collectors.toSet()));
+		});
+
+		return atividades;
 	}
 
 	@Transactional(readOnly = true)
@@ -137,11 +145,10 @@ public class AtividadeService {
 
 		return atividadeRepository.save(atividade);
 	}
-	
+
 	public void delete(Long idAtividade) {
 		Optional<Atividade> optAtividade = atividadeRepository.findById(idAtividade);
 
-		
 		if (optAtividade.isEmpty())
 			throw new ResourceNotFoundException("Atividade não existe");
 
