@@ -49,7 +49,7 @@ public class Atividade {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "id_professor")
+	@JoinColumn(name = "id_usuario")
 	private Professor professor;
 
 	@OneToMany(cascade = CascadeType.ALL)

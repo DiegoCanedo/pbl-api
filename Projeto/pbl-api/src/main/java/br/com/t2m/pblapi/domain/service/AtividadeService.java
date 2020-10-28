@@ -118,12 +118,7 @@ public class AtividadeService {
 		Set<Atividade> atividades = this.getByDisciplina(pbl.getPblTemaDisciplina().getDisciplina().getId());
 
 		atividades.forEach(a -> {
-			Set<AtividadePbl> atividadePbls = new HashSet<AtividadePbl>();
-			AtividadePbl atividadePbl = new AtividadePbl();
-			atividadePbl.setPbl(pbl);
-			atividadePbls.add(atividadePbl);
-			a.setAtividadePbls(atividadePbls);
-			atividadeRepository.save(a);
+			atividadePblRepository.bindPblToAtividade(pbl.getIdPbl(), a.getId());
 		});
 	}
 

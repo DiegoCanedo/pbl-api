@@ -65,7 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	            
 	            // -- desenvolvimento
 	            "/aluno/**",
+	            "/professor/**",
 	    		"/temaPbl/**",
+	    		"/pbl/**",
 	    		"/disciplina/**",
 	    		"/atividades/**",
 	    };

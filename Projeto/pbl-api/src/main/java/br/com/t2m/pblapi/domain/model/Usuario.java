@@ -1,5 +1,6 @@
 package br.com.t2m.pblapi.domain.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,17 +20,18 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.t2m.pblapi.config.Constants;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Usuario {
+public abstract class Usuario implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7768096444504586762L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
