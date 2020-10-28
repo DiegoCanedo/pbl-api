@@ -57,6 +57,13 @@ public class ProfessorService {
 	}
 
 	public Professor insert(ProfessorDTO professorDTO, String senha) {
+		
+		Optional<Perfil> optPerfil = perfilRepository.findByNome(EPerfil.ROLE_PROFESSOR);
+		
+		if(optPerfil.isEmpty())
+		{
+			throw new ResourceNotFoundException(Constants.PERFIL_NAO_ENCONTRADO, EPerfil.ROLE_PROFESSOR.name());
+		}
 
 		if (professorDTO.getId() != null)
 
@@ -68,9 +75,8 @@ public class ProfessorService {
 		
 		professor.setSenha(passwordEncoder.encode(senha));
 		Set<Perfil> perfis = new HashSet<>();
-		Perfil teste = new Perfil();
-		teste = perfilRepository.findByNome(EPerfil.ROLE_PROFESSOR).get();
-		perfis.add(teste);
+
+		perfis.add(optPerfil.get());
 		professor.setPerfil(perfis);
 		
 		professor.setAtivo(false);
