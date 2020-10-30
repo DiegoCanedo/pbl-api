@@ -9,7 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Disciplina;
+import br.com.t2m.pblapi.domain.model.PblTemaDisciplina;
 import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
+import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
+import br.com.t2m.pblapi.exception.ResourceAlreadyBounded;
 import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
@@ -19,6 +22,9 @@ public class DisciplinaService {
 
 	@Autowired
 	IDisciplinaRepository disciplinaRepository;
+	
+	@Autowired
+	IPblTemaDisciplinaRepository pblTemaDisciplina;
 
 	@Transactional(readOnly = true)
 	public List<Disciplina> getAll() {
@@ -62,6 +68,13 @@ public class DisciplinaService {
 
 		if (opt.isEmpty())
 			throw new ResourceNotFoundException(Constants.DISCIPLINA_NAO_ENCONTRADA, id.toString());
+		
+		Optional<List<PblTemaDisciplina>> optPblTemaDisciplina = pblTemaDisciplina.findByDisciplina(opt.get());
+		
+		if(optPblTemaDisciplina.isPresent())
+		{
+			throw new ResourceAlreadyBounded(Constants.DISCIPLINA_VINCULADA);
+		}
 
 		disciplinaRepository.delete(opt.get());
 	}
