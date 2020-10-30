@@ -145,6 +145,20 @@ public class AtividadeService {
 
 		return atividadeRepository.save(atividade);
 	}
+	
+	public AtividadePbl updateAtividadePbl(Atividade atividade, Long id) {
+		Optional<Professor> optProfessor = professorRepository.findById(atividade.getProfessor().getId());
+		Optional<Atividade> optAtividade = atividadeRepository.findById(id);
+		
+		if (optProfessor.isEmpty())
+			throw new ResourceNotFoundException("Professor não existe");
+
+		if (optAtividade.isEmpty())
+			throw new ResourceNotFoundException("Atividade não existe");
+		
+		return atividadePblRepository.save(atividade.getAtividadePbls().stream().findFirst().get());
+		
+	}
 
 	public void delete(Long idAtividade) {
 		Optional<Atividade> optAtividade = atividadeRepository.findById(idAtividade);
