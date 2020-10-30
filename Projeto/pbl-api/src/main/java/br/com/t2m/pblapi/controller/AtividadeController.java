@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.model.Atividade;
+import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.service.AtividadeService;
 import io.swagger.annotations.Api;
 
@@ -53,6 +54,11 @@ public class AtividadeController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Atividade> alterar(@Valid @RequestBody Atividade atividade, @PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.update(atividade, id));
+	}
+	
+	@PutMapping("/atividade-pbl/{id}")
+	public ResponseEntity<AtividadePbl> alterarAtividadePbl(@Valid @RequestBody Atividade atividade, @PathVariable Long id) {
+		return ResponseEntity.ok().body(atividadeService.updateAtividadePbl(atividade, id));
 	}
 	
 	@DeleteMapping("/{id}")
