@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.t2m.pblapi.config.Constants;
@@ -37,7 +36,9 @@ public class ProfessorDTO implements Serializable {
 	private boolean excluido;
 	
 	private Instant createdDate = new Date().toInstant();
-	@NotNull
+	
+	private String matricula;
+	
 	private Disciplina disciplina;
 	
 	private Set<Perfil> perfis;
@@ -46,6 +47,7 @@ public class ProfessorDTO implements Serializable {
 		this.id = professor.getId();
 		this.email = professor.getEmail();
 		this.nome = professor.getNome();
+		this.matricula = professor.getMatricula();
 		this.disciplina = professor.getDisciplina();
 		this.perfis = professor.getPerfil();
 		this.ativo = professor.isAtivo();
@@ -102,6 +104,14 @@ public class ProfessorDTO implements Serializable {
 
 	public void setCreatedDate(Instant createdDate) {
 		this.createdDate = createdDate;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public Disciplina getDisciplina() {

@@ -1,5 +1,6 @@
 package br.com.t2m.pblapi.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -7,6 +8,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "professor")
@@ -15,8 +17,12 @@ public class Professor extends Usuario {
 
 	@NotBlank
 	private String nome;
-
+	
 	@NotNull
+	@Size(max = 7)
+	@Column(nullable = false, unique = true, length = 7)
+	private String matricula;
+
 	@ManyToOne
 	@JoinColumn(name = "id_disciplina")
 	private Disciplina disciplina;
@@ -27,6 +33,14 @@ public class Professor extends Usuario {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
 	}
 
 	public Disciplina getDisciplina() {
