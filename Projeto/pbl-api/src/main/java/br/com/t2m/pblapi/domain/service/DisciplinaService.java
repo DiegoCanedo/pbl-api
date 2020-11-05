@@ -58,9 +58,7 @@ public class DisciplinaService {
 			throw new ResourceNotFoundException(Constants.DISCIPLINA_NAO_ENCONTRADA, id.toString());
 		});
 
-		Disciplina discip = opt.get();
-		discip.setId(id);
-		return disciplinaRepository.save(discip);
+		return disciplinaRepository.save(disciplina);
 	}
 
 	public void delete(Long id) {
