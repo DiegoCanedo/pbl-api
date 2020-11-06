@@ -36,7 +36,6 @@ public class ProfessorMapper {
 		Professor.setAtivo(ProfessorDTO.isAtivo());
 		Professor.setNome(ProfessorDTO.getNome());
 		Professor.setExcluido(ProfessorDTO.isExcluido());
-		Professor.setMatricula(ProfessorDTO.getMatricula());
 		Professor.setDisciplina(ProfessorDTO.getDisciplina());
 		Set<Perfil> perfis = ProfessorDTO.getPerfis();
 		Professor.setPerfil(perfis);
