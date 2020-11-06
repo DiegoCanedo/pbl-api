@@ -61,4 +61,11 @@ public class ExceptionController extends ResponseEntityExceptionHandler{
 				.header("error_code", HttpStatus.BAD_REQUEST.toString())
 				.header("error_value", "").body(e.getMessage());
 	}
+	
+	@ExceptionHandler(ResourceAlreadyBounded.class)
+	public ResponseEntity<String> handleResourceAlreadyBoundedException(ResourceAlreadyBounded e) {
+		return ResponseEntity.badRequest()
+				.header("error_code", HttpStatus.BAD_REQUEST.toString())
+				.header("error_value", "").body(e.getMessage());
+	}
 }
