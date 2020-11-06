@@ -34,10 +34,11 @@ public class EmpresaMapper {
 		Empresa Empresa = new Empresa();
 		Empresa.setId(EmpresaDTO.getId());
 		Empresa.setEmail(EmpresaDTO.getEmail());
-		Empresa.setAtivo(EmpresaDTO.isAtivo());
 		Empresa.setNome(EmpresaDTO.getNome());
+		Empresa.setCnpj(EmpresaDTO.getCnpj());
 		Empresa.setEndereco(EmpresaDTO.getEndereco());
 		Empresa.setUrlLog(EmpresaDTO.getUrlLog());
+		Empresa.setAtivo(EmpresaDTO.isAtivo());
 		Empresa.setExcluido(EmpresaDTO.isExcluido());
 		Set<Perfil> perfis = EmpresaDTO.getPerfis();
 		Empresa.setPerfil(perfis);

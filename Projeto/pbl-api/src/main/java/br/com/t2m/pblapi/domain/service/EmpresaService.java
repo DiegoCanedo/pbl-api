@@ -96,8 +96,10 @@ public class EmpresaService {
 		// TODO Falta setar o array de perfil;
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(empresa -> {
 			empresa.setNome(empresaDTO.getNome());
+			empresa.setEmail(empresaDTO.getEmail());
+			empresa.setEndereco(empresaDTO.getEndereco());
 			empresa.setCnpj(empresaDTO.getCnpj());
-			empresa.setAtivo(empresaDTO.isAtivo());
+			empresa.setUrlLog(empresaDTO.getUrlLog());
 			return empresa;
 		}).map(EmpresaDTO::new).get();
 	}

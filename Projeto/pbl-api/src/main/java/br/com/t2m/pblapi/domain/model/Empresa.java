@@ -69,4 +69,14 @@ public class Empresa extends Usuario implements Serializable {
 		this.urlLog = urlLog;
 	}
 
+	public List<Problema> getProblema() {
+		return problema;
+	}
+
+	public void setProblema(List<Problema> problema) {
+		this.problema = problema;
+	}
+
+	
+
 }
