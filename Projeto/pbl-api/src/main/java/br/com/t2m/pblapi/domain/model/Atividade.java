@@ -69,6 +69,10 @@ public class Atividade {
 		this.tarefas = tarefas;
 	}
 	
+	public void addTarefa(Tarefa tarefa) {
+		tarefas.add(tarefa);
+	}
+	
 	public Long getId() {
 		return id;
 	}
