@@ -28,7 +28,7 @@ public class Empresa extends Usuario implements Serializable {
 	private String cnpj;
 
 	private String endereco;
-
+	
 	private String urlLog;
 
 	// private String focalPoint;
@@ -60,7 +60,7 @@ public class Empresa extends Usuario implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-
+	
 	public String getUrlLog() {
 		return urlLog;
 	}
