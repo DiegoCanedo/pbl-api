@@ -7,5 +7,5 @@ import br.com.t2m.pblapi.domain.model.Tarefa;
 
 @Repository
 public interface ITarefaRepository extends JpaRepository<Tarefa, Long> {
-
+	
 }

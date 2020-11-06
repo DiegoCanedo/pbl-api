@@ -1,5 +1,7 @@
 package br.com.t2m.pblapi.domain.model;
 
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tarefa_atividade")
-public class Tarefa {
+public class Tarefa implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +33,7 @@ public class Tarefa {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataCriacao;
+	private Instant dataCriacao;
 	
 	@NotNull
 	@Column(name = "descricao")
@@ -49,10 +52,32 @@ public class Tarefa {
 	@JoinTable(name = "tarefa_aluno", 
 		joinColumns = @JoinColumn(name = "id_tarefa", referencedColumnName = "id_tarefa"), 
 			inverseJoinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"))
-	private List<Aluno> alunos;
+	private List<Aluno> alunos;	
 	
+	public Tarefa() {
+		
+	}	
 
-	public Date getDataCriacao() {
+	public Tarefa(Long id, @NotNull Instant dataCriacao, @NotNull String descricao, @NotNull Date dataConclusao,
+			@NotNull boolean concluido, List<Aluno> alunos) {
+		super();
+		this.id = id;
+		this.dataCriacao = dataCriacao;
+		this.descricao = descricao;
+		this.dataConclusao = dataConclusao;
+		this.concluido = concluido;
+		this.alunos = alunos;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Instant getDataCriacao() {
 		return dataCriacao;
 	}	
 
@@ -72,7 +97,7 @@ public class Tarefa {
 		return concluido;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(Instant dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
