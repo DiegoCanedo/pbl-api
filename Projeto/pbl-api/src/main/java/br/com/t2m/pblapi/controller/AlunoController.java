@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import io.swagger.annotations.Api;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/aluno")
 @Api(description = "rest api para aluno", tags= {"Aluno"})
 public class AlunoController {
@@ -27,6 +28,7 @@ public class AlunoController {
 	AlunoService alunoService;
 
 	@GetMapping
+//	@PreAuthorize("hasRole('ALUNO')")
 	public ResponseEntity<Iterable<AlunoDTO>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());
 	}

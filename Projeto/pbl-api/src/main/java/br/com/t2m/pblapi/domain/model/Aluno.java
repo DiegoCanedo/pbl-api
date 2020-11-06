@@ -16,8 +16,6 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Aluno extends Usuario implements Serializable {
 
-
-
 	/**
 	 * 
 	 */

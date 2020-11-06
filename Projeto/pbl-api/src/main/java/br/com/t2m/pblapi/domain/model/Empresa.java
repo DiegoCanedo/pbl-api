@@ -22,10 +22,4 @@ public class Empresa {
 	
 	@NotBlank
 	private String cnpj;
-	
-	@NotBlank
-	private String email;
-	
-	
-	
 }
