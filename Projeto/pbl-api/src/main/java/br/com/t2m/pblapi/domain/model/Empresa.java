@@ -1,8 +1,12 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -28,6 +32,10 @@ public class Empresa extends Usuario implements Serializable {
 	private String urlLog;
 
 	// private String focalPoint;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_problema")
+	private List<Problema> problema;
 
 	public String getNome() {
 		return nome;
