@@ -31,7 +31,6 @@ public class Problema implements Serializable {
 	@Column(name = "id_problema")
 	private Long idProblema;
 	
-	@NotBlank
 	private String descricao;
 	
 	@NotNull
@@ -41,6 +40,17 @@ public class Problema implements Serializable {
 	
 	@NotBlank
 	private String prioridade;	
+	
+	public Problema(Problema problema) {
+		this.idProblema = problema.getIdProblema();
+		this.descricao = problema.getDescricao();
+		this.dataRegistro = problema.getDataRegistro();
+		this.prioridade = problema.getPrioridade();
+	}
+	
+	public Problema() {
+		
+	}
 
 	public Long getIdProblema() {
 		return idProblema;
@@ -97,6 +107,16 @@ public class Problema implements Serializable {
 		} else if (!idProblema.equals(other.idProblema))
 			return false;
 		return true;
+	}
+
+	public void setAtivo(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setExcluido(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

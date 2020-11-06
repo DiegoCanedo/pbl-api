@@ -17,6 +17,8 @@ public final class Constants {
 	public static final String ATIVIDADE_NAO_ENCONTRADA = "Não existe atividade com o id: ";
 	public static final String PERFIL_NAO_ENCONTRADO = "Não existe perfil: ";
 	public static final String EMPRESA_NÃO_ENCONTRADA = "Não existe empresa com o id";
+	public static final String PROBLEMA_NAO_ENCONTRADO = "Não existe problema com o id";
+	public static final String PROBLEMA_JA_EXISTE = "Já existe um problema cadastrado com essa descrição.";
 	private Constants() {
 	}
 }
