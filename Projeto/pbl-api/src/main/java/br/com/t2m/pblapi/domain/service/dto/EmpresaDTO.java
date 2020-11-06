@@ -24,7 +24,6 @@ public class EmpresaDTO implements Serializable {
 	@NotBlank
 	private String nome;
 	
-	@NotBlank
 	private String endereco;
 	
 	private String urlLog;
@@ -47,6 +46,7 @@ public class EmpresaDTO implements Serializable {
 		this.id = empresa.getId();
 		this.email = empresa.getEmail();
 		this.nome = empresa.getNome();
+		this.cnpj = empresa.getCnpj();
 		this.endereco = empresa.getEndereco();
 		this.urlLog = empresa.getUrlLog();
 		this.perfis = empresa.getPerfil();
@@ -73,7 +73,7 @@ public class EmpresaDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-		
+
 	public String getEndereco() {
 		return endereco;
 	}
@@ -81,7 +81,7 @@ public class EmpresaDTO implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-		
+
 	public String getUrlLog() {
 		return urlLog;
 	}
@@ -129,6 +129,8 @@ public class EmpresaDTO implements Serializable {
 	public void setPerfis(Set<Perfil> perfis) {
 		this.perfis = perfis;
 	}
+
+
 	
 	
 }
