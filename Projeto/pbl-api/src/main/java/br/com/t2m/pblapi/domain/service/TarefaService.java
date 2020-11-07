@@ -1,6 +1,5 @@
 package br.com.t2m.pblapi.domain.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import br.com.t2m.pblapi.domain.model.Tarefa;
 import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
 import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
 import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
@@ -156,9 +154,9 @@ public class TarefaService {
 		
 		if(aluno.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, idAluno.toString());
-		}
+		}		
 		
-		tarefa.get().getAlunos().remove(aluno.get()); //verificar se o método "remove" esta sendo usado de forma correta
+		tarefa.get().getAlunos().remove(aluno.get());
 		tarefaRepository.save(tarefa.get());
 		return new TarefaDTO(tarefa.get());
 	}
