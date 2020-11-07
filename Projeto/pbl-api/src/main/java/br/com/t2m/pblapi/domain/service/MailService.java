@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.Pbl;
 import br.com.t2m.pblapi.domain.model.Usuario;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
+import br.com.t2m.pblapi.domain.service.mapper.AlunoMapper;
 
 @Service
 public class MailService {
@@ -24,21 +26,26 @@ public class MailService {
 	public MailService(JavaMailSender javaMailSender) {
 		this.javaMailSender = javaMailSender;
 	}
+	
+	@Autowired
+	private AlunoService service;
+		
+	
 
 	public void sendEmailPbl(Pbl pbl) throws MailException, MessagingException {
 
 		for (Aluno aluno : pbl.getAluno()) {
+			AlunoDTO alunoDTO = service.getById(aluno.getId());
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 			String htmlMsg = "<h3>Data de ínicio: " + pbl.getDataInicio() + "</h3>\r\n"
-					+ "   	  <h3>Data de conclusão: " + pbl.getDataConclusao() + " 18/11/2020</h3>\r\n"
-					+ "    	  <h3>Problema: " + pbl.getProblema() + " </h3>\r\n" + "    	  <h3>Disciplina: "
-					+ pbl.getPblTemaDisciplina().getDisciplina() + "</h3> ";
-			helper.setSubject("Novo PBL da disciplina: " + pbl.getPblTemaDisciplina().getDisciplina());
+					+ "   	  <h3>Data de conclusão: " + pbl.getDataConclusao() + " </h3>\r\n"
+					+ "    	  <h3>Problema: " + pbl.getProblema() + " </h3>\r\n" + "    	  <h3>"
+					+         "Disciplina: " + pbl.getPblTemaDisciplina().getDisciplina().getNome() + "</h3> ";
+			helper.setSubject("Novo PBL da disciplina: " + pbl.getPblTemaDisciplina().getDisciplina().getNome());
 			helper.setText(htmlMsg, true);
 
-			System.out.println(aluno.getEmail());
-			helper.setTo(aluno.getEmail());
+			helper.setTo(alunoDTO.getEmail());
 			javaMailSender.send(mimeMessage);
 			
 		}

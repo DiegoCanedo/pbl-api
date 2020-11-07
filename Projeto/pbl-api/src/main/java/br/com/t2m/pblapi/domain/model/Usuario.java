@@ -146,4 +146,12 @@ public abstract class Usuario implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", email=" + email + ", senha=" + senha + ", ativo=" + ativo + ", excluido="
+				+ excluido + ", perfil=" + perfil + "]";
+	}
+	
+	
+
 }

@@ -170,6 +170,15 @@ public class Pbl {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Pbl [idPbl=" + idPbl + ", problema=" + problema + ", situacaoProblema=" + situacaoProblema + ", resumo="
+				+ resumo + ", dataInicio=" + dataInicio + ", dataConclusao=" + dataConclusao + ", professor="
+				+ professor + ", aluno=" + aluno + ", pblTemaDisciplina=" + pblTemaDisciplina + "]";
+	}
+	
+	
+
 	
 
 }
