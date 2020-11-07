@@ -27,12 +27,12 @@ public class ProblemaService {
 	
 	@Transactional(readOnly = true)
 	public List<Problema> getAll() {
-		return problemaRepository.findAll().stream().map(Problema::new).collect(Collectors.toList());
+		return problemaRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
 	public Problema getById(Long id) {
-		Optional<Problema> opt = problemaRepository.findByIdProblema(id).map(Problema::new);
+		Optional<Problema> opt = problemaRepository.findByIdProblema(id);
 
 		if (!opt.isPresent())
 			throw new ResourceNotFoundException(Constants.PROBLEMA_NAO_ENCONTRADO, id.toString());
@@ -51,13 +51,15 @@ public class ProblemaService {
 	public Problema update(Problema problema) {
 		Optional<Problema> opt = problemaRepository.findById(problema.getIdProblema());
 		
-		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(prob -> {
-			problema.setIdProblema(problema.getIdProblema());
-			problema.setAtivo(problema.isAtivo());
-			return problema;
-		}).map(Problema::new).get();
-	}
-
+		if (!opt.isPresent())
+			throw new ResourceNotFoundException(Constants.PROBLEMA_NAO_ENCONTRADO);
+		Problema problemaBanco = opt.get(); 
+		problemaBanco.setDescricao(problema.getDescricao());
+		problemaBanco.setPrioridade(problema.getPrioridade());
+		problemaBanco.setAtivo(problema.isAtivo());
+		return problemaRepository.save(problemaBanco);
+	}		
+	
 	@Transactional
 	public void delete(Long id) {
 		Optional<Problema> opt = problemaRepository.findByIdProblema(id);		

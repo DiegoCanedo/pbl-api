@@ -39,23 +39,9 @@ public class Problema implements Serializable {
 	private Date dataRegistro;
 	
 	@NotBlank
-	private String prioridade;
+	private Integer prioridade;
 	
 	private boolean ativo;
-	
-	private boolean excluído;
-	
-	public Problema(Problema problema) {
-		this.idProblema = problema.getIdProblema();
-		this.descricao = problema.getDescricao();
-		this.dataRegistro = problema.getDataRegistro();
-		this.prioridade = problema.getPrioridade();
-		this.ativo = problema.isAtivo();
-	}
-	
-	public Problema() {
-		
-	}
 
 	public Long getIdProblema() {
 		return idProblema;
@@ -81,11 +67,11 @@ public class Problema implements Serializable {
 		this.dataRegistro = dataRegistro;
 	}
 
-	public String getPrioridade() {
+	public Integer getPrioridade() {
 		return prioridade;
 	}
 
-	public void setPrioridade(String prioridade) {
+	public void setPrioridade(Integer prioridade) {
 		this.prioridade = prioridade;
 	}	
 
@@ -95,14 +81,6 @@ public class Problema implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	public boolean isExcluído() {
-		return excluído;
-	}
-
-	public void setExcluído(boolean excluído) {
-		this.excluído = excluído;
 	}
 
 	@Override
