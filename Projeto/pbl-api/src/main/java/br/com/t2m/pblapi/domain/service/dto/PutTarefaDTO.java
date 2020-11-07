@@ -8,25 +8,21 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class PutTarefaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
 	private String descricao;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;	
 	private boolean concluido;
 	
+	public PutTarefaDTO() {
+		super();
+	}
 	
 	public PutTarefaDTO(TarefaDTO entidade) {
 		super();
-		this.id = entidade.getId();
 		this.descricao = entidade.getDescricao();
 		this.dataConclusao = entidade.getDataConclusao();
 		this.concluido = entidade.isConcluido();
-	}
-
-
-	public Long getId() {
-		return id;
 	}
 
 
@@ -42,11 +38,6 @@ public class PutTarefaDTO implements Serializable {
 
 	public boolean isConcluido() {
 		return concluido;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 
