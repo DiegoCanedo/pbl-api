@@ -73,7 +73,6 @@ public class Pbl {
 	@MapsId
 	private PblTemaDisciplina pblTemaDisciplina;
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_problema")
 	private Problema problemaEmpresa;
