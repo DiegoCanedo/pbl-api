@@ -57,7 +57,7 @@ public abstract class Usuario implements Serializable {
 	@Column(nullable = false)
 	private boolean excluido;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "perfil_usuario", joinColumns = {
 			@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario") }, inverseJoinColumns = {
 					@JoinColumn(name = "id_perfil", referencedColumnName = "id") })

@@ -71,7 +71,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    		"/pbl/**",
 	    		"/disciplina/**",
 	    		"/atividades/**",
-	    };
+	 };
+
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
