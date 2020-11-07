@@ -74,7 +74,7 @@ public class Pbl {
 	private PblTemaDisciplina pblTemaDisciplina;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_problema")
 	private Problema problemaEmpresa;
 	
