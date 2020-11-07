@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -55,7 +56,23 @@ public class Atividade {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_atividade")
 	private Set<AtividadePbl> atividadePbls;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_atividade")
+	private List<Tarefa> tarefas;
 
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+	
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
+	
+	public void addTarefa(Tarefa tarefa) {
+		tarefas.add(tarefa);
+	}
+	
 	public Long getId() {
 		return id;
 	}
