@@ -1,8 +1,6 @@
 package br.com.t2m.pblapi.domain.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.Date;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
@@ -10,21 +8,28 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import br.com.t2m.pblapi.config.Constants;
-import br.com.t2m.pblapi.domain.model.Disciplina;
+import br.com.t2m.pblapi.domain.model.Empresa;
 import br.com.t2m.pblapi.domain.model.Perfil;
-import br.com.t2m.pblapi.domain.model.Professor;
 
-public class ProfessorDTO implements Serializable {
 
+public class EmpresaDTO implements Serializable {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 8369244573575768444L;
+	private static final long serialVersionUID = -838231074945922732L;
 
 	private Long id;
 
 	@NotBlank
 	private String nome;
+	
+	private String endereco;
+	
+	private String urlLog;
+	
+	@NotBlank
+	private String cnpj;
 	
 	@NotBlank
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
@@ -35,23 +40,21 @@ public class ProfessorDTO implements Serializable {
 	
 	private boolean excluido;
 	
-	private Instant createdDate = new Date().toInstant();
-	
-	private Disciplina disciplina;
-	
 	private Set<Perfil> perfis;
 
-	public ProfessorDTO(Professor professor) {
-		this.id = professor.getId();
-		this.email = professor.getEmail();
-		this.nome = professor.getNome();
-		this.disciplina = professor.getDisciplina();
-		this.perfis = professor.getPerfil();
-		this.ativo = professor.isAtivo();
-		this.excluido = professor.isExcluido();
+	public EmpresaDTO(Empresa empresa) {
+		this.id = empresa.getId();
+		this.email = empresa.getEmail();
+		this.nome = empresa.getNome();
+		this.cnpj = empresa.getCnpj();
+		this.endereco = empresa.getEndereco();
+		this.urlLog = empresa.getUrlLog();
+		this.perfis = empresa.getPerfil();
+		this.ativo = empresa.isAtivo();
+		this.excluido = empresa.isExcluido();
 	}
 	
-	public ProfessorDTO() {
+	public EmpresaDTO() {
 		
 	}
 
@@ -69,6 +72,30 @@ public class ProfessorDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getUrlLog() {
+		return urlLog;
+	}
+
+	public void setUrlLog(String urlLog) {
+		this.urlLog = urlLog;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 	public String getEmail() {
@@ -95,22 +122,6 @@ public class ProfessorDTO implements Serializable {
 		this.excluido = excluido;
 	}
 
-	public Instant getCreatedDate() {
-		return createdDate;
-	}
-
-	public void setCreatedDate(Instant createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public Disciplina getDisciplina() {
-		return disciplina;
-	}
-
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
-	}
-
 	public Set<Perfil> getPerfis() {
 		return perfis;
 	}
@@ -119,4 +130,7 @@ public class ProfessorDTO implements Serializable {
 		this.perfis = perfis;
 	}
 
+
+	
+	
 }

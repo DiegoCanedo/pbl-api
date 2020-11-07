@@ -3,6 +3,7 @@ package br.com.t2m.pblapi.config;
 public final class Constants {
 	public static final String EMAIL_REGEX = ".+@.+\\..+";
 	public static final String USUARIO_EMAIL_JA_EXISTE = "Esse email pertence a outro usuario: ";
+	public static final String USUARIO_CNPJ_JA_EXISTE = "Esse cnpj pertence a outra empresa: ";
 	public static final String USUARIO_MATRICULA_JA_EXISTE = "Essa matricula pertence a outro usuario: ";
 	public static final String USUARIO_NAO_ENCONTRADO = "Não existe usuario com o id: ";
 	public static final String DISCIPLINA_NAO_ENCONTRADA = "Não existe disciplina com o id: ";
@@ -16,6 +17,9 @@ public final class Constants {
 	public static final String ATIVIDADE_NAO_ENCONTRADA = "Não existe atividade com o id: ";
 	public static final String PERFIL_NAO_ENCONTRADO = "Não existe perfil: ";
 	public static final String TAREFA_NAO_ENCONTRADA = "Não existe tarefa com id: ";
+	public static final String EMPRESA_NÃO_ENCONTRADA = "Não existe empresa com o id";
+	public static final String PROBLEMA_NAO_ENCONTRADO = "Não existe problema com o id";
+	public static final String PROBLEMA_JA_EXISTE = "Já existe um problema cadastrado com essa descrição.";
 
 	private Constants() {
 	}

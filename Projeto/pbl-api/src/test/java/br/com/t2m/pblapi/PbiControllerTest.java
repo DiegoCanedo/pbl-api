@@ -1,4 +1,4 @@
-//package br.com.t2m.pblapi;
+package br.com.t2m.pblapi;
 //
 //import static org.assertj.core.api.Assertions.assertThat;
 //import static org.junit.jupiter.api.Assertions.assertEquals;

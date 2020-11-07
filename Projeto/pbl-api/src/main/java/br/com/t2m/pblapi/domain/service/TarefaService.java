@@ -1,8 +1,6 @@
 package br.com.t2m.pblapi.domain.service;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -11,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.t2m.pblapi.config.Constants;
+import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.Atividade;
 import br.com.t2m.pblapi.domain.model.Tarefa;
+import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
 import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
 import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
@@ -28,6 +29,9 @@ public class TarefaService {
 	
 	@Autowired
 	private IAtividadeRepository atividadeRepository;
+	
+	@Autowired
+	private IAlunoRepository alunoRepository;
 	
 	@Transactional
 	public TarefaDTO postTarefa(Long atividadeId, PostTarefaDTO novaTarefa){		
@@ -79,4 +83,23 @@ public class TarefaService {
 	
 	
     
+	@Transactional
+	public TarefaDTO addAlunoIntoTarefa(Long idTarefa, AlunoDTO alunoDTO) {
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
+		Optional<Aluno> aluno = alunoRepository.findById(alunoDTO.getId()); //verificar existencia do aluno
+		
+		tarefa.get().getAlunos().add(aluno.get());
+		tarefaRepository.save(tarefa.get());
+		return new TarefaDTO(tarefa.get());
+	}
+	
+	@Transactional
+	public TarefaDTO removeAlunoFromTarefa(Long idTarefa, Long idAluno) {
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
+		Optional<Aluno> aluno = alunoRepository.findById(idAluno); //verificar existencia do aluno
+		
+		tarefa.get().getAlunos().remove(aluno.get()); //verificar se o método "remove" esta sendo usado de forma correta
+		tarefaRepository.save(tarefa.get());
+		return new TarefaDTO(tarefa.get());
+	}
 }

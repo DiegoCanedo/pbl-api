@@ -67,7 +67,7 @@ public class Atividade {
 	
 	public void setTarefas(List<Tarefa> tarefas) {
 		this.tarefas = tarefas;
-	}	
+	}
 	
 	public Long getId() {
 		return id;

@@ -28,9 +28,9 @@ public class Tarefa implements Serializable {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tarefa")
-	private Long id;
-	
-	@NotNull	
+	private Long id;	
+
+	@NotNull
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Instant dataCriacao;
 	
