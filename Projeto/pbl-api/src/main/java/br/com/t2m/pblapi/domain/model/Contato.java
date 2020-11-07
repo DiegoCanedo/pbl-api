@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -39,21 +41,8 @@ public class Contato implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_contato")
-	private TipoContato tipoContato  ;
-	
-	public Contato(Contato contato) {
-		this.idContato = contato.getIdContato();
-		this.nomeContato = contato.getNomeContato();
-		this.email = contato.getContato();
-		this.contato = contato.getContato();
-		this.tipoContato = contato.getTipoContato();
-	}
-	
-	public Contato() {
+	private TipoContato tipoContato;
 		
-	}
-
-	
 	public long getIdContato() {
 		return idContato;
 	}
@@ -115,8 +104,5 @@ public class Contato implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-
 		
 }
