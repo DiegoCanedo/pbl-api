@@ -16,7 +16,7 @@ import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 
 @RestController
-@RequestMapping(value = "/atividade/{id}/tarefas")
+@RequestMapping(value = "/atividades/{id}/tarefas")
 public class TarefaController {	
 	
 	@Autowired
@@ -35,8 +35,9 @@ public class TarefaController {
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
-	@DeleteMapping("/id")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteTarefa(@PathVariable Long id){
+		tarefaService.deleteTarefa(id);
 		return ResponseEntity.ok().body("Tarefa " + id.toString() + " excluido com sucesso.");
 	}
 

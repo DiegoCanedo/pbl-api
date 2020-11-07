@@ -30,8 +30,7 @@ public class Tarefa implements Serializable {
 	@Column(name = "id_tarefa")
 	private Long id;
 	
-	@NotNull
-	@Temporal(TemporalType.DATE)
+	@NotNull	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Instant dataCriacao;
 	
