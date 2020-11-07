@@ -64,13 +64,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	            "/pbl-api/auth/**",
 	            
 	            // -- desenvolvimento
-	           // "/aluno/**",
-	            //"/professor/**",
-	    		//"/temaPbl/**",
-	    		//"/pbl/**",
-	    		//"/disciplina/**",
-	    		//"/atividades/**",
-	    };
+	            "/aluno/**",
+	            "/professor/**",
+	            "/empresa/**",
+	    		"/temaPbl/**",
+	    		"/pbl/**",
+	    		"/disciplina/**",
+	    		"/atividades/**",
+	 };
+
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{

@@ -19,7 +19,7 @@ import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import io.swagger.annotations.Api;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/aluno")
 @Api(description = "rest api para aluno", tags= {"Aluno"})
 public class AlunoController {
@@ -28,6 +28,7 @@ public class AlunoController {
 	AlunoService alunoService;
 
 	@GetMapping
+
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<Iterable<AlunoDTO>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());

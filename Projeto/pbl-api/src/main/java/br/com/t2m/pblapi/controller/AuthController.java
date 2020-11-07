@@ -23,9 +23,11 @@ import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.config.jwt.JwtUtils;
 import br.com.t2m.pblapi.config.services.PblUserDetails;
 import br.com.t2m.pblapi.controller.vm.AlunoVM;
+import br.com.t2m.pblapi.controller.vm.EmpresaVM;
 import br.com.t2m.pblapi.controller.vm.ProfessorVM;
 import br.com.t2m.pblapi.domain.model.Usuario;
 import br.com.t2m.pblapi.domain.service.AlunoService;
+import br.com.t2m.pblapi.domain.service.EmpresaService;
 import br.com.t2m.pblapi.domain.service.ProfessorService;
 import br.com.t2m.pblapi.domain.service.dto.JwtResponseDTO;
 import br.com.t2m.pblapi.domain.service.dto.LoginDTO;
@@ -44,6 +46,9 @@ public class AuthController {
 	
 	@Autowired
 	ProfessorService professorService;
+	
+	@Autowired
+	EmpresaService empresaService;
 
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginDTO loginRequest) {
@@ -75,6 +80,14 @@ public class AuthController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<MensagemDTO> registrarProfessor(@Valid @RequestBody ProfessorVM professor) {
 		professorService.insert(professor, professor.getSenha());
+
+		return ResponseEntity.ok(new MensagemDTO(Constants.MENSAGEM_USUARIO_REGISTRADO_SUCESSO));
+	}
+	
+	@PostMapping("/empresa/registrar")
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<MensagemDTO> registrarEmpresa(@Valid @RequestBody EmpresaVM empresa) {
+		empresaService.insert(empresa, empresa.getSenha());
 
 		return ResponseEntity.ok(new MensagemDTO(Constants.MENSAGEM_USUARIO_REGISTRADO_SUCESSO));
 	}
