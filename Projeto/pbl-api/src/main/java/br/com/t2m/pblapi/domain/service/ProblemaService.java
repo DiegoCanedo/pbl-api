@@ -34,28 +34,31 @@ public class ProblemaService {
 	public Problema getById(Long id) {
 		Optional<Problema> opt = problemaRepository.findByIdProblema(id).map(Problema::new);
 
-		if (opt.isPresent())
+		if (!opt.isPresent())
 			throw new ResourceNotFoundException(Constants.PROBLEMA_NAO_ENCONTRADO, id.toString());
 
 		return opt.get();
 	}
 
+	@Transactional
 	public Problema insert(Problema problema) {
 
 		return problemaRepository.save(problema);
 
 	}
 	
-	public Problema update(Problema problema, Long id) {
-		Optional<Problema> opt = problemaRepository.findById(id);
+	@Transactional
+	public Problema update(Problema problema) {
+		Optional<Problema> opt = problemaRepository.findById(problema.getIdProblema());
 		
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(prob -> {
-			problema.setIdProblema(id);
+			problema.setIdProblema(problema.getIdProblema());
 			problema.setAtivo(problema.isAtivo());
 			return problema;
 		}).map(Problema::new).get();
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		Optional<Problema> opt = problemaRepository.findByIdProblema(id);		
 		if (!opt.isPresent())
