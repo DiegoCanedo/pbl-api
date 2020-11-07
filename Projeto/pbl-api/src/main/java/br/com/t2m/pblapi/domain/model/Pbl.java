@@ -15,7 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,19 +22,16 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 //TODO Precisa definir relacionamento com empresa
 
 @Entity
 @Table(name = "pbl")
-@SequenceGenerator(name = "pbl_id_seq", sequenceName = "pbl_id_seq", allocationSize = 1)
 public class Pbl {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pbl_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_pbl")
 	private Long idPbl;
 

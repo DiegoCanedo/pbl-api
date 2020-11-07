@@ -106,6 +106,8 @@ public class AtividadeService {
 		pbls.stream().forEach(p -> {
 			AtividadePbl atividadePbl = new AtividadePbl();
 			atividadePbl.setPbl(p);
+			atividade.getAtividadePbls().stream()
+			.forEach(atividadePBL -> atividadePbl.setDataEntrega(atividadePBL.getDataEntrega()));
 			atividadePbls.add(atividadePbl);
 		});
 
