@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.t2m.pblapi.config.Constants;
@@ -37,7 +36,7 @@ public class ProfessorDTO implements Serializable {
 	private boolean excluido;
 	
 	private Instant createdDate = new Date().toInstant();
-	@NotNull
+	
 	private Disciplina disciplina;
 	
 	private Set<Perfil> perfis;
