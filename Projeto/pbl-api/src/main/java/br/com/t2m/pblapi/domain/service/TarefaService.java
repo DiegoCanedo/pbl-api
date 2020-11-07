@@ -98,15 +98,37 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}
 		
+		if(tarefa.get().isConcluido()) {
+			throw new RuntimeException("Tarefas concluídas não podem ser excluídas.");
+		}
+		
 		tarefaRepository.deleteById(idTarefa); 
 	}
 	
 	
     
 	@Transactional
-	public TarefaDTO addAlunoIntoTarefa(Long idTarefa, AlunoDTO alunoDTO) {
-		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
-		Optional<Aluno> aluno = alunoRepository.findById(alunoDTO.getId()); //verificar existencia do aluno
+	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, AlunoDTO alunoDTO) {
+		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
+		Optional<Aluno> aluno = alunoRepository.findById(alunoDTO.getId());
+		
+
+		if(atividade.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
+		}
+		
+		if(tarefa.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
+		}
+		
+		if(aluno.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, alunoDTO.getId().toString());
+		}
+		
+		if(tarefa.get().isConcluido()) {
+			throw new RuntimeException("Tarefas concluídas não podem receber novos alunos.");
+		}
 		
 		tarefa.get().getAlunos().add(aluno.get());
 		tarefaRepository.save(tarefa.get());
@@ -115,8 +137,21 @@ public class TarefaService {
 	
 	@Transactional
 	public TarefaDTO removeAlunoFromTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
-		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
-		Optional<Aluno> aluno = alunoRepository.findById(idAluno); //verificar existencia do aluno
+		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
+		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
+		
+		if(atividade.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
+		}
+		
+		if(tarefa.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
+		}
+		
+		if(aluno.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, idAluno.toString());
+		}
 		
 		tarefa.get().getAlunos().remove(aluno.get()); //verificar se o método "remove" esta sendo usado de forma correta
 		tarefaRepository.save(tarefa.get());

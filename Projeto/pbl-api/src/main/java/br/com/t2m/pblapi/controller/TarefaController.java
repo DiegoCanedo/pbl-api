@@ -49,7 +49,7 @@ public class TarefaController {
 	public ResponseEntity<TarefaDTO> addAlunoIntoTarefa(
 			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @Valid @RequestBody AlunoDTO alunoDTO) {
 		
-		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idTarefa, alunoDTO);
+		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idAtividade, idTarefa, alunoDTO);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
