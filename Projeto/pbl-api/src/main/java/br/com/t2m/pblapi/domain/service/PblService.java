@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +39,9 @@ public class PblService {
 
 	@Autowired
 	AtividadeService atividadeService;
+	
+	@Autowired
+	private MailService notificationService;
 
 	@Transactional(readOnly = true)
 	public List<Pbl> getAll() {
@@ -43,10 +49,7 @@ public class PblService {
 		return pblRepository.findAll();
 	}
 
-//	@Transactional(readOnly = true)
-//	public Set<Pbl> getByDisciplina(Long idDisciplina) {
-//		return pblRepository.findAllByTemaPbl_Disciplinas_Id(idDisciplina);
-//	}
+
 
 	public Pbl insert(Pbl pbl) {
 
@@ -63,11 +66,21 @@ public class PblService {
 			throw new ResourceNotFoundException(Constants.DISCIPLINA_NAO_ENCONTRADA,
 					pbl.getPblTemaDisciplina().getDisciplina().getId().toString());
 		}
-
+		
 		Pbl pblRetorno = pblRepository.save(pbl);
 
+		System.out.println(pblRetorno);
 		atividadeService.bindPblToAtividadePBl(pblRetorno);
 
+		try {
+			notificationService.sendEmailPbl(pbl);
+		} catch (MailException e) {
+			e.printStackTrace();
+			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+			
+		}
 		return pblRetorno;
 
 	}

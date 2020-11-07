@@ -1,5 +1,7 @@
 package br.com.t2m.pblapi.controller;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,19 +19,14 @@ public class MailController {
 	/**
 	 * 
 	 * @return
+	 * @throws MessagingException 
 	 */
 	@RequestMapping("/send-mail")
-	public String send() {
+	public String send() throws MessagingException {
 
-		/*
-		 * Creating a User with the help of User class that we have declared and setting
-		 * Email address of the sender.
-		 */
-		/*
-		 * Here we will call sendEmail() for Sending mail to the sender.
-		 */
+	
 		try {
-			notificationService.sendEmail();
+			//notificationService.sendEmailPbl();
 		} catch (MailException mailException) {
 			System.out.println(mailException);
 		}
