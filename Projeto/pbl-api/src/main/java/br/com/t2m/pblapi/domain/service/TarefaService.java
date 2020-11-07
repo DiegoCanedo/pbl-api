@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.service;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -36,7 +37,7 @@ public class TarefaService {
 	@Transactional
 	public TarefaDTO postTarefa(Long idAtividade, PostTarefaDTO novaTarefa){		
 		
-		Calendar c = Calendar.getInstance();
+		
 		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);		
 		
 		if(atividade.isEmpty()) {
@@ -48,7 +49,7 @@ public class TarefaService {
 		}			
 		
 		Tarefa tarefa = new Tarefa();		
-		tarefa.setDataCriacao(c.toInstant());
+		tarefa.setDataCriacao(new Date());
 		tarefa.setDescricao(novaTarefa.getDescricao());		
 		tarefa.setDataConclusao(novaTarefa.getDataConclusao());
 		tarefa.setConcluido(false);

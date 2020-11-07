@@ -32,7 +32,7 @@ public class Tarefa implements Serializable {
 
 	@NotNull
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Instant dataCriacao;
+	private Date dataCriacao;
 	
 	@NotNull
 	@Column(name = "descricao")
@@ -57,7 +57,7 @@ public class Tarefa implements Serializable {
 		
 	}	
 
-	public Tarefa(Long id, @NotNull Instant dataCriacao, @NotNull String descricao, @NotNull Date dataConclusao,
+	public Tarefa(Long id, @NotNull Date dataCriacao, @NotNull String descricao, @NotNull Date dataConclusao,
 			@NotNull boolean concluido, List<Aluno> alunos) {
 		super();
 		this.id = id;
@@ -76,7 +76,7 @@ public class Tarefa implements Serializable {
 		this.id = id;
 	}
 
-	public Instant getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}	
 
@@ -96,7 +96,7 @@ public class Tarefa implements Serializable {
 		return concluido;
 	}
 
-	public void setDataCriacao(Instant dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 

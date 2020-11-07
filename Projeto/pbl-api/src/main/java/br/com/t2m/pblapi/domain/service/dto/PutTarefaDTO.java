@@ -5,6 +5,8 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.t2m.pblapi.domain.model.Tarefa;
+
 public class PutTarefaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -16,7 +18,7 @@ public class PutTarefaDTO implements Serializable {
 	private boolean concluido;
 	
 	
-	public PutTarefaDTO(TarefaDTO entidade) {
+	public PutTarefaDTO(Tarefa entidade) {
 		super();
 		this.id = entidade.getId();
 		this.descricao = entidade.getDescricao();
