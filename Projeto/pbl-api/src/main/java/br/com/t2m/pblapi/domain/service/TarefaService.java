@@ -1,6 +1,5 @@
 package br.com.t2m.pblapi.domain.service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -11,12 +10,11 @@ import org.springframework.stereotype.Service;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Aluno;
-import br.com.t2m.pblapi.domain.model.Atividade;
+import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.model.Tarefa;
 import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
-import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
+import br.com.t2m.pblapi.domain.repository.IAtividadePblRepository;
 import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
@@ -29,7 +27,7 @@ public class TarefaService {
 	private ITarefaRepository tarefaRepository;
 	
 	@Autowired
-	private IAtividadeRepository atividadeRepository;
+	private IAtividadePblRepository atividadeRepository;
 	
 	@Autowired
 	private IAlunoRepository alunoRepository;
@@ -38,15 +36,15 @@ public class TarefaService {
 	public TarefaDTO postTarefa(Long idAtividade, PostTarefaDTO novaTarefa){		
 		
 		
-		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);		
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		
 		if(atividade.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
-		}		
+		}
 		
-		if(atividade.get().getDataConclusao().compareTo(novaTarefa.getDataConclusao()) < 0) {		
+		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
 			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-		}			
+		}
 		
 		Tarefa tarefa = new Tarefa();		
 		tarefa.setDataCriacao(new Date());
@@ -66,7 +64,7 @@ public class TarefaService {
 	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) {
 		
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
-		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);		
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);		
 		
 		if(atividade.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
@@ -76,7 +74,7 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}
 		
-		if(atividade.get().getDataConclusao().compareTo(novosDados.getDataConclusao()) < 0) {
+		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
 			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
 		}
 		
@@ -92,7 +90,7 @@ public class TarefaService {
 	
 	@Transactional
 	public void deleteTarefa(Long idAtividade, Long idTarefa) {
-		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		
 		if(atividade.isEmpty()) {
@@ -114,7 +112,7 @@ public class TarefaService {
     
 	@Transactional
 	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
-		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
 		
@@ -142,7 +140,7 @@ public class TarefaService {
 	
 	@Transactional
 	public TarefaDTO removeAlunoFromTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
-		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
 		
