@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.model.Problema;
 import br.com.t2m.pblapi.domain.service.ProblemaService;
+import io.swagger.annotations.Api;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/problema")
+@Api(description = "rest api para problema", tags= {"Problema"})
 public class ProblemaController {
 
 	@Autowired
