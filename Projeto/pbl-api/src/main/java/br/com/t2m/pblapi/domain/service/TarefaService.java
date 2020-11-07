@@ -44,7 +44,7 @@ public class TarefaService {
 		tarefa.setConcluido(false);
 		
 		tarefa = tarefaRepository.save(tarefa);
-		atividade.get().addTarefa(tarefa);
+		atividade.get().getTarefas().add(tarefa);
 		atividadeRepository.save(atividade.get());
 		
 		return new TarefaDTO(tarefa);		
@@ -65,8 +65,23 @@ public class TarefaService {
 		tarefaRepository.deleteById(idTarefa); //verificar existencia da tarefa
 	}
     
-//	public TarefaDTO addAlunoToTarefa(Long idTarefa, AlunoDTO alunoDTO) {
-//		Tarefa tarefa = tarefaRepository.getOne(idTarefa);
-//		Aluno aluno = alunoRepository.getOne();
-//	}
+	@Transactional
+	public TarefaDTO addAlunoIntoTarefa(Long idTarefa, AlunoDTO alunoDTO) {
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
+		Optional<Aluno> aluno = alunoRepository.findById(alunoDTO.getId()); //verificar existencia do aluno
+		
+		tarefa.get().getAlunos().add(aluno.get());
+		tarefaRepository.save(tarefa.get());
+		return new TarefaDTO(tarefa.get());
+	}
+	
+	@Transactional
+	public TarefaDTO removeAlunoFromTarefa(Long idTarefa, Long idAluno) {
+		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa); //verificar existencia da tarefa
+		Optional<Aluno> aluno = alunoRepository.findById(idAluno); //verificar existencia do aluno
+		
+		tarefa.get().getAlunos().remove(aluno.get()); //verificar se o método "remove" esta sendo usado de forma correta
+		tarefaRepository.save(tarefa.get());
+		return new TarefaDTO(tarefa.get());
+	}
 }

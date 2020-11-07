@@ -20,7 +20,7 @@ import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 
 @RestController
-@RequestMapping(value = "/atividade/{id}/tarefas")
+@RequestMapping(value = "/atividades/{id}/tarefas")
 public class TarefaController {	
 	
 	@Autowired
@@ -44,8 +44,15 @@ public class TarefaController {
 		return ResponseEntity.ok().body("Tarefa " + id.toString() + " excluido com sucesso.");
 	}
 
-//	@PatchMapping("/{id}")
-//	public ResponseEntity<TarefaDTO> addAlunoToTarefa(@PathVariable Long idTarefa, @Valid @RequestBody AlunoDTO alunoDTO) {
-//		TarefaDTO tarefa = service.addAlunoToTarefa(idTarefa, alunoDTO);
-//	}
+	@PatchMapping("/{idTarefa}")
+	public ResponseEntity<TarefaDTO> addAlunoIntoTarefa(@PathVariable Long idTarefa, @Valid @RequestBody AlunoDTO alunoDTO) {
+		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idTarefa, alunoDTO);
+		return ResponseEntity.ok().body(tarefa);
+	}
+	
+	@PatchMapping("/{idTarefa}/{idAluno}")
+	public ResponseEntity<TarefaDTO> removeAlunoFromTarefa(@PathVariable Long idTarefa, @PathVariable Long idAluno) {
+		TarefaDTO tarefa = tarefaService.removeAlunoFromTarefa(idTarefa, idAluno);
+		return ResponseEntity.ok().body(tarefa);
+	}
 }
