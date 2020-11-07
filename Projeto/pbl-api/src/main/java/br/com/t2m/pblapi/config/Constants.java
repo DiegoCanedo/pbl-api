@@ -19,11 +19,13 @@ public final class Constants {
 	public static final String TAREFA_NAO_ENCONTRADA = "Não existe tarefa com id: ";
 	public static final String EMPRESA_NÃO_ENCONTRADA = "Não existe empresa com o id";
 	public static final String PROBLEMA_NAO_ENCONTRADO = "Não existe problema com o id";
+	public static final String CONTATO_JA_EXISTE = "Já existe um contato cadastrado.";
+	public static final String CONTATO_NAO_ENCONTRADO = "Não existe contato com o id";
 	public static final String PROBLEMA_JA_EXISTE = "Já existe um problema cadastrado com essa descrição.";
 	public static final String PROBLEMA_NAO_PODE_SER_EXCLUIDO = "O problema selecionado não pode ser excluído.";
 	public static final String PROBLEMA_VINCULADO = "Este problema não pode ser excluído pois já está vinculado a um PBL.";
 	public static final String ALUNO_NAO_ENCONTRADO = "Não existe aluno com id: ;";
-
+	public static final String CONTATO_VINCULADO = "Contato não pode ser excluído";
 	private Constants() {
 	}
 }
