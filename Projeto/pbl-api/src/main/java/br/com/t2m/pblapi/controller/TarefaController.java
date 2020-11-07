@@ -20,7 +20,7 @@ import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 
 @RestController
-@RequestMapping(value = "/atividades/{id}/tarefas")
+@RequestMapping(value = "/atividades/{idAtividade}/tarefas")
 public class TarefaController {	
 	
 	@Autowired
@@ -28,8 +28,8 @@ public class TarefaController {
 	
 	@PostMapping
 	public ResponseEntity<TarefaDTO> postTarefa(
-			@PathVariable("atividadeId") Long atividadeId, @RequestBody PostTarefaDTO novaTarefa){		
-		TarefaDTO tarefa = tarefaService.postTarefa(atividadeId, novaTarefa);
+			@PathVariable Long idAtividade, @RequestBody PostTarefaDTO novaTarefa){		
+		TarefaDTO tarefa = tarefaService.postTarefa(idAtividade, novaTarefa);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
