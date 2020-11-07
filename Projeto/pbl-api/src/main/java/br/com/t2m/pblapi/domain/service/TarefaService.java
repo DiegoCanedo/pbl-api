@@ -63,9 +63,9 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public TarefaDTO putTarefa(Long idAtividade, PutTarefaDTO novosDados) {
+	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) {
 		
-		Optional <Tarefa> tarefa = tarefaRepository.findById(novosDados.getId());		
+		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
 		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);		
 		
 		if(atividade.isEmpty()) {
@@ -73,16 +73,20 @@ public class TarefaService {
 		}		
 		
 		if(tarefa.isEmpty()) {
-			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, novosDados.getId().toString());
+			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}
 		
 		if(atividade.get().getDataConclusao().compareTo(novosDados.getDataConclusao()) < 0) {
 			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
 		}
 		
+		if(tarefa.get().isConcluido()) {
+			throw new RuntimeException("Tarefas concluídas não podem receber alterações.");
+		}
+		
 		tarefa.get().setDescricao(novosDados.getDescricao());
-		tarefa.get().setDataConclusao(novosDados.getDataConclusao()); 
-		tarefa.get().setConcluido(novosDados.isConcluido());		
+		tarefa.get().setDataConclusao(novosDados.getDataConclusao());
+		tarefa.get().setConcluido(novosDados.isConcluido());
 		return new TarefaDTO(tarefaRepository.save(tarefa.get()));
 	}
 	
@@ -109,10 +113,10 @@ public class TarefaService {
 	
     
 	@Transactional
-	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, AlunoDTO alunoDTO) {
+	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
 		Optional<Atividade> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
-		Optional<Aluno> aluno = alunoRepository.findById(alunoDTO.getId());
+		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
 		
 
 		if(atividade.isEmpty()) {
@@ -124,7 +128,7 @@ public class TarefaService {
 		}
 		
 		if(aluno.isEmpty()) {
-			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, alunoDTO.getId().toString());
+			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, idAluno.toString());
 		}
 		
 		if(tarefa.get().isConcluido()) {
@@ -158,6 +162,4 @@ public class TarefaService {
 		tarefaRepository.save(tarefa.get());
 		return new TarefaDTO(tarefa.get());
 	}
-	
-	
 }

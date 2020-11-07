@@ -33,9 +33,12 @@ public class TarefaController {
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
-	@PutMapping
-	public ResponseEntity<TarefaDTO> alterarTarefa(@PathVariable Long idAtividade, @RequestBody PutTarefaDTO novosDados){
-		TarefaDTO tarefa = tarefaService.putTarefa(idAtividade, novosDados);
+	@PutMapping("/{idTarefa}")
+	public ResponseEntity<TarefaDTO> alterarTarefa(
+			@PathVariable Long idAtividade, 
+			@PathVariable Long idTarefa, 
+			@RequestBody PutTarefaDTO novosDados){
+		TarefaDTO tarefa = tarefaService.putTarefa(idAtividade, idTarefa, novosDados);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
@@ -45,15 +48,15 @@ public class TarefaController {
 		return ResponseEntity.ok().body("Tarefa " + idTarefa.toString() + " excluido com sucesso.");
 	}
 
-	@PatchMapping("/{idTarefa}")
+	@PatchMapping("/{idTarefa}/add/{idAluno}")
 	public ResponseEntity<TarefaDTO> addAlunoIntoTarefa(
-			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @Valid @RequestBody AlunoDTO alunoDTO) {
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @PathVariable Long idAluno) {
 		
-		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idAtividade, idTarefa, alunoDTO);
+		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idAtividade, idTarefa, idAluno);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
-	@PatchMapping("/{idTarefa}/aluno/{idAluno}")
+	@PatchMapping("/{idTarefa}/remove/{idAluno}")
 	public ResponseEntity<TarefaDTO> removeAlunoFromTarefa(
 			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @PathVariable Long idAluno) {
 		
