@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +28,7 @@ public class AlunoController {
 	AlunoService alunoService;
 
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<Iterable<AlunoDTO>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());
 	}
@@ -37,11 +39,13 @@ public class AlunoController {
 	}
 
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR,ROLE_ALUNO')")
 	public ResponseEntity<AlunoDTO> alterar(@Valid @RequestBody AlunoDTO aluno, @PathVariable Long id){
 		return ResponseEntity.ok().body(alunoService.update(aluno));
 	}
 	
 	@DeleteMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<String> deletar(@PathVariable Long id){
 		alunoService.delete(id);
 		return ResponseEntity.ok().body("Usuario " + id.toString() + " excluido com sucesso.");
