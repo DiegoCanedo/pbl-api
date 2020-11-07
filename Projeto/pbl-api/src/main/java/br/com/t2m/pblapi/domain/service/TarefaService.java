@@ -8,10 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.Atividade;
 import br.com.t2m.pblapi.domain.model.Tarefa;
+import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
 import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
 import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
@@ -24,6 +27,9 @@ public class TarefaService {
 	
 	@Autowired
 	private IAtividadeRepository atividadeRepository;
+	
+	@Autowired
+	private IAlunoRepository alunoRepository;
 	
 	@Transactional
 	public TarefaDTO postTarefa(Long atividadeId, PostTarefaDTO novaTarefa){
@@ -59,4 +65,8 @@ public class TarefaService {
 		tarefaRepository.deleteById(idTarefa); //verificar existencia da tarefa
 	}
     
+//	public TarefaDTO addAlunoToTarefa(Long idTarefa, AlunoDTO alunoDTO) {
+//		Tarefa tarefa = tarefaRepository.getOne(idTarefa);
+//		Aluno aluno = alunoRepository.getOne();
+//	}
 }
