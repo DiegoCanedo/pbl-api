@@ -39,13 +39,18 @@ public class Problema implements Serializable {
 	private Date dataRegistro;
 	
 	@NotBlank
-	private String prioridade;	
+	private String prioridade;
+	
+	private boolean ativo;
+	
+	private boolean excluído;
 	
 	public Problema(Problema problema) {
 		this.idProblema = problema.getIdProblema();
 		this.descricao = problema.getDescricao();
 		this.dataRegistro = problema.getDataRegistro();
 		this.prioridade = problema.getPrioridade();
+		this.ativo = problema.isAtivo();
 	}
 	
 	public Problema() {
@@ -82,6 +87,22 @@ public class Problema implements Serializable {
 
 	public void setPrioridade(String prioridade) {
 		this.prioridade = prioridade;
+	}	
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public boolean isExcluído() {
+		return excluído;
+	}
+
+	public void setExcluído(boolean excluído) {
+		this.excluído = excluído;
 	}
 
 	@Override
@@ -107,16 +128,6 @@ public class Problema implements Serializable {
 		} else if (!idProblema.equals(other.idProblema))
 			return false;
 		return true;
-	}
-
-	public void setAtivo(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setExcluido(boolean b) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }

@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Problema;
+import br.com.t2m.pblapi.domain.repository.IPblRepository;
 import br.com.t2m.pblapi.domain.repository.IProblemaRepository;
+import br.com.t2m.pblapi.exception.ResourceAlreadyBounded;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
 @Service
@@ -19,6 +21,9 @@ public class ProblemaService {
 	
 	@Autowired
 	IProblemaRepository problemaRepository;
+	
+	@Autowired
+	IPblRepository pblRepository;
 	
 	@Transactional(readOnly = true)
 	public List<Problema> getAll() {
@@ -40,19 +45,26 @@ public class ProblemaService {
 		return problemaRepository.save(problema);
 
 	}
+	
+	public Problema update(Problema problema, Long id) {
+		Optional<Problema> opt = problemaRepository.findById(id);
+		
+		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(prob -> {
+			problema.setIdProblema(id);
+			problema.setAtivo(problema.isAtivo());
+			return problema;
+		}).map(Problema::new).get();
+	}
 
 	public void delete(Long id) {
-		Optional<Problema> opt = problemaRepository.findByIdProblema(id);
-
-		if (opt.isEmpty())
+		Optional<Problema> opt = problemaRepository.findByIdProblema(id);		
+		if (!opt.isPresent())
 			throw new ResourceNotFoundException(Constants.PROBLEMA_NAO_ENCONTRADO, id.toString());
+		
+		if (pblRepository.existsByProblema(opt.get()))
+			throw new ResourceAlreadyBounded(Constants.PROBLEMA_VINCULADO);
 
-		
-		
-		Problema problema = opt.get();
-		//problema.setExcluido(true);
-		//problema.setAtivo(false);
-		problemaRepository.save(problema);
+		problemaRepository.delete(opt.get());
 	}
 
 }
