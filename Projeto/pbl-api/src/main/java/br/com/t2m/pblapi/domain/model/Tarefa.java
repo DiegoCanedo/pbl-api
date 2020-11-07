@@ -31,7 +31,6 @@ public class Tarefa implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Instant dataCriacao;
 	
