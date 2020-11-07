@@ -72,7 +72,12 @@ public class Pbl {
 	@JoinColumn(name = "id_pbl")
 	@MapsId
 	private PblTemaDisciplina pblTemaDisciplina;
-
+	
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "id_problema")
+	private Problema problemaEmpresa;
+	
 	public Long getIdPbl() {
 		return idPbl;
 	}
@@ -143,6 +148,14 @@ public class Pbl {
 
 	public void setPblTemaDisciplina(PblTemaDisciplina pblTemaDisciplina) {
 		this.pblTemaDisciplina = pblTemaDisciplina;
+	}
+
+	public Problema getProblemaEmpresa() {
+		return problemaEmpresa;
+	}
+
+	public void setProblemaEmpresa(Problema problemaEmpresa) {
+		this.problemaEmpresa = problemaEmpresa;
 	}
 
 	@Override
