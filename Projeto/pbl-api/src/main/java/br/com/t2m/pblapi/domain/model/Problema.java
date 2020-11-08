@@ -38,7 +38,6 @@ public class Problema implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataRegistro;
 	
-	@NotBlank
 	private Integer prioridade;
 	
 	private boolean ativo;

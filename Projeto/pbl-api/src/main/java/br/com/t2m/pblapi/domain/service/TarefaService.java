@@ -42,9 +42,9 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}
 		
-		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
-			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-		}
+//		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
+//			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+//		}
 		
 		Tarefa tarefa = new Tarefa();		
 		tarefa.setDataCriacao(new Date());
@@ -74,9 +74,9 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}
 		
-		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
-			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-		}
+//		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
+//			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+//		}
 		
 		if(tarefa.get().isConcluido()) {
 			throw new RuntimeException("Tarefas concluídas não podem receber alterações.");
