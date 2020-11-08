@@ -37,6 +37,9 @@ public class Contato implements Serializable{
 	@NotBlank
 	private String contato;
 	
+	@Column(name = "id_usuario")
+	private Long idUsuario;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_contato")
 	private TipoContato tipoContato;
@@ -47,6 +50,14 @@ public class Contato implements Serializable{
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public String getNomeContato() {
