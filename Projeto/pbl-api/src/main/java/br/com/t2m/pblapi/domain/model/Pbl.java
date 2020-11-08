@@ -23,8 +23,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 //TODO Precisa definir relacionamento com empresa
@@ -35,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class Pbl {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pbl_id_seq")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "pbl_id_seq")
 	@Column(name = "id_pbl")
 	private Long idPbl;
 
@@ -49,12 +47,12 @@ public class Pbl {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataInicio;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataConclusao;
 
 	@NotNull
@@ -73,7 +71,8 @@ public class Pbl {
 	@MapsId
 	private PblTemaDisciplina pblTemaDisciplina;
 	
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_problema")
 	private Problema problemaEmpresa;
 	
@@ -181,7 +180,4 @@ public class Pbl {
 			return false;
 		return true;
 	}
-
-	
-
 }

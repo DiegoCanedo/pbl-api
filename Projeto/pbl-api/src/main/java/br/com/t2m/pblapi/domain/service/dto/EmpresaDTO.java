@@ -1,15 +1,21 @@
 package br.com.t2m.pblapi.domain.service.dto;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import br.com.t2m.pblapi.config.Constants;
+import br.com.t2m.pblapi.domain.model.Contato;
 import br.com.t2m.pblapi.domain.model.Empresa;
 import br.com.t2m.pblapi.domain.model.Perfil;
+import br.com.t2m.pblapi.domain.model.Problema;
 
 
 public class EmpresaDTO implements Serializable {
@@ -41,6 +47,10 @@ public class EmpresaDTO implements Serializable {
 	private boolean excluido;
 	
 	private Set<Perfil> perfis;
+	
+	private List<Problema> problema;
+	
+	private List<Contato> contato ;
 
 	public EmpresaDTO(Empresa empresa) {
 		this.id = empresa.getId();
@@ -50,8 +60,11 @@ public class EmpresaDTO implements Serializable {
 		this.endereco = empresa.getEndereco();
 		this.urlLog = empresa.getUrlLog();
 		this.perfis = empresa.getPerfil();
+		this.problema = empresa.getProblema();
+		this.contato = empresa.getContato();
 		this.ativo = empresa.isAtivo();
 		this.excluido = empresa.isExcluido();
+
 	}
 	
 	public EmpresaDTO() {
@@ -130,6 +143,23 @@ public class EmpresaDTO implements Serializable {
 		this.perfis = perfis;
 	}
 
+	public List<Problema> getProblema() {
+		return problema;
+	}
+
+	public void setProblema(List<Problema> problema) {
+		this.problema = problema;
+	}
+
+	public List<Contato> getContato() {
+		return contato;
+	}
+
+	public void setContato(List<Contato> contato) {
+		this.contato = contato;
+	}
+
+	
 
 	
 	

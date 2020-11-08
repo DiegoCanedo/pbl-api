@@ -1,13 +1,16 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,9 +24,9 @@ public class AtividadePbl {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+	private Long id;	
+
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataEntrega;
 	
@@ -38,12 +41,17 @@ public class AtividadePbl {
 	@JoinColumn(name = "id_aluno")
 	private Aluno aluno;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_atividade")
+	private List<Tarefa> tarefas;
+	
 	public AtividadePbl(AtividadePbl atividadepbl) {
 		this.id = atividadepbl.getId();
 		this.dataEntrega = atividadepbl.getDataEntrega();
 		this.nota = atividadepbl.getNota();
 		this.pbl = atividadepbl.getPbl();
 		this.aluno = atividadepbl.getAluno();
+		this.tarefas = atividadepbl.getTarefas();
 	}
 	
 	public AtividadePbl() {
@@ -89,7 +97,12 @@ public class AtividadePbl {
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
-	
-	
-	
+
+	public List<Tarefa> getTarefas() {
+		return tarefas;
+	}
+
+	public void setTarefas(List<Tarefa> tarefas) {
+		this.tarefas = tarefas;
+	}
 }
