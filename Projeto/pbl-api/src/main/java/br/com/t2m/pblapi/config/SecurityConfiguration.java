@@ -67,6 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	            "/aluno/**",
 	            "/professor/**",
 	            "/empresa/**",
+	            "/contato/**",
 	            "/tipoContato/**",
 	    		"/temaPbl/**",
 	    		"/pbl/**",
