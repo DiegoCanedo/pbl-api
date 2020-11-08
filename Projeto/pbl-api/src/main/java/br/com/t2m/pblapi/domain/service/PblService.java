@@ -1,8 +1,6 @@
 package br.com.t2m.pblapi.domain.service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -13,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Pbl;
-import br.com.t2m.pblapi.domain.model.PblTemaDisciplina;
 import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblRepository;
 import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
