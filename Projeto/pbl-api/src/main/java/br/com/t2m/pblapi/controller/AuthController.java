@@ -62,6 +62,7 @@ public class AuthController {
 		PblUserDetails userDetails = (PblUserDetails) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		
 
 		return ResponseEntity.ok(
 				new JwtResponseDTO(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));

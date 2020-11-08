@@ -71,9 +71,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    		"/pbl/**",
 	    		"/disciplina/**",
 	    		"/atividades/**",
+
 	    		"/problema/**",
 	    };
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.cors().and().csrf().disable()
