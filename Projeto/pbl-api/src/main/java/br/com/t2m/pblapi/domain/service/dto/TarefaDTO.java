@@ -1,6 +1,5 @@
 package br.com.t2m.pblapi.domain.service.dto;
 
-import java.time.Instant;
 import java.util.Date;
 
 import br.com.t2m.pblapi.domain.model.Tarefa;

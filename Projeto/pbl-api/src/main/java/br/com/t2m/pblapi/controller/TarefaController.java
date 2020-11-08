@@ -15,7 +15,6 @@ import br.com.t2m.pblapi.domain.service.TarefaService;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
-import br.com.t2m.pblapi.exception.TaskRestrictionException;
 
 @RestController
 @RequestMapping(value = "/atividades/{idAtividade}/tarefas")
