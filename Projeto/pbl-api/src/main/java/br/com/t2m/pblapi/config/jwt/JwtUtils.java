@@ -29,7 +29,7 @@ public class JwtUtils {
 		PblUserDetails usuarioPrincipal = (PblUserDetails) authentication.getPrincipal();
 
 		return Jwts.builder().setSubject(usuarioPrincipal.getEmail()).setIssuedAt(new Date())
-				.setExpiration(new Date(jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+				.setExpiration(new Date(System.currentTimeMillis()+jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public String getUserNameFromJwtToken(String token) {
@@ -53,5 +53,9 @@ public class JwtUtils {
 		}
 
 		return false;
+	}
+
+	public String getJwtSecret() {
+		return jwtSecret;
 	}
 }

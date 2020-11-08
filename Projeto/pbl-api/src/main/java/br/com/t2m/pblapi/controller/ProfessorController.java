@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import io.swagger.annotations.Api;
 @CrossOrigin
 @RequestMapping("/professor")
 @Api(description = "rest api para professor", tags= {"Professor"})
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 public class ProfessorController {
 	@Autowired
 	ProfessorService professorService;
