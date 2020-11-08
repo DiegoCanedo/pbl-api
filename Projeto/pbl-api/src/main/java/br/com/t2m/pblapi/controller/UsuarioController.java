@@ -20,9 +20,7 @@ import io.swagger.annotations.Api;
 public class UsuarioController {
 
 	@Autowired
-	private AlunoService alunoService;
-
-	
+	private AlunoService alunoService;	
 
 	@PutMapping("/altera-status-ativo/{id}")
 	public ResponseEntity<AlunoDTO> alterarStatusAtivo(@Valid @RequestBody UsuarioIsAtivoDTO usuario,

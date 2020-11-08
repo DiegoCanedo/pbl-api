@@ -42,10 +42,6 @@ public class TarefaService {
 		if(atividade.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}
-		
-//		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
-//			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-//		}
 
 		Tarefa tarefa = new Tarefa();		
 		tarefa.setDataCriacao(new Date());
@@ -62,7 +58,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) throws TaskRestrictionException {
+	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados){
 		
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);		
@@ -73,11 +69,7 @@ public class TarefaService {
 		
 		if(tarefa.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
-		}		
-
-//		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
-//			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-//		}
+		}
 		
 		if(tarefa.get().isConcluido()) {
 			throw new TaskRestrictionException("Tarefas concluídas não podem receber alterações.");
@@ -90,7 +82,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public void deleteTarefa(Long idAtividade, Long idTarefa) throws TaskRestrictionException {
+	public void deleteTarefa(Long idAtividade, Long idTarefa) {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		
@@ -110,7 +102,7 @@ public class TarefaService {
 	}	
     
 	@Transactional
-	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) throws TaskRestrictionException {
+	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
