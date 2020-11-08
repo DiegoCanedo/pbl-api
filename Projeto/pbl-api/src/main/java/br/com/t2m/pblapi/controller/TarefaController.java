@@ -1,7 +1,5 @@
 package br.com.t2m.pblapi.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,13 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.service.TarefaService;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 
 @RestController
-@RequestMapping(value = "/atividade/{id}/tarefas")
+@RequestMapping(value = "/atividades/{idAtividade}/tarefas")
 public class TarefaController {	
 	
 	@Autowired
@@ -28,24 +25,41 @@ public class TarefaController {
 	
 	@PostMapping
 	public ResponseEntity<TarefaDTO> postTarefa(
-			@PathVariable("atividadeId") Long atividadeId, @RequestBody PostTarefaDTO novaTarefa){		
-		TarefaDTO tarefa = tarefaService.postTarefa(atividadeId, novaTarefa);
+			@PathVariable Long idAtividade, @RequestBody PostTarefaDTO novaTarefa){		
+		TarefaDTO tarefa = tarefaService.postTarefa(idAtividade, novaTarefa);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
-	@PutMapping
-	public ResponseEntity<TarefaDTO> alterarTarefa(@RequestBody PutTarefaDTO novosDados){
-		TarefaDTO tarefa = tarefaService.putTarefa(novosDados);
+	@PutMapping("/{idTarefa}")
+	public ResponseEntity<TarefaDTO> alterarTarefa(
+			@PathVariable Long idAtividade, 
+			@PathVariable Long idTarefa, 
+			@RequestBody PutTarefaDTO novosDados){
+		TarefaDTO tarefa = tarefaService.putTarefa(idAtividade, idTarefa, novosDados);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteTarefa(@PathVariable Long id){
-		return ResponseEntity.ok().body("Tarefa " + id.toString() + " excluido com sucesso.");
+	@DeleteMapping("/{idTarefa}")
+	public ResponseEntity<String> deleteTarefa(
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa){
+		tarefaService.deleteTarefa(idAtividade, idTarefa);
+		return ResponseEntity.ok().body("Tarefa " + idTarefa.toString() + " excluido com sucesso.");
 	}
 
-//	@PatchMapping("/{id}")
-//	public ResponseEntity<TarefaDTO> addAlunoToTarefa(@PathVariable Long idTarefa, @Valid @RequestBody AlunoDTO alunoDTO) {
-//		TarefaDTO tarefa = service.addAlunoToTarefa(idTarefa, alunoDTO);
-//	}
+	@PatchMapping("/{idTarefa}/add/{idAluno}")
+	public ResponseEntity<TarefaDTO> addAlunoIntoTarefa(
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa, 
+			@PathVariable Long idAluno){
+		
+		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idAtividade, idTarefa, idAluno);
+		return ResponseEntity.ok().body(tarefa);
+	}
+	
+	@PatchMapping("/{idTarefa}/remove/{idAluno}")
+	public ResponseEntity<TarefaDTO> removeAlunoFromTarefa(
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @PathVariable Long idAluno) {
+		
+		TarefaDTO tarefa = tarefaService.removeAlunoFromTarefa(idAtividade, idTarefa, idAluno);
+		return ResponseEntity.ok().body(tarefa);
+	}
 }
