@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    		"/pbl/**",
 	    		"/disciplina/**",
 	    		"/atividades/**",
+	    		"/problema/**",
 	    };
 	
 	@Override

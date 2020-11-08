@@ -1,7 +1,6 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
