@@ -2,7 +2,6 @@ package br.com.t2m.pblapi.domain.service.dto;
 
 import java.time.Instant;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

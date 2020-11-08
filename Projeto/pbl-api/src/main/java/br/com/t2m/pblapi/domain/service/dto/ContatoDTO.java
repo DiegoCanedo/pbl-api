@@ -1,32 +1,24 @@
-package br.com.t2m.pblapi.domain.model;
-
-import java.io.Serializable;
+package br.com.t2m.pblapi.domain.service.dto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "contato")
-public class Contato implements Serializable{
+import br.com.t2m.pblapi.domain.model.Contato;
+import br.com.t2m.pblapi.domain.model.TipoContato;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1435614680358719514L;
+public class ContatoDTO {
 	
-	@Id
+	
+	private Long id;
+	
 	@NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_contato")
-	private long id;
+	private Long idEmpresa;
 	
 	@NotBlank
 	private String nomeContato;
@@ -37,16 +29,37 @@ public class Contato implements Serializable{
 	@NotBlank
 	private String contato;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_tipo_contato")
+	@NotNull
 	private TipoContato tipoContato;
 	
-	public long getId() {
+	public ContatoDTO(Contato contato) {
+		this.id = contato.getId();
+		this.nomeContato = contato.getNomeContato();
+		this.email = contato.getEmail();
+		this.contato = contato.getContato();
+		this.tipoContato = contato.getTipoContato();
+	}
+	
+	public ContatoDTO() {
+		
+	}
+
+	
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getIdEmpresa() {
+		return idEmpresa;
+	}
+
+	public void setIdEmpresa(Long idEmpresa) {
+		this.idEmpresa = idEmpresa;
 	}
 
 	public String getNomeContato() {
@@ -80,27 +93,7 @@ public class Contato implements Serializable{
 	public void setTipoContato(TipoContato tipoContato) {
 		this.tipoContato = tipoContato;
 	}
+	
+	
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contato other = (Contato) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-		
 }

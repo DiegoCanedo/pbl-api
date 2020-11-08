@@ -22,35 +22,34 @@ public class TipoContato implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_tipo_contato")
-	private long idTipoContato;
+	private long id;
 	
-	private String descricao;
+	@Column(name = "descricao")
+	private String nome;
 
-	public long getIdTipoContato() {
-		return idTipoContato;
+	
+	
+	public long getId() {
+		return id;
 	}
 
-	public void setIdTipoContato(long idTipoContato) {
-		this.idTipoContato = idTipoContato;
+	public void setId(long id) {
+		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (idTipoContato ^ (idTipoContato >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
 
@@ -63,7 +62,7 @@ public class TipoContato implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		TipoContato other = (TipoContato) obj;
-		if (idTipoContato != other.idTipoContato)
+		if (id != other.id)
 			return false;
 		return true;
 	}

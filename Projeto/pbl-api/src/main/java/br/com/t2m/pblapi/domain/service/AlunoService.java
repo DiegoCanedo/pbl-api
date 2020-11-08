@@ -1,6 +1,5 @@
 package br.com.t2m.pblapi.domain.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Aluno;
-import br.com.t2m.pblapi.domain.model.EPerfil;
-import br.com.t2m.pblapi.domain.model.Perfil;
 import br.com.t2m.pblapi.domain.repository.IAlunoRepository;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.domain.service.dto.UsuarioIsAtivoDTO;
