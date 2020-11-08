@@ -31,12 +31,14 @@ public class Empresa extends Usuario implements Serializable {
 	
 	private String urlLog;
 
-	// private String focalPoint;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_usuario")
+	private List<Problema> problema;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_problema")
-	private List<Problema> problema;
-
+	@JoinColumn(name = "id_usuario")
+	private List<Contato> contato ;
+	
 	public String getNome() {
 		return nome;
 	}
@@ -77,6 +79,12 @@ public class Empresa extends Usuario implements Serializable {
 		this.problema = problema;
 	}
 
-	
+	public List<Contato> getContato() {
+		return contato;
+	}
+
+	public void setContato(List<Contato> contato) {
+		this.contato = contato;
+	}
 
 }

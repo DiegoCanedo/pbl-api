@@ -73,6 +73,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    		
 	    		"/disciplina/**",
 	    		"/atividades/**",
+	    		"/problema/**",
 	    };
 	
 	@Override
