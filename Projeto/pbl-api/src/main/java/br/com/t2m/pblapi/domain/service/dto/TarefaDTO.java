@@ -1,6 +1,5 @@
 package br.com.t2m.pblapi.domain.service.dto;
 
-import java.time.Instant;
 import java.util.Date;
 
 import br.com.t2m.pblapi.domain.model.Tarefa;
@@ -8,7 +7,7 @@ import br.com.t2m.pblapi.domain.model.Tarefa;
 public class TarefaDTO {
 	
 	private Long id;
-	private Instant dataCriacao;
+	private Date dataCriacao;
 	private String descricao;
 	private Date dataConclusao;
 	private boolean concluido;
@@ -29,7 +28,7 @@ public class TarefaDTO {
 	}
 
 
-	public Instant getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
@@ -54,7 +53,7 @@ public class TarefaDTO {
 	}
 
 
-	public void setDataCriacao(Instant dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
