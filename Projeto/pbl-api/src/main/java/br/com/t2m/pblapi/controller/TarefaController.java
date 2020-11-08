@@ -28,7 +28,7 @@ public class TarefaController {
 	
 	@PostMapping
 	public ResponseEntity<TarefaDTO> postTarefa(
-			@PathVariable("atividadeId") Long atividadeId, @RequestBody PostTarefaDTO novaTarefa){		
+			@PathVariable("id") Long atividadeId, @RequestBody PostTarefaDTO novaTarefa){		
 		TarefaDTO tarefa = tarefaService.postTarefa(atividadeId, novaTarefa);
 		return ResponseEntity.ok().body(tarefa);
 	}
