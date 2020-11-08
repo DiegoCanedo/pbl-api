@@ -42,11 +42,11 @@ public class TarefaService {
 		if(atividade.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}
-
+		
 //		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
 //			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
 //		}
-		
+
 		Tarefa tarefa = new Tarefa();		
 		tarefa.setDataCriacao(new Date());
 		tarefa.setDescricao(novaTarefa.getDescricao());		
@@ -62,7 +62,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) {
+	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) throws TaskRestrictionException {
 		
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);		
@@ -80,7 +80,7 @@ public class TarefaService {
 //		}
 		
 		if(tarefa.get().isConcluido()) {
-			throw new RuntimeException("Tarefas concluídas não podem receber alterações."); //exception
+			throw new TaskRestrictionException("Tarefas concluídas não podem receber alterações.");
 		}
 		
 		tarefa.get().setDescricao(novosDados.getDescricao());
@@ -90,7 +90,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public void deleteTarefa(Long idAtividade, Long idTarefa) {
+	public void deleteTarefa(Long idAtividade, Long idTarefa) throws TaskRestrictionException {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		
@@ -103,14 +103,14 @@ public class TarefaService {
 		}
 		
 		if(tarefa.get().isConcluido()) {
-			throw new RuntimeException("Tarefas concluídas não podem ser excluídas.");
+			throw new TaskRestrictionException("Tarefas concluídas não podem ser excluídas.");
 		}
 		
 		tarefaRepository.deleteById(idTarefa); 
 	}	
     
 	@Transactional
-	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
+	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) throws TaskRestrictionException {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
@@ -129,7 +129,7 @@ public class TarefaService {
 		}
 		
 		if(tarefa.get().isConcluido()) {
-			throw new RuntimeException("Tarefas concluídas não podem receber novos alunos.");
+			throw new TaskRestrictionException("Tarefas concluídas não podem receber novos alunos.");
 		}
 		
 		if(verificaAluno(aluno.get(), tarefa.get())) {
