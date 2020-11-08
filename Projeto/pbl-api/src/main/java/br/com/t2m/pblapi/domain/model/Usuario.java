@@ -145,5 +145,4 @@ public abstract class Usuario implements Serializable {
 			return false;
 		return true;
 	}
-
 }

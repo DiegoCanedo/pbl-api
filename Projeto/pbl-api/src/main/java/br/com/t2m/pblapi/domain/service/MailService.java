@@ -1,64 +1,69 @@
 package br.com.t2m.pblapi.domain.service;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import br.com.t2m.pblapi.domain.model.Aluno;
+import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.model.Pbl;
-import br.com.t2m.pblapi.domain.model.Usuario;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
+import br.com.t2m.pblapi.utils.EmailMessage;
 
 @Service
 public class MailService {
 
+	@Autowired
 	private JavaMailSender javaMailSender;
 
 	@Autowired
-	public MailService(JavaMailSender javaMailSender) {
-		this.javaMailSender = javaMailSender;
-	}
+	private AlunoService alunoService;
+	@Autowired
+	private DisciplinaService disciplinaService;
+
+	public static int noOfQuickServiceThreads = 20;
+
+	private ScheduledExecutorService quickService = Executors.newScheduledThreadPool(noOfQuickServiceThreads);
 
 	public void sendEmailPbl(Pbl pbl) throws MailException, MessagingException {
 
-		for (Aluno aluno : pbl.getAluno()) {
-			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-			String htmlMsg = "<h3>Data de ínicio: " + pbl.getDataInicio() + "</h3>\r\n"
-					+ "   	  <h3>Data de conclusão: " + pbl.getDataConclusao() + " 18/11/2020</h3>\r\n"
-					+ "    	  <h3>Problema: " + pbl.getProblema() + " </h3>\r\n" + "    	  <h3>Disciplina: "
-					+ pbl.getPblTemaDisciplina().getDisciplina() + "</h3> ";
-			helper.setSubject("Novo PBL da disciplina: " + pbl.getPblTemaDisciplina().getDisciplina());
-			helper.setText(htmlMsg, true);
-
-			System.out.println(aluno.getEmail());
-			helper.setTo(aluno.getEmail());
-			javaMailSender.send(mimeMessage);
-			
-		}
-
-	}
-
-	public void sendEmailWithAttachment(Usuario usuario) throws MailException, MessagingException {
-
 		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+		Disciplina disciplina = disciplinaService.getById(pbl.getPblTemaDisciplina().getDisciplina().getId());
 
-		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+		helper.setSubject("Novo PBL da disciplina: " + disciplina.getNome());
 
-		helper.setTo(usuario.getEmail());
-		helper.setSubject("Testing Mail API with Attachment");
-		helper.setText("Please find the attached document below.");
+		quickService.submit(new Runnable() {
 
-		ClassPathResource classPathResource = new ClassPathResource("Attachment.pdf");
-		helper.addAttachment(classPathResource.getFilename(), classPathResource);
+			@Override
+			public void run() {
+				for (Aluno aluno : pbl.getAluno()) {
+					AlunoDTO alunoDTO = alunoService.getById(aluno.getId());
+					
+					try {
+						helper.setText(EmailMessage.pblAlunos(pbl, alunoDTO.getNome() ,disciplina.getNome()), true);
+						helper.setTo(alunoDTO.getEmail());
+						
+						javaMailSender.send(mimeMessage);
 
-		javaMailSender.send(mimeMessage);
+					} catch (MessagingException e) {
+						e.printStackTrace();
+					}
+
+				}
+
+			}
+
+		});
+
 	}
 
 }

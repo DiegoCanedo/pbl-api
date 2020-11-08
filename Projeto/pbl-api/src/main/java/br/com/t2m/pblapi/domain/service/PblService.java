@@ -18,6 +18,7 @@ import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblRepository;
 import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.ITemaPblRepository;
+import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.exception.InvalidDateException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
@@ -51,6 +52,7 @@ public class PblService {
 
 
 
+	@Transactional
 	public Pbl insert(Pbl pbl) {
 
 		if (pbl.getDataInicio().after(pbl.getDataConclusao())) {
@@ -68,12 +70,10 @@ public class PblService {
 		}
 		
 		Pbl pblRetorno = pblRepository.save(pbl);
-
-		System.out.println(pblRetorno);
-		atividadeService.bindPblToAtividadePBl(pblRetorno);
-
+		
 		try {
-			notificationService.sendEmailPbl(pbl);
+			System.out.println(pblRepository.findById(pblRetorno.getIdPbl()).get());
+			notificationService.sendEmailPbl(pblRepository.findById(pblRetorno.getIdPbl()).get());
 		} catch (MailException e) {
 			e.printStackTrace();
 			
@@ -81,8 +81,10 @@ public class PblService {
 			e.printStackTrace();
 			
 		}
+		atividadeService.bindPblToAtividadePBl(pblRetorno);
+
 		return pblRetorno;
 
 	}
-
+	
 }
