@@ -18,6 +18,7 @@ import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
+import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 import br.com.t2m.pblapi.exception.TaskRestrictionException;
 
@@ -34,8 +35,7 @@ public class TarefaService {
 	private IAlunoRepository alunoRepository;
 	
 	@Transactional
-	public TarefaDTO postTarefa(Long idAtividade, PostTarefaDTO novaTarefa){		
-		
+	public TarefaDTO postTarefa(Long idAtividade, PostTarefaDTO novaTarefa){
 		
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		
@@ -43,11 +43,10 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}
 		
+//		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
+//			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+//		}
 
-		//if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
-		//	throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-		//}
-		
 		Tarefa tarefa = new Tarefa();		
 		tarefa.setDataCriacao(new Date());
 		tarefa.setDescricao(novaTarefa.getDescricao());		
@@ -63,7 +62,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados) throws TaskRestrictionException {
+	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados){
 		
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);		
@@ -76,9 +75,9 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}		
 
-		//if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
-		//	throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
-		//}
+//		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
+//			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+//		}
 		
 		if(tarefa.get().isConcluido()) {
 			throw new TaskRestrictionException("Tarefas concluídas não podem receber alterações.");
@@ -91,7 +90,7 @@ public class TarefaService {
 	}
 	
 	@Transactional
-	public void deleteTarefa(Long idAtividade, Long idTarefa) throws TaskRestrictionException {
+	public void deleteTarefa(Long idAtividade, Long idTarefa) {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		
@@ -111,7 +110,7 @@ public class TarefaService {
 	}	
     
 	@Transactional
-	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) throws TaskRestrictionException {
+	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);
 		Optional<Tarefa> tarefa = tarefaRepository.findById(idTarefa);
 		Optional<Aluno> aluno = alunoRepository.findById(idAluno);
@@ -133,9 +132,20 @@ public class TarefaService {
 			throw new TaskRestrictionException("Tarefas concluídas não podem receber novos alunos.");
 		}
 		
+		if(verificaAluno(aluno.get(), tarefa.get())) {
+			throw new ResourceAlreadyExistsException(Constants.ALUNO_JA_ATRIBUIDO);
+		}
+		
 		tarefa.get().getAlunos().add(aluno.get());
 		tarefaRepository.save(tarefa.get());
 		return new TarefaDTO(tarefa.get());
+	}
+	
+	private boolean verificaAluno(Aluno aluno, Tarefa tarefa) {
+		if(tarefa.getAlunos().contains(aluno)) {
+			return true;
+		}
+		return false;
 	}
 	
 	@Transactional
@@ -154,7 +164,11 @@ public class TarefaService {
 		
 		if(aluno.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ALUNO_NAO_ENCONTRADO, idAluno.toString());
-		}		
+		}
+		
+		if(tarefa.get().getAlunos().isEmpty()) {
+			throw new TaskRestrictionException(Constants.TAREFA_NAO_POSSUI_ALUNOS);
+		}
 		
 		tarefa.get().getAlunos().remove(aluno.get());
 		tarefaRepository.save(tarefa.get());
