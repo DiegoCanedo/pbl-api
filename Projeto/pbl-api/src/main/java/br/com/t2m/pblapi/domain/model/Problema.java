@@ -36,9 +36,8 @@ public class Problema implements Serializable {
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	private Date dataRegistro;
-	
-	
+	private Date dataRegistro;	
+
 	private Integer prioridade;
 	
 	private boolean ativo;
