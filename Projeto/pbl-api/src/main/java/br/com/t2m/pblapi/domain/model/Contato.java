@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,7 +31,7 @@ public class Contato implements Serializable{
 	private long idContato;
 	
 	@NotBlank
-	private String nome;
+	private String nomeContato;
 	
 	@NotBlank
 	private String email;
@@ -39,8 +41,8 @@ public class Contato implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_contato")
-	private TipoContato tipoContato  ;
-	
+	private TipoContato tipoContato;
+		
 	public long getIdContato() {
 		return idContato;
 	}
@@ -49,12 +51,12 @@ public class Contato implements Serializable{
 		this.idContato = idContato;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeContato() {
+		return nomeContato;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeContato(String nomeContato) {
+		this.nomeContato = nomeContato;
 	}
 
 	public String getEmail() {
@@ -80,8 +82,27 @@ public class Contato implements Serializable{
 	public void setTipoContato(TipoContato tipoContato) {
 		this.tipoContato = tipoContato;
 	}
-	
-	
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (idContato ^ (idContato >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contato other = (Contato) obj;
+		if (idContato != other.idContato)
+			return false;
+		return true;
+	}
 		
 }
