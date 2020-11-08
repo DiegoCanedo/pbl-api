@@ -71,7 +71,7 @@ public class Pbl {
 	@MapsId
 	private PblTemaDisciplina pblTemaDisciplina;
 	
-	@NotNull
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_problema")
 	private Problema problemaEmpresa;
