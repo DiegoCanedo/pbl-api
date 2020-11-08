@@ -27,7 +27,6 @@ public class Empresa extends Usuario implements Serializable {
 	@NotBlank
 	private String cnpj;
 
-	@NotBlank
 	private String endereco;
 	
 	private String urlLog;

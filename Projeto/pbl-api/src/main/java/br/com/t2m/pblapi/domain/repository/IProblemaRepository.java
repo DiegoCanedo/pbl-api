@@ -8,12 +8,9 @@ import org.springframework.stereotype.Repository;
 import br.com.t2m.pblapi.domain.model.Problema;
 
 @Repository
-public interface IProblemaRepository extends JpaRepository<Problema, Long>{
-
-	Optional<Problema> findByIdProblema(Long idProblema);
+public interface IProblemaRepository extends JpaRepository<Problema, Long> {
 
 	boolean existsByDescricao(String descricao);
-
 	Optional<Problema> findByDescricao(String descricao);
 
 }
