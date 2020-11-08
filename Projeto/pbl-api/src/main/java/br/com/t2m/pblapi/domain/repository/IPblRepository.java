@@ -14,5 +14,5 @@ public interface IPblRepository extends JpaRepository<Pbl, Long> {
 	
 	public Set<Pbl> findAllByPblTemaDisciplina_Disciplina_Id(@Param("id_disciplina") Long id_disciplina);
 	
-	public boolean existsByProblema(Problema problema);
+	public boolean existsByProblemaEmpresa(Problema problema);
 }
