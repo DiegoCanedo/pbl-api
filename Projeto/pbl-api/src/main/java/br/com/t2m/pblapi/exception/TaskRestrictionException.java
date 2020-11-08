@@ -9,4 +9,8 @@ public class TaskRestrictionException extends Exception {
 		this.message = message;
 	}
 
+	public String getMessage() {
+		return message;
+	}	
+
 }

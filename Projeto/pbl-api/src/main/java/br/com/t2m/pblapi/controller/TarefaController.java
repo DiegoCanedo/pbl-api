@@ -15,6 +15,7 @@ import br.com.t2m.pblapi.domain.service.TarefaService;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
+import br.com.t2m.pblapi.exception.TaskRestrictionException;
 
 @RestController
 @RequestMapping(value = "/atividades/{idAtividade}/tarefas")
@@ -34,20 +35,22 @@ public class TarefaController {
 	public ResponseEntity<TarefaDTO> alterarTarefa(
 			@PathVariable Long idAtividade, 
 			@PathVariable Long idTarefa, 
-			@RequestBody PutTarefaDTO novosDados){
+			@RequestBody PutTarefaDTO novosDados) throws TaskRestrictionException{
 		TarefaDTO tarefa = tarefaService.putTarefa(idAtividade, idTarefa, novosDados);
 		return ResponseEntity.ok().body(tarefa);
 	}
 	
 	@DeleteMapping("/{idTarefa}")
-	public ResponseEntity<String> deleteTarefa(@PathVariable Long idAtividade, @PathVariable Long idTarefa){
+	public ResponseEntity<String> deleteTarefa(
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa) throws TaskRestrictionException{
 		tarefaService.deleteTarefa(idAtividade, idTarefa);
 		return ResponseEntity.ok().body("Tarefa " + idTarefa.toString() + " excluido com sucesso.");
 	}
 
 	@PatchMapping("/{idTarefa}/add/{idAluno}")
 	public ResponseEntity<TarefaDTO> addAlunoIntoTarefa(
-			@PathVariable Long idAtividade, @PathVariable Long idTarefa, @PathVariable Long idAluno) {
+			@PathVariable Long idAtividade, @PathVariable Long idTarefa, 
+			@PathVariable Long idAluno) throws TaskRestrictionException {
 		
 		TarefaDTO tarefa = tarefaService.addAlunoIntoTarefa(idAtividade, idTarefa, idAluno);
 		return ResponseEntity.ok().body(tarefa);
