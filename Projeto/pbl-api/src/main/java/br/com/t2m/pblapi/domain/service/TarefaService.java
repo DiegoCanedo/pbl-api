@@ -18,7 +18,6 @@ import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
-import br.com.t2m.pblapi.exception.InvalidDateException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 import br.com.t2m.pblapi.exception.TaskRestrictionException;
 
