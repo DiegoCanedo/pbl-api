@@ -47,12 +47,12 @@ public class Pbl {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataInicio;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataConclusao;
 
 	@NotNull

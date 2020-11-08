@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,12 +25,14 @@ import io.swagger.annotations.Api;
 @CrossOrigin
 @RequestMapping("/temaPbl")
 @Api(description = "rest api para tema pbl", tags= {"Tema PBL"})
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 public class TemaPblController {
 
 	@Autowired
 	TemaPblService temaPblService;
 
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<List<TemaPbl>> listarTodos() {
 		return ResponseEntity.ok().body(temaPblService.getAll());
 	}
