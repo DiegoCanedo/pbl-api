@@ -63,19 +63,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	            // -- auth ui
 	            "/pbl-api/auth/**",
 	            
-	            // -- desenvolvimento
-	            "/aluno/**",
-	            "/professor/**",
-	            "/empresa/**",
-	            "/contato/**",
-	            "/tipoContato/**",
-	    		"/temaPbl/**",
-	    		"/pbl/**",
-	    		"/disciplina/**",
-	    		"/atividades/**",
-	    		"/problema/**",
-	    };
-	
+//	            // -- desenvolvimento
+//	            "/aluno/**",
+//	            "/professor/**",
+//	            "/empresa/**",
+//	            "/tipoContato/**",
+//	    		"/temaPbl/**",
+//	    		"/pbl/**",
+//	    		"/disciplina/**",
+//	    		"/atividades/**",
+//	    		"/problema/**",
+	 };
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.cors().and().csrf().disable()

@@ -35,9 +35,10 @@ public class PblUserDetails implements UserDetails {
 	}
 
 	public static PblUserDetails build(Usuario usuario) {
+		
+		
 		List<GrantedAuthority> authorities = usuario.getPerfil().stream()
 				.map(p -> new SimpleGrantedAuthority(p.getNome().name())).collect(Collectors.toList());
-
 		return new PblUserDetails(usuario.getId(), usuario.getEmail(), usuario.getSenha(), authorities);
 	}
 
