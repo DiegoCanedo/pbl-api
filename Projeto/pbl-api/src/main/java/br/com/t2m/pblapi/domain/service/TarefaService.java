@@ -18,6 +18,7 @@ import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
+import br.com.t2m.pblapi.exception.InvalidDateException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
 @Service
@@ -43,7 +44,7 @@ public class TarefaService {
 		}
 		
 		if(atividade.get().getDataEntrega().compareTo(novaTarefa.getDataConclusao()) < 0) {		
-			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
 		}
 		
 		Tarefa tarefa = new Tarefa();		
@@ -75,11 +76,11 @@ public class TarefaService {
 		}
 		
 		if(atividade.get().getDataEntrega().compareTo(novosDados.getDataConclusao()) < 0) {
-			throw new RuntimeException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
+			throw new InvalidDateException("Data de conclusão da tarefa não pode ser superior a data de conclusão da atividade.");
 		}
 		
 		if(tarefa.get().isConcluido()) {
-			throw new RuntimeException("Tarefas concluídas não podem receber alterações.");
+			throw new RuntimeException("Tarefas concluídas não podem receber alterações."); //exception
 		}
 		
 		tarefa.get().setDescricao(novosDados.getDescricao());
@@ -106,9 +107,7 @@ public class TarefaService {
 		}
 		
 		tarefaRepository.deleteById(idTarefa); 
-	}
-	
-	
+	}	
     
 	@Transactional
 	public TarefaDTO addAlunoIntoTarefa(Long idAtividade, Long idTarefa, Long idAluno) {
