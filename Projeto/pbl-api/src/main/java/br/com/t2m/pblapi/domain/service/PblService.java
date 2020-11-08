@@ -52,6 +52,7 @@ public class PblService {
 
 
 
+	@Transactional
 	public Pbl insert(Pbl pbl) {
 
 		if (pbl.getDataInicio().after(pbl.getDataConclusao())) {
@@ -69,9 +70,10 @@ public class PblService {
 		}
 		
 		Pbl pblRetorno = pblRepository.save(pbl);
-		System.out.println(pblRetorno);
+		
 		try {
-			notificationService.sendEmailPbl(pblRetorno);
+			System.out.println(pblRepository.findById(pblRetorno.getIdPbl()).get());
+			notificationService.sendEmailPbl(pblRepository.findById(pblRetorno.getIdPbl()).get());
 		} catch (MailException e) {
 			e.printStackTrace();
 			
@@ -85,8 +87,4 @@ public class PblService {
 
 	}
 	
-	public List<AlunoDTO> getAllAlunos (Pbl pbl){
-		return null;
-		
-	}
 }

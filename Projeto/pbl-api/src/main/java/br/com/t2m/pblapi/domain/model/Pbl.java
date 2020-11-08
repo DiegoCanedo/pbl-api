@@ -49,12 +49,12 @@ public class Pbl {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataInicio;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy",timezone = "America/Sao_Paulo")
 	private Date dataConclusao;
 
 	@NotNull
@@ -169,16 +169,4 @@ public class Pbl {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Pbl [idPbl=" + idPbl + ", problema=" + problema + ", situacaoProblema=" + situacaoProblema + ", resumo="
-				+ resumo + ", dataInicio=" + dataInicio + ", dataConclusao=" + dataConclusao + ", professor="
-				+ professor + ", aluno=" + aluno + ", pblTemaDisciplina=" + pblTemaDisciplina + "]";
-	}
-	
-	
-
-	
-
 }
