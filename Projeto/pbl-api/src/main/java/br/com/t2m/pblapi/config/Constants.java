@@ -26,6 +26,8 @@ public final class Constants {
 	public static final String PROBLEMA_VINCULADO = "Este problema não pode ser excluído pois já está vinculado a um PBL.";
 	public static final String ALUNO_NAO_ENCONTRADO = "Não existe aluno com id: ;";
 	public static final String CONTATO_VINCULADO = "Contato não pode ser excluído";
+	public static final String ALUNO_JA_ATRIBUIDO = "O aluno já foi atribuído a essa tarefa";
+	public static final String TAREFA_NAO_POSSUI_ALUNOS = "Não é possível remover aluno se a tarefa não possui alunos associados";
 	private Constants() {
 	}
 }

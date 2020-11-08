@@ -1,11 +1,15 @@
 package br.com.t2m.pblapi.exception;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +18,6 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -40,6 +43,17 @@ public class ExceptionController extends ResponseEntityExceptionHandler{
 
 		return super.handleExceptionInternal(ex, body, headers, status, request);
 	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public List<String> trataDataException(ConstraintViolationException exception){
+		List <String> error = new ArrayList<>();
+		Set<ConstraintViolation<?>> cv = exception.getConstraintViolations();
+		for(ConstraintViolation<?> item : cv) {
+			String r = "Campo " + item.getPropertyPath() + " " + item.getMessage();
+			error.add(r);			
+		}		
+		 return error;
+	}	
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {

@@ -1,6 +1,6 @@
 package br.com.t2m.pblapi.exception;
 
-public class TaskRestrictionException extends Exception {
+public class TaskRestrictionException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
 	private String message;
@@ -9,4 +9,11 @@ public class TaskRestrictionException extends Exception {
 		this.message = message;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 }
