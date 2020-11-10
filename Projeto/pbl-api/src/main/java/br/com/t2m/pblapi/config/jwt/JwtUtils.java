@@ -4,13 +4,16 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import br.com.t2m.pblapi.config.services.PblUserDetails;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtUtils {
@@ -26,7 +29,7 @@ public class JwtUtils {
 		PblUserDetails usuarioPrincipal = (PblUserDetails) authentication.getPrincipal();
 
 		return Jwts.builder().setSubject(usuarioPrincipal.getEmail()).setIssuedAt(new Date())
-				.setExpiration(new Date(jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
+				.setExpiration(new Date(System.currentTimeMillis()+jwtExpirationMs)).signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
 	}
 
 	public String getUserNameFromJwtToken(String token) {
@@ -50,5 +53,9 @@ public class JwtUtils {
 		}
 
 		return false;
+	}
+
+	public String getJwtSecret() {
+		return jwtSecret;
 	}
 }

@@ -1,5 +1,7 @@
 package br.com.t2m.pblapi.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.t2m.pblapi.domain.model.Contato;
+import br.com.t2m.pblapi.domain.service.ContatoService;
 import br.com.t2m.pblapi.domain.service.EmpresaService;
 import br.com.t2m.pblapi.domain.service.dto.EmpresaDTO;
 import io.swagger.annotations.Api;
@@ -25,6 +29,9 @@ public class EmpresaController {
 
 	@Autowired
 	EmpresaService empresaService;
+	
+	@Autowired
+	ContatoService contatoService;
 
 	@GetMapping
 	public ResponseEntity<Iterable<EmpresaDTO>> listarTodos() {
@@ -35,6 +42,17 @@ public class EmpresaController {
 	public ResponseEntity<EmpresaDTO> listarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(empresaService.getById(id));
 	}
+	
+	@GetMapping("/contato")
+	public ResponseEntity<List<Contato>> listarTodosContatos() {
+		return ResponseEntity.ok().body(contatoService.getAll());
+	}
+
+	@GetMapping("/contato/{id}")
+	public ResponseEntity<Contato> listarContatoPorId(@PathVariable Long id) {
+		return ResponseEntity.ok().body(contatoService.getById(id));
+	}
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<EmpresaDTO> alterar(@Valid @RequestBody EmpresaDTO empresa, @PathVariable Long id){

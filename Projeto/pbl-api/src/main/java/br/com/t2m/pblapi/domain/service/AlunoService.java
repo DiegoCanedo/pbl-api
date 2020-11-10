@@ -3,6 +3,7 @@ package br.com.t2m.pblapi.domain.service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
+import br.com.t2m.pblapi.config.services.PblUserRole;
 import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.EPerfil;
 import br.com.t2m.pblapi.domain.model.Perfil;
@@ -34,6 +36,9 @@ public class AlunoService {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	PblUserRole userRole;
 
 	@Transactional(readOnly = true)
 	public List<AlunoDTO> getAll() {
@@ -61,6 +66,10 @@ public class AlunoService {
 			throw new ResourceAlreadyExistsException(Constants.USUARIO_MATRICULA_JA_EXISTE, alunoDTO.getEmail());
 
 		Aluno aluno = alunoMapper.alunoDTOTOAluno(alunoDTO);
+		Set<Perfil> perfis = new HashSet<>();
+		perfis.add(userRole.setPerfil(EPerfil.ROLE_ALUNO));
+		aluno.setPerfil(perfis);
+		
 		aluno.setSenha(passwordEncoder.encode(senha));
 		aluno.setAtivo(false);
 		aluno.setExcluido(false);

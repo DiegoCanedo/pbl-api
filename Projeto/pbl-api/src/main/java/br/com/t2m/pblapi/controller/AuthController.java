@@ -25,7 +25,6 @@ import br.com.t2m.pblapi.config.services.PblUserDetails;
 import br.com.t2m.pblapi.controller.vm.AlunoVM;
 import br.com.t2m.pblapi.controller.vm.EmpresaVM;
 import br.com.t2m.pblapi.controller.vm.ProfessorVM;
-import br.com.t2m.pblapi.domain.model.Usuario;
 import br.com.t2m.pblapi.domain.service.AlunoService;
 import br.com.t2m.pblapi.domain.service.EmpresaService;
 import br.com.t2m.pblapi.domain.service.ProfessorService;
@@ -62,6 +61,7 @@ public class AuthController {
 		PblUserDetails userDetails = (PblUserDetails) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		
 
 		return ResponseEntity.ok(
 				new JwtResponseDTO(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));

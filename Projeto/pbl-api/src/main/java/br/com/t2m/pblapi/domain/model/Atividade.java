@@ -55,7 +55,7 @@ public class Atividade {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_atividade")
 	private Set<AtividadePbl> atividadePbls;
-
+	
 	public Long getId() {
 		return id;
 	}

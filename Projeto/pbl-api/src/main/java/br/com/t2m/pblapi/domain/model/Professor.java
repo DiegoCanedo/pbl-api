@@ -6,7 +6,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "professor")
@@ -16,7 +15,6 @@ public class Professor extends Usuario {
 	@NotBlank
 	private String nome;
 
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_disciplina")
 	private Disciplina disciplina;
