@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.t2m.pblapi.config.Constants;
+import br.com.t2m.pblapi.config.services.PblUserRole;
 import br.com.t2m.pblapi.domain.model.EPerfil;
 import br.com.t2m.pblapi.domain.model.Perfil;
 import br.com.t2m.pblapi.domain.model.Professor;
@@ -28,18 +29,17 @@ import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 @Transactional
 public class ProfessorService {
 
-
 	@Autowired
 	IProfessorRepository professorRepository;
-	
+
 	@Autowired
 	ProfessorMapper professorMapper;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
-	IPerfilRepository perfilRepository;
+	PblUserRole userRole;
 
 	@Transactional(readOnly = true)
 	public List<ProfessorDTO> getAll() {
@@ -57,28 +57,20 @@ public class ProfessorService {
 	}
 
 	public Professor insert(ProfessorDTO professorDTO, String senha) {
-		
-		Optional<Perfil> optPerfil = perfilRepository.findByNome(EPerfil.ROLE_PROFESSOR);
-		
-		if(optPerfil.isEmpty())
-		{
-			throw new ResourceNotFoundException(Constants.PERFIL_NAO_ENCONTRADO, EPerfil.ROLE_PROFESSOR.name());
-		}
 
 		if (professorDTO.getId() != null)
 
 			if (professorRepository.existsByEmail(professorDTO.getEmail()))
 				throw new ResourceAlreadyExistsException(Constants.USUARIO_EMAIL_JA_EXISTE, professorDTO.getEmail());
 
-		
 		Professor professor = professorMapper.ProfessorDTOTOProfessor(professorDTO);
-		
-		professor.setSenha(passwordEncoder.encode(senha));
-		Set<Perfil> perfis = new HashSet<>();
 
-		perfis.add(optPerfil.get());
-		professor.setPerfil(perfis);
+		professor.setSenha(passwordEncoder.encode(senha));
 		
+		Set<Perfil> perfis = new HashSet<>();
+		perfis.add(userRole.setPerfil(EPerfil.ROLE_PROFESSOR));
+		professor.setPerfil(perfis);
+
 		professor.setAtivo(false);
 		professor.setExcluido(false);
 		return professorRepository.save(professor);
@@ -100,7 +92,7 @@ public class ProfessorService {
 			return professor;
 		}).map(ProfessorDTO::new).get();
 	}
-	
+
 	public ProfessorDTO updateAtivo(UsuarioIsAtivoDTO professorIsAtivoDTO, Long id) {
 		Optional<Professor> opt = professorRepository.findById(id);
 
@@ -111,7 +103,7 @@ public class ProfessorService {
 			return professor;
 		}).map(ProfessorDTO::new).get();
 	}
-	
+
 	public ProfessorDTO updateExcluido(UsuarioIsExcluidoDTO professorIsExcluidoDTO, Long id) {
 		Optional<Professor> opt = professorRepository.findById(id);
 
@@ -136,7 +128,8 @@ public class ProfessorService {
 	}
 
 	private void validaUsuario(Professor antigo, ProfessorDTO novo) {
-		if (!novo.getEmail().equalsIgnoreCase(antigo.getEmail()) && professorRepository.existsByEmail(novo.getEmail())) {
+		if (!novo.getEmail().equalsIgnoreCase(antigo.getEmail())
+				&& professorRepository.existsByEmail(novo.getEmail())) {
 			throw new ResourceAlreadyExistsException(Constants.USUARIO_EMAIL_JA_EXISTE, novo.getEmail());
 		}
 	}
