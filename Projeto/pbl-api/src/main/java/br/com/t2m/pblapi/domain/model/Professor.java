@@ -2,6 +2,7 @@ package br.com.t2m.pblapi.domain.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,8 +23,8 @@ public class Professor extends Usuario {
 	@JoinColumn(name = "id_disciplina")
 	private Disciplina disciplina;
 	
-	@OneToMany
-	@JoinColumn(name="id_publicacao")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="id_usuario")
 	private List<Publicacao> publicacoes;
 
 	public String getNome() {
