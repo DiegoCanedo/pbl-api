@@ -29,6 +29,8 @@ public final class Constants {
 	public static final String CONTATO_VINCULADO = "Contato não pode ser excluído";
 	public static final String ALUNO_JA_ATRIBUIDO = "O aluno já foi atribuído a essa tarefa";
 	public static final String TAREFA_NAO_POSSUI_ALUNOS = "Não é possível remover aluno se a tarefa não possui alunos associados";
+	public static final String PUBLICACAO_NAO_ENCONTRADA = "Não existe publicação com este id";
+	public static final String PROFESSOR_NÃO_ENCONTRADO = "Não existe professor com este id";
 	private Constants() {
 	}
 }
