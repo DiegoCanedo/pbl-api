@@ -1,5 +1,6 @@
 package br.com.t2m.pblapi.controller;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -26,45 +27,57 @@ import io.swagger.annotations.Api;
 @CrossOrigin
 @RequestMapping("/atividades")
 @Api(description = "rest api para atividades", tags = { "Atividade" })
-@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 public class AtividadeController {
 
 	@Autowired
 	private AtividadeService atividadeService;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Atividade> litarPorId(@PathVariable Long id){
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	public ResponseEntity<Atividade> litarPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.getById(id));
 	}
-	
+
 	@GetMapping("/disciplina/{id}")
-	public ResponseEntity<Set<Atividade>> listarPorIdDisciplina(@PathVariable Long id){
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	public ResponseEntity<Set<Atividade>> listarPorIdDisciplina(@PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.getByDisciplina(id));
 	}
-	
+
 	@GetMapping("/pbl/{id}")
-	public ResponseEntity<Set<Atividade>> listarPorIdPbl(@PathVariable Long id){
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	public ResponseEntity<Set<Atividade>> listarPorIdPbl(@PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.getByPbl(id));
 	}
-	
-	
+
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR,ROLE_ALUNO')")
+	@GetMapping("/atividade-aluno/{id}")
+	public ResponseEntity<List<Atividade>> listarPorIdAluno(@PathVariable Long id) {
+		return ResponseEntity.ok().body(atividadeService.getByIdAluno(id));
+	}
+
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<Atividade> cadastrar(@Valid @RequestBody Atividade atividade) {
 		return ResponseEntity.ok().body(atividadeService.insert(atividade));
 	}
-	
+
 	@PutMapping("/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 	public ResponseEntity<Atividade> alterar(@Valid @RequestBody Atividade atividade, @PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.update(atividade, id));
 	}
-	
+
 	@PutMapping("/atividade-pbl/{id}")
-	public ResponseEntity<AtividadePbl> alterarAtividadePbl(@Valid @RequestBody Atividade atividade, @PathVariable Long id) {
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	public ResponseEntity<AtividadePbl> alterarAtividadePbl(@Valid @RequestBody Atividade atividade,
+			@PathVariable Long id) {
 		return ResponseEntity.ok().body(atividadeService.updateAtividadePbl(atividade, id));
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deletar(@PathVariable Long id){
+	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	public ResponseEntity<String> deletar(@PathVariable Long id) {
 		atividadeService.delete(id);
 		return ResponseEntity.ok().body("Atividade " + id.toString() + " excluido com sucesso.");
 	}

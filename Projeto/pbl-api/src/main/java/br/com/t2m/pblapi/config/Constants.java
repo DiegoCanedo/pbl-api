@@ -15,6 +15,7 @@ public final class Constants {
 	public static final String PBL_NAO_ENCONTRADO = "Não existe PBL com o id: ";
 	public static final String MENSAGEM_USUARIO_REGISTRADO_SUCESSO = "Usuario cadastrado com sucesso, aguarde confirmação do administrador para acessar o sistema.";
 	public static final String ATIVIDADE_NAO_ENCONTRADA = "Não existe atividade com o id: ";
+	public static final String ATIVIDADE_ALUNO_NAO_ENCONTRADA = "Não existem atividades vinculadas no momento";
 	public static final String PERFIL_NAO_ENCONTRADO = "Não existe perfil: ";
 	public static final String TAREFA_NAO_ENCONTRADA = "Não existe tarefa com id: ";
 	public static final String EMPRESA_NÃO_ENCONTRADA = "Não existe empresa com o id";
