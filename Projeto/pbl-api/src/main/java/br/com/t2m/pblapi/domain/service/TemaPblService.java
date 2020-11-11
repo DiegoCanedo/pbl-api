@@ -68,12 +68,14 @@ public class TemaPblService {
 	public TemaPbl update(TemaPbl temaPbl, Long id) {
 		Optional<TemaPbl> opt = temaPblRepository.findById(id);
 
-		opt.ifPresentOrElse(pbl -> validaTemaExistente(pbl), () -> {
+		opt.ifPresentOrElse(pbl -> validaTemaExistente(temaPbl), () -> {
 			throw new ResourceNotFoundException(Constants.DISCIPLINA_NAO_ENCONTRADA, temaPbl.getId().toString());
 		});
 
 		TemaPbl tema = opt.get();
 		tema.setId(id);
+		tema.setNome(temaPbl.getNome());
+		tema.setDisciplinas(temaPbl.getDisciplinas());
 		return temaPblRepository.save(tema);
 	}
 

@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class AtividadeService {
 		}
 
 		Set<Atividade> atividades = atividadeRepository.findByAtividadePbls_Pbl(optPbl.get());
-		
+
 		atividades.forEach(a -> {
 			a.setAtividadePbls(a.getAtividadePbls().stream().filter(f -> f.getPbl().getIdPbl().equals(idPbl))
 					.collect(Collectors.toSet()));
@@ -79,6 +80,18 @@ public class AtividadeService {
 		}
 
 		return atividadeRepository.findByDisciplina(optDisciplina.get());
+	}
+
+	@Transactional(readOnly = true)
+	public List<Atividade> getByIdAluno(Long idAluno) {
+
+		List<Atividade> atividades = atividadeRepository.findByAtividadePbls_Pbl_Aluno_Id(idAluno);
+
+		if (atividades.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ATIVIDADE_ALUNO_NAO_ENCONTRADA);
+		}
+
+		return atividades;
 	}
 
 	/**
@@ -145,19 +158,19 @@ public class AtividadeService {
 
 		return atividadeRepository.save(atividade);
 	}
-	
+
 	public AtividadePbl updateAtividadePbl(Atividade atividade, Long id) {
 		Optional<Professor> optProfessor = professorRepository.findById(atividade.getProfessor().getId());
 		Optional<Atividade> optAtividade = atividadeRepository.findById(id);
-		
+
 		if (optProfessor.isEmpty())
 			throw new ResourceNotFoundException("Professor não existe");
 
 		if (optAtividade.isEmpty())
 			throw new ResourceNotFoundException("Atividade não existe");
-		
+
 		return atividadePblRepository.save(atividade.getAtividadePbls().stream().findFirst().get());
-		
+
 	}
 
 	public void delete(Long idAtividade) {
