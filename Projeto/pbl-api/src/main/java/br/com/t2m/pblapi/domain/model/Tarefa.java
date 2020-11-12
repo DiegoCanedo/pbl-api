@@ -59,6 +59,8 @@ public class Tarefa implements Serializable {
 	public Tarefa() {
 		
 	}	
+	
+	
 
 	public Tarefa(Long id, @NotNull Date dataCriacao, @NotNull String descricao, @NotNull Date dataConclusao,
 			@NotNull boolean concluido, List<Aluno> alunos) {
