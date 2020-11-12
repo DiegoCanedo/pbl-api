@@ -34,6 +34,10 @@ public class Tarefa implements Serializable {
 	private Date dataCriacao;
 	
 	@NotNull
+	@Column(name = "titulo")
+	private String titulo;
+	
+	@NotNull
 	@Column(name = "descricao")
 	private String descricao;
 	
@@ -55,6 +59,8 @@ public class Tarefa implements Serializable {
 	public Tarefa() {
 		
 	}	
+	
+	
 
 	public Tarefa(Long id, @NotNull Date dataCriacao, @NotNull String descricao, @NotNull Date dataConclusao,
 			@NotNull boolean concluido, List<Aluno> alunos) {
@@ -78,6 +84,15 @@ public class Tarefa implements Serializable {
 	public Date getDataCriacao() {
 		return dataCriacao;
 	}	
+	
+	
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
 	public String getDescricao() {
 		return descricao;
