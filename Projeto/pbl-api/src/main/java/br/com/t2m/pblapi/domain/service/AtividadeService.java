@@ -152,7 +152,7 @@ public class AtividadeService {
 		Set<AtividadePbl> atividadePbls = new HashSet<AtividadePbl>();
 		pbls.stream().forEach(p -> {
 			AtividadePbl atividadePbl = new AtividadePbl();
-			atividadePbl.setPbl(p);
+			atividadePbl.setPbl(p);			
 			atividadePbls.add(atividadePbl);
 		});
 
@@ -172,7 +172,7 @@ public class AtividadeService {
 
 		Set<Atividade> atividades = this.getByDisciplina(pbl.getPblTemaDisciplina().getDisciplina().getId());
 
-		atividades.forEach(a -> {
+		atividades.forEach(a -> {			
 			atividadePblRepository.bindPblToAtividade(pbl.getIdPbl(), a.getId());
 		});
 	}
