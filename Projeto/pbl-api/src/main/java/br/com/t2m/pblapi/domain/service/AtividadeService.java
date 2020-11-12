@@ -1,21 +1,29 @@
 package br.com.t2m.pblapi.domain.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sun.el.stream.Stream;
+
 import br.com.t2m.pblapi.config.Constants;
+import br.com.t2m.pblapi.controller.AtividadeTarefaDTO;
+import br.com.t2m.pblapi.domain.model.Aluno;
 import br.com.t2m.pblapi.domain.model.Atividade;
 import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.model.Pbl;
 import br.com.t2m.pblapi.domain.model.Professor;
+import br.com.t2m.pblapi.domain.model.Tarefa;
 import br.com.t2m.pblapi.domain.repository.IAtividadePblRepository;
 import br.com.t2m.pblapi.domain.repository.IAtividadeRepository;
 import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
@@ -83,15 +91,41 @@ public class AtividadeService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Atividade> getByIdAluno(Long idAluno) {
+	public List<AtividadeTarefaDTO> getByIdAluno(Long idAluno, Long idPbl) {
 
-		List<Atividade> atividades = atividadeRepository.findByAtividadePbls_Pbl_Aluno_Id(idAluno);
+		Optional<Pbl> optPbl = pblRepository.findById(idPbl);
+
+		List<Atividade> atividades = atividadeRepository.findByIdUsuarioAndIdPbl(idAluno, idPbl);
+		List<AtividadeTarefaDTO> atividadeTarefaDTOs = new ArrayList<>();
+
+		Function<AtividadePbl, List<Aluno>> alunosFunction = a -> a.getPbl().getAluno();
 
 		if (atividades.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_ALUNO_NAO_ENCONTRADA);
 		}
 
-		return atividades;
+		atividades.forEach(a -> {
+			AtividadeTarefaDTO at = new AtividadeTarefaDTO();
+
+			List<Tarefa> tarefas = a.getAtividadePbls().parallelStream().filter(f -> f.getIdAtividade() == a.getId())
+					.filter(f -> f.getPbl() == optPbl.get()).map(AtividadePbl::getTarefas)
+					.flatMap(Collection<Tarefa>::stream).collect(Collectors.toList());
+
+			List<Aluno> alunos = (List<Aluno>) a.getAtividadePbls().parallelStream()
+					.filter(f -> f.getIdAtividade() == a.getId()).filter(f -> f.getPbl() == optPbl.get())
+					.map(alunosFunction).flatMap(Collection<Aluno>::stream).collect(Collectors.toList());
+
+			at.setId(a.getId());
+			at.setTitulo(a.getTitulo());
+			at.setDataConclusao(a.getDataConclusao());
+			at.setIdPbl(optPbl.get().getIdPbl());
+			at.setTarefas(tarefas);
+			at.setAlunos(alunos);
+			atividadeTarefaDTOs.add(at);
+
+		});
+
+		return atividadeTarefaDTOs;
 	}
 
 	/**
