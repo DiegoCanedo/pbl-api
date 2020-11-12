@@ -15,7 +15,6 @@ import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblRepository;
 import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.ITemaPblRepository;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.exception.InvalidDateException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
