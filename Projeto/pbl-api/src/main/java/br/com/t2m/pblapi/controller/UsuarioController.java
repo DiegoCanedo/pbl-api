@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import io.swagger.annotations.Api;
 @CrossOrigin
 @RestController
 @Api(description = "rest api para usuario", tags = { "Usuario" })
+@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
 public class UsuarioController {
 
 	@Autowired
