@@ -31,10 +31,12 @@ import br.com.t2m.pblapi.domain.service.ProfessorService;
 import br.com.t2m.pblapi.domain.service.dto.JwtResponseDTO;
 import br.com.t2m.pblapi.domain.service.dto.LoginDTO;
 import br.com.t2m.pblapi.domain.service.dto.MensagemDTO;
+import io.swagger.annotations.Api;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/pbl-api/auth")
+@Api(description = "rest api para autenticação", tags = { "Auth" })
 public class AuthController {
 
 	@Autowired
