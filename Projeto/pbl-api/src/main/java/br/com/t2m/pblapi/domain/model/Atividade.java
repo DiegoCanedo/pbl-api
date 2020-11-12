@@ -34,12 +34,12 @@ public class Atividade {
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
 	private Date dataCriacao;
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
 	private Date dataConclusao;
 
 	@NotNull

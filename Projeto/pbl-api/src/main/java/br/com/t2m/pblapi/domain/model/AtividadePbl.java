@@ -27,7 +27,7 @@ public class AtividadePbl {
 	private Long id;	
 
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
 	private Date dataEntrega;
 	
 	private Integer nota;
