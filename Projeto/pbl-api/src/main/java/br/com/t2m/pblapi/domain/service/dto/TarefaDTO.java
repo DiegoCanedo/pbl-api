@@ -7,6 +7,7 @@ import br.com.t2m.pblapi.domain.model.Tarefa;
 public class TarefaDTO {
 	
 	private Long id;
+	private String titulo;
 	private Date dataCriacao;
 	private String descricao;
 	private Date dataConclusao;
@@ -16,13 +17,17 @@ public class TarefaDTO {
 	public TarefaDTO(Tarefa entidade) {
 		super();
 		this.id = entidade.getId();
+		this.titulo = entidade.getTitulo();
 		this.dataCriacao = entidade.getDataCriacao();
 		this.descricao = entidade.getDescricao();
 		this.dataConclusao = entidade.getDataConclusao();
 		this.concluido = entidade.isConcluido();
+	}	
+
+	public String getTitulo() {
+		return titulo;
 	}
-
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -51,7 +56,10 @@ public class TarefaDTO {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
 	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
