@@ -30,7 +30,8 @@ public class Tarefa implements Serializable {
 	private Long id;	
 
 	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 	
 	@NotNull
@@ -43,7 +44,7 @@ public class Tarefa implements Serializable {
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
 	
 	@NotNull
