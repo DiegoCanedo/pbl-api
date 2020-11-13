@@ -10,6 +10,8 @@ import br.com.t2m.pblapi.domain.model.Tarefa;
 public class PostTarefaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	private String titulo;
+	
 	private String descricao;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -20,9 +22,16 @@ public class PostTarefaDTO implements Serializable {
 	}	
 	
 	public PostTarefaDTO(Tarefa entidade) {
-		super();		
+		super();
+		this.titulo = entidade.getTitulo();
 		this.descricao = entidade.getDescricao();
 		this.dataConclusao = entidade.getDataConclusao();		
+	}	
+	
+	
+
+	public String getTitulo() {
+		return titulo;
 	}	
 
 	public String getDescricao() {
@@ -31,7 +40,11 @@ public class PostTarefaDTO implements Serializable {
 
 	public Date getDataConclusao() {
 		return dataConclusao;
-	}	
+	}
+	
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
