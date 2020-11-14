@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.t2m.pblapi.domain.service.AlunoService;
 import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin
@@ -30,6 +31,7 @@ public class AlunoController {
 	@GetMapping
 
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR')")
+	@ApiOperation(value="Lista todos os alunos cadastrados no PBL")
 	public ResponseEntity<Iterable<AlunoDTO>> listarTodos() {
 		return ResponseEntity.ok().body(alunoService.getAll());
 	}

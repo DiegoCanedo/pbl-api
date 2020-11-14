@@ -38,7 +38,7 @@ public class Atividade {
 	private Date dataCriacao;
 
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
 
