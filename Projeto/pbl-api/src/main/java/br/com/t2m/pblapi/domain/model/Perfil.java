@@ -19,20 +19,27 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "perfil")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Perfil implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long Id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	private EPerfil nome;
+
+	public Perfil() {
+
+	}
+
+	public Perfil(EPerfil nome) {
+		this.nome = nome;
+	}
 
 	public Long getId() {
 		return Id;
@@ -53,6 +60,5 @@ public class Perfil implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 }
