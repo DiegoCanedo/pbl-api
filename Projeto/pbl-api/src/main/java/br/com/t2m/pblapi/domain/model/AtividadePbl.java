@@ -46,7 +46,7 @@ public class AtividadePbl {
 	private Aluno aluno;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_atividade")
+	@JoinColumn(name = "id")
 	private List<Tarefa> tarefas;
 	
 	public AtividadePbl(AtividadePbl atividadepbl) {

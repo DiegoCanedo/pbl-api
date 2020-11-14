@@ -43,7 +43,8 @@ public class TarefaService {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}
 
-		Tarefa tarefa = new Tarefa();		
+		Tarefa tarefa = new Tarefa();
+		tarefa.setTitulo(novaTarefa.getTitulo());
 		tarefa.setDataCriacao(new Date());
 		tarefa.setDescricao(novaTarefa.getDescricao());		
 		tarefa.setDataConclusao(novaTarefa.getDataConclusao());
