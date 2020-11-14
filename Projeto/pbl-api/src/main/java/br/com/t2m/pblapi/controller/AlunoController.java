@@ -19,7 +19,7 @@ import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import io.swagger.annotations.Api;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RequestMapping("/aluno")
 @Api(description = "rest api para aluno", tags= {"Aluno"})
 public class AlunoController {
