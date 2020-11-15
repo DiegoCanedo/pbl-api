@@ -18,7 +18,7 @@ public class PblUserRole {
 	@Autowired
 	IPerfilRepository perfilRepository;
 
-	public Perfil setPerfil(EPerfil perfil) {
+	public Perfil getPerfil(EPerfil perfil) {
 
 		Optional<Perfil> optPerfil = perfilRepository.findByNome(perfil);
 
