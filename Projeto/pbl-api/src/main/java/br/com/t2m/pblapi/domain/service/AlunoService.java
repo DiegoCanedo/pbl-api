@@ -67,7 +67,7 @@ public class AlunoService {
 
 		Aluno aluno = alunoMapper.alunoDTOTOAluno(alunoDTO);
 		Set<Perfil> perfis = new HashSet<>();
-		perfis.add(userRole.setPerfil(EPerfil.ROLE_ALUNO));
+		perfis.add(userRole.getPerfil(EPerfil.ROLE_ALUNO));
 		aluno.setPerfil(perfis);
 		
 		aluno.setSenha(passwordEncoder.encode(senha));
