@@ -21,7 +21,7 @@ import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(value = "/atividades/{idAtividade}/tarefas")
+@RequestMapping(value = "/tarefas")
 @CrossOrigin
 @Api(description = "rest api para tarefas dos alunos", tags = { "Tarefas" })
 @PreAuthorize("hasAnyRole('ROLE_PROFESSOR,ROLE_ALUNO')")
@@ -31,8 +31,8 @@ public class TarefaController {
 	private TarefaService tarefaService;
 
 	@PostMapping
-	public ResponseEntity<TarefaDTO> postTarefa(@PathVariable Long idAtividade, @RequestBody PostTarefaDTO novaTarefa) {
-		TarefaDTO tarefa = tarefaService.postTarefa(idAtividade, novaTarefa);
+	public ResponseEntity<TarefaDTO> postTarefa(@RequestBody PostTarefaDTO novaTarefa) {
+		TarefaDTO tarefa = tarefaService.postTarefa(novaTarefa);
 		return ResponseEntity.ok().body(tarefa);
 	}
 

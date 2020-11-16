@@ -39,7 +39,7 @@ public abstract class Usuario implements Serializable {
 	private Long id;
 
 	@NotBlank
-	@Column(length = 50)
+	@Column(length = 50, unique = true)
 	@Size(max = 50)
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
 	private String email;
@@ -51,7 +51,7 @@ public abstract class Usuario implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
-	private boolean ativo;
+	private boolean ativo;	
 
 	@NotNull
 	@Column(nullable = false)

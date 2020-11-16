@@ -20,7 +20,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RequestMapping("/aluno")
 @Api(description = "rest api para aluno", tags= {"Aluno"})
 public class AlunoController {

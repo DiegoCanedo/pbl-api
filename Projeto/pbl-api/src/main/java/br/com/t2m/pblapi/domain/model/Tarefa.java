@@ -30,23 +30,21 @@ public class Tarefa implements Serializable {
 	private Long id;	
 
 	@NotNull
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataCriacao;
 	
 	@NotNull
 	@Column(name = "titulo")
 	private String titulo;
 	
-	@NotNull
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@NotNull
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
 	
-	@NotNull
 	@Column(name = "concluido")
 	private boolean concluido;
 	

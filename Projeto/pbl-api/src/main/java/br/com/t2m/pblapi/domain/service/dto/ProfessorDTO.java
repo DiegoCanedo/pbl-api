@@ -25,19 +25,19 @@ public class ProfessorDTO implements Serializable {
 
 	@NotBlank
 	private String nome;
-	
+
 	@NotBlank
 	@Email(regexp = Constants.EMAIL_REGEX, message = "e-mail deve estar em um formato válido.")
 	@Size(min = 5, max = 254)
 	private String email;
 
 	private boolean ativo;
-	
+
 	private boolean excluido;
-	
+
 	private Instant createdDate = new Date().toInstant();
-	
-	private Disciplina disciplina;
+
+	private Set<Disciplina> disciplinas;
 	
 	private Set<Perfil> perfis;
 
@@ -45,14 +45,14 @@ public class ProfessorDTO implements Serializable {
 		this.id = professor.getId();
 		this.email = professor.getEmail();
 		this.nome = professor.getNome();
-		this.disciplina = professor.getDisciplina();
+		this.disciplinas = professor.getDisciplinas();
 		this.perfis = professor.getPerfil();
 		this.ativo = professor.isAtivo();
 		this.excluido = professor.isExcluido();
 	}
-	
+
 	public ProfessorDTO() {
-		
+
 	}
 
 	public Long getId() {
@@ -103,12 +103,12 @@ public class ProfessorDTO implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public Set<Disciplina> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setDisciplinas(Set<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	public Set<Perfil> getPerfis() {
