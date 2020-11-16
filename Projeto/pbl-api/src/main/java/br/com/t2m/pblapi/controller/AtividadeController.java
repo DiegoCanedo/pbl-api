@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.t2m.pblapi.domain.model.Atividade;
 import br.com.t2m.pblapi.domain.model.AtividadePbl;
 import br.com.t2m.pblapi.domain.service.AtividadeService;
+import br.com.t2m.pblapi.domain.service.dto.AtividadeTarefaDTO;
+import br.com.t2m.pblapi.domain.service.dto.TarefaPblDTO;
 import io.swagger.annotations.Api;
 
 @RestController
@@ -52,8 +54,8 @@ public class AtividadeController {
 
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR,ROLE_ALUNO')")
 	@GetMapping("/atividade-aluno/{id}")
-	public ResponseEntity<List<AtividadeTarefaDTO>> listarPorIdAluno(@PathVariable Long id) {
-		return ResponseEntity.ok().body(atividadeService.getByIdAluno(id, 31L));
+	public ResponseEntity<TarefaPblDTO> listarPorIdAluno(@PathVariable Long id) {
+		return ResponseEntity.ok().body(atividadeService.getByIdAluno(id, 5L));
 	}
 
 	@PostMapping

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.t2m.pblapi.config.Constants;
 import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.service.DisciplinaService;
+import br.com.t2m.pblapi.domain.service.dto.SelectDisciplinaDTO;
 import io.swagger.annotations.Api;
 
 @RestController
@@ -35,6 +36,11 @@ public class DisciplinaController {
 	@GetMapping
 	public ResponseEntity<List<Disciplina>> listarTodos() {
 		return ResponseEntity.ok().body(disciplinaService.getAll());
+	}
+	
+	@GetMapping("select-disciplina")
+	public ResponseEntity<List<SelectDisciplinaDTO>> selectDisciplina() {
+		return ResponseEntity.ok().body(disciplinaService.getAllTOSelectDisciplinaDTO());
 	}
 
 	@GetMapping("/{id}")

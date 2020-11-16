@@ -38,16 +38,13 @@ public class Tarefa implements Serializable {
 	@Column(name = "titulo")
 	private String titulo;
 	
-	@NotNull
 	@Column(name = "descricao")
 	private String descricao;
 	
-	@NotNull
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataConclusao;
 	
-	@NotNull
 	@Column(name = "concluido")
 	private boolean concluido;
 	
