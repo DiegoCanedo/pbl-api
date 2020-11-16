@@ -68,7 +68,7 @@ public class ProfessorService {
 		professor.setSenha(passwordEncoder.encode(senha));
 		
 		Set<Perfil> perfis = new HashSet<>();
-		perfis.add(userRole.setPerfil(EPerfil.ROLE_PROFESSOR));
+		perfis.add(userRole.getPerfil(EPerfil.ROLE_PROFESSOR));
 		professor.setPerfil(perfis);
 
 		professor.setAtivo(false);
@@ -88,7 +88,7 @@ public class ProfessorService {
 		return Optional.of(opt).filter(Optional::isPresent).map(Optional::get).map(professor -> {
 			professor.setNome(professorDTO.getNome());
 			professor.setEmail(professorDTO.getEmail());
-			professor.setAtivo(professorDTO.isAtivo());
+			professor.setDisciplinas(professorDTO.getDisciplinas());
 			return professor;
 		}).map(ProfessorDTO::new).get();
 	}

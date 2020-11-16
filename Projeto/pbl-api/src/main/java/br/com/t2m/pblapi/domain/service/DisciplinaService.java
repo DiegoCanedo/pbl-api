@@ -2,6 +2,7 @@ package br.com.t2m.pblapi.domain.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import br.com.t2m.pblapi.domain.model.Disciplina;
 import br.com.t2m.pblapi.domain.model.PblTemaDisciplina;
 import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
+import br.com.t2m.pblapi.domain.service.dto.SelectDisciplinaDTO;
 import br.com.t2m.pblapi.exception.ResourceAlreadyBounded;
 import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
@@ -29,6 +31,14 @@ public class DisciplinaService {
 	@Transactional(readOnly = true)
 	public List<Disciplina> getAll() {
 		return disciplinaRepository.findAll();
+	}
+	
+	@Transactional(readOnly = true)
+	public List<SelectDisciplinaDTO> getAllTOSelectDisciplinaDTO() {
+		return disciplinaRepository.findAll()
+				.stream()
+				.map(SelectDisciplinaDTO::new)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)

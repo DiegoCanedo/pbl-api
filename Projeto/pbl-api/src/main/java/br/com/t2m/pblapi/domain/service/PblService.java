@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -46,8 +47,12 @@ public class PblService {
 
 		return pblRepository.findAll();
 	}
+	
+	@Transactional(readOnly = true)
+	public Set<Pbl> getByDisciplina(Long idDisciplinas) {
 
-
+		return pblRepository.findAllByPblTemaDisciplina_Disciplina_Id(idDisciplinas);
+	}
 
 	@Transactional
 	public Pbl insert(Pbl pbl) {
