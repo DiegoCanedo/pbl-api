@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,9 @@ public class AtividadePbl {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
+	
+	@Column(name = "id_atividade")
+	private Long idAtividade;	
 
 	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern = "dd/MM/yyyy")
@@ -42,7 +46,7 @@ public class AtividadePbl {
 	private Aluno aluno;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_atividade")
+	@JoinColumn(name = "id")
 	private List<Tarefa> tarefas;
 	
 	public AtividadePbl(AtividadePbl atividadepbl) {
@@ -64,6 +68,16 @@ public class AtividadePbl {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+
+	public Long getIdAtividade() {
+		return idAtividade;
+	}
+
+	public void setIdAtividade(Long idAtividade) {
+		this.idAtividade = idAtividade;
 	}
 
 	public Date getDataEntrega() {
