@@ -17,6 +17,7 @@ import br.com.t2m.pblapi.domain.repository.IAtividadePblRepository;
 import br.com.t2m.pblapi.domain.repository.ITarefaRepository;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
+import br.com.t2m.pblapi.domain.service.dto.TarefaConcluidoDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 import br.com.t2m.pblapi.exception.ResourceAlreadyExistsException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
@@ -49,6 +50,7 @@ public class TarefaService {
 		tarefa.setDescricao(novaTarefa.getDescricao());		
 		tarefa.setDataConclusao(novaTarefa.getDataConclusao());
 		tarefa.setConcluido(false);
+		tarefa.setAlunos(novaTarefa.getAlunos());
 		
 		tarefa = tarefaRepository.save(tarefa);
 		atividade.get().getTarefas().add(tarefa);
@@ -61,25 +63,27 @@ public class TarefaService {
 	@Transactional
 	public TarefaDTO putTarefa(Long idAtividade, Long idTarefa, PutTarefaDTO novosDados){
 		
-		Optional <Tarefa> tarefa = tarefaRepository.findById(idTarefa);		
+		Optional <Tarefa> optTarefa = tarefaRepository.findById(idTarefa);		
 		Optional<AtividadePbl> atividade = atividadeRepository.findById(idAtividade);		
 		
 		if(atividade.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, idAtividade.toString());
 		}		
 		
-		if(tarefa.isEmpty()) {
+		if(optTarefa.isEmpty()) {
 			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, idTarefa.toString());
 		}
 		
-		if(tarefa.get().isConcluido()) {
-			throw new TaskRestrictionException("Tarefas concluídas não podem receber alterações.");
-		}
 		
-		tarefa.get().setDescricao(novosDados.getDescricao());
-		tarefa.get().setDataConclusao(novosDados.getDataConclusao());
-		tarefa.get().setConcluido(novosDados.isConcluido());
-		return new TarefaDTO(tarefaRepository.save(tarefa.get()));
+		Tarefa tarefa = optTarefa.get();
+		if(novosDados.isConcluido()) {
+			tarefa.setDataConclusao(novosDados.getDataConclusao());
+		}else {
+			tarefa.setDataConclusao(null);
+		}
+		tarefa.setDescricao(novosDados.getDescricao());
+		tarefa.setConcluido(novosDados.isConcluido());
+		return new TarefaDTO(tarefaRepository.save(tarefa));
 	}
 	
 	@Transactional
@@ -167,4 +171,29 @@ public class TarefaService {
 		tarefaRepository.save(tarefa.get());
 		return new TarefaDTO(tarefa.get());
 	}
+	
+	public void  alterarConcluidoTarefa(TarefaConcluidoDTO tarefaConcluidoDTO){
+		Optional <Tarefa> optTarefa = tarefaRepository.findById(tarefaConcluidoDTO.getId());		
+		Optional<AtividadePbl> atividade = atividadeRepository.findById(tarefaConcluidoDTO.getIdAtividade());		
+		
+		if(atividade.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.ATIVIDADE_NAO_ENCONTRADA, tarefaConcluidoDTO.getIdAtividade().toString());
+		}		
+		
+		if(optTarefa.isEmpty()) {
+			throw new ResourceNotFoundException(Constants.TAREFA_NAO_ENCONTRADA, tarefaConcluidoDTO.getId().toString());
+		}
+		
+		
+		Tarefa tarefa = optTarefa.get();
+		if(tarefaConcluidoDTO.isConcluido()) {
+			tarefa.setDataConclusao(tarefaConcluidoDTO.getDataConclusao());
+		}else {
+			tarefa.setDataConclusao(null);
+		}
+		tarefa.setConcluido(tarefaConcluidoDTO.isConcluido());
+		tarefaRepository.save(tarefa);
+		
+	}
+	
 }
