@@ -46,7 +46,7 @@ public class TarefaController {
 		return ResponseEntity.ok().body(tarefa);
 	}
 
-	@DeleteMapping("/{idTarefa}")
+	@DeleteMapping("/{idAtividade}/{idTarefa}")
 	public ResponseEntity<String> deleteTarefa(@PathVariable Long idAtividade, @PathVariable Long idTarefa) {
 		tarefaService.deleteTarefa(idAtividade, idTarefa);
 		return ResponseEntity.ok().body("Tarefa " + idTarefa.toString() + " excluido com sucesso.");
