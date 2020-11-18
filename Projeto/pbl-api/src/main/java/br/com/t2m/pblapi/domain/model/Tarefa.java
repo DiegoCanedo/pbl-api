@@ -27,7 +27,11 @@ public class Tarefa implements Serializable {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tarefa")
-	private Long id;	
+	private Long id;
+	
+	@Column(name = "id")
+	private Long idAtividade;
+
 
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -74,9 +78,18 @@ public class Tarefa implements Serializable {
 	public Long getId() {
 		return id;
 	}
+	
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Long getIdAtividade() {
+		return idAtividade;
+	}
+	
+	public void setIdAtividade(Long idAtividade) {
+		this.idAtividade = idAtividade;
 	}
 
 	public Date getDataCriacao() {
