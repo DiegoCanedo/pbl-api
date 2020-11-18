@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.t2m.pblapi.domain.service.TarefaService;
 import br.com.t2m.pblapi.domain.service.dto.PostTarefaDTO;
 import br.com.t2m.pblapi.domain.service.dto.PutTarefaDTO;
+import br.com.t2m.pblapi.domain.service.dto.TarefaConcluidoDTO;
 import br.com.t2m.pblapi.domain.service.dto.TarefaDTO;
 import io.swagger.annotations.Api;
 
@@ -36,7 +39,7 @@ public class TarefaController {
 		return ResponseEntity.ok().body(tarefa);
 	}
 
-	@PutMapping("/{idTarefa}")
+	@PutMapping("/{idAtividade}/{idTarefa}")
 	public ResponseEntity<TarefaDTO> alterarTarefa(@PathVariable Long idAtividade, @PathVariable Long idTarefa,
 			@RequestBody PutTarefaDTO novosDados) {
 		TarefaDTO tarefa = tarefaService.putTarefa(idAtividade, idTarefa, novosDados);
@@ -63,5 +66,12 @@ public class TarefaController {
 
 		TarefaDTO tarefa = tarefaService.removeAlunoFromTarefa(idAtividade, idTarefa, idAluno);
 		return ResponseEntity.ok().body(tarefa);
+	}
+	
+	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("/alterar-concluido")
+	public void alterarConcluidoTarefa(@RequestBody TarefaConcluidoDTO tarefaConcluidoDTO){
+		tarefaService.alterarConcluidoTarefa(tarefaConcluidoDTO);
+		
 	}
 }
