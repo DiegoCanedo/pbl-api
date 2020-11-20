@@ -20,15 +20,22 @@ public class TipoContato implements Serializable {
 	private static final long serialVersionUID = -967647814911941252L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tipo_contato")
 	private long id;
 	
-	@Column(name = "descricao")
+	@Column(name = "nome")
 	private String nome;
+	
+	public TipoContato() {
+		super();
+	}
 
-	
-	
+	public TipoContato(String nome) {
+		super();
+		this.nome = nome;
+	}
+
 	public long getId() {
 		return id;
 	}

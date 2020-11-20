@@ -51,7 +51,7 @@ public abstract class Usuario implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
-	private boolean ativo;
+	private boolean ativo;	
 
 	@NotNull
 	@Column(nullable = false)

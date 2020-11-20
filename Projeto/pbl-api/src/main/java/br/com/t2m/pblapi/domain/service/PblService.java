@@ -1,6 +1,7 @@
 package br.com.t2m.pblapi.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.mail.MessagingException;
 
@@ -15,7 +16,6 @@ import br.com.t2m.pblapi.domain.repository.IDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.IPblRepository;
 import br.com.t2m.pblapi.domain.repository.IPblTemaDisciplinaRepository;
 import br.com.t2m.pblapi.domain.repository.ITemaPblRepository;
-import br.com.t2m.pblapi.domain.service.dto.AlunoDTO;
 import br.com.t2m.pblapi.exception.InvalidDateException;
 import br.com.t2m.pblapi.exception.ResourceNotFoundException;
 
@@ -46,8 +46,12 @@ public class PblService {
 
 		return pblRepository.findAll();
 	}
+	
+	@Transactional(readOnly = true)
+	public Set<Pbl> getByDisciplina(Long idDisciplinas) {
 
-
+		return pblRepository.findAllByPblTemaDisciplina_Disciplina_Id(idDisciplinas);
+	}
 
 	@Transactional
 	public Pbl insert(Pbl pbl) {
