@@ -81,8 +81,10 @@ public class TarefaService {
 		}else {
 			tarefa.setDataConclusao(null);
 		}
+		tarefa.setTitulo(novosDados.getTitulo());
 		tarefa.setDescricao(novosDados.getDescricao());
 		tarefa.setConcluido(novosDados.isConcluido());
+		tarefa.setAlunos(novosDados.getAlunos());
 		return new TarefaDTO(tarefaRepository.save(tarefa));
 	}
 	
