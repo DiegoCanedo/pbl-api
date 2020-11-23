@@ -1,11 +1,13 @@
 package br.com.t2m.pblapi.domain.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -19,9 +21,11 @@ public class Professor extends Usuario {
 	@NotBlank
 	private String nome;
 
-	@ManyToOne
-	@JoinColumn(name = "id_disciplina")
-	private Disciplina disciplina;
+	@ManyToMany
+	@JoinTable(name = "professor_disciplina",	
+			   joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"), 
+	           inverseJoinColumns = @JoinColumn(name = "id_disciplina", referencedColumnName = "id_disciplina"))
+	private Set<Disciplina> disciplinas;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="id_usuario")
@@ -35,12 +39,12 @@ public class Professor extends Usuario {
 		this.nome = nome;
 	}
 
-	public Disciplina getDisciplina() {
-		return disciplina;
+	public Set<Disciplina> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
-		this.disciplina = disciplina;
+	public void setDisciplinas(Set<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
 	}
 
 	public List<Publicacao> getPublicacoes() {
