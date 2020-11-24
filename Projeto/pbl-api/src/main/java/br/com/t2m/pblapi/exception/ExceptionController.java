@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,5 +89,12 @@ public class ExceptionController extends ResponseEntityExceptionHandler{
 		return ResponseEntity.badRequest()
 				.header("error_code", HttpStatus.BAD_REQUEST.toString())
 				.header("error_value ").body(e.getMessage());
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<String> DataIntegrityViolationException(DataIntegrityViolationException exception){
+		return ResponseEntity.badRequest()
+				.header("error_code", HttpStatus.BAD_REQUEST.toString())
+				.header("error_value ").body(exception.getMessage());
 	}
 }
