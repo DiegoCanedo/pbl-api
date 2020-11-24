@@ -31,6 +31,7 @@ public final class Constants {
 	public static final String TAREFA_NAO_POSSUI_ALUNOS = "Não é possível remover aluno se a tarefa não possui alunos associados";
 	public static final String PUBLICACAO_NAO_ENCONTRADA = "Não existe publicação com este id";
 	public static final String PROFESSOR_NÃO_ENCONTRADO = "Não existe professor com este id";
+	public static final String TEMA_VINCULADO = "Não é possivel deletar um tema vinculado a um PBL";
 	private Constants() {
 	}
 }
