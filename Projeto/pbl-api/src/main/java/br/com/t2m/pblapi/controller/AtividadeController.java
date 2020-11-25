@@ -55,7 +55,7 @@ public class AtividadeController {
 	@PreAuthorize("hasAnyRole('ROLE_PROFESSOR,ROLE_ALUNO')")
 	@GetMapping("/atividade-aluno/{id}")
 	public ResponseEntity<TarefaPblDTO> listarPorIdAluno(@PathVariable Long id) {
-		return ResponseEntity.ok().body(atividadeService.getByIdAluno(id, 6L));
+		return ResponseEntity.ok().body(atividadeService.getByIdAluno(id, 5L));
 	}
 
 	@PostMapping
