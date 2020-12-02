@@ -9,7 +9,7 @@ public final class Constants {
 	public static final String DISCIPLINA_NAO_ENCONTRADA = "Não existe disciplina com o id: ";
 	public static final String DISCIPLINA_JA_EXISTE = "Já existe uma disciplina cadastrada com o nome: ";
 	public static final String DISCIPLINA_EXCLUIDA = "Disciplina excluida com sucesso!";
-	public static final String DISCIPLINA_VINCULADA = "Disciplina não pode ser excluida!";
+	public static final String DISCIPLINA_VINCULADA = "Disciplina possui vínculo com pelo menos um PBL e não pode ser excluída!";
 	public static final String TEMA_NAO_ENCONTRADO = "Não existe tema com o id: ";
 	public static final String TEMA_JA_EXISTE = "Já existe um tema com esse nome.";
 	public static final String PBL_NAO_ENCONTRADO = "Não existe PBL com o id: ";
@@ -31,6 +31,7 @@ public final class Constants {
 	public static final String TAREFA_NAO_POSSUI_ALUNOS = "Não é possível remover aluno se a tarefa não possui alunos associados";
 	public static final String PUBLICACAO_NAO_ENCONTRADA = "Não existe publicação com este id";
 	public static final String PROFESSOR_NÃO_ENCONTRADO = "Não existe professor com este id";
+	public static final String TEMA_VINCULADO = "Não é possivel deletar um tema vinculado a um PBL";
 	private Constants() {
 	}
 }
