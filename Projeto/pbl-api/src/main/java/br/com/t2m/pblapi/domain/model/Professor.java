@@ -17,12 +17,13 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "professor")
 @PrimaryKeyJoinColumn(name = "id_usuario")
 public class Professor extends Usuario {
+	private static final long serialVersionUID = 3672682498252245272L;
 
 	@NotBlank
 	private String nome;
 
 	@ManyToMany
-	@JoinTable(name = "professor_disciplina",	
+	@JoinTable(name = "professor_disciplina",
 			   joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"), 
 	           inverseJoinColumns = @JoinColumn(name = "id_disciplina", referencedColumnName = "id_disciplina"))
 	private Set<Disciplina> disciplinas;

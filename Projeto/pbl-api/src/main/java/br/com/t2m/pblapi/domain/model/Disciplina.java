@@ -1,10 +1,13 @@
 package br.com.t2m.pblapi.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +22,9 @@ public class Disciplina {
 
 	@NotNull
 	private String nome;
+	
+	@ManyToMany(mappedBy = "disciplinas")
+	private List<Professor> professores;
 
 	public Long getId() {
 		return id;
@@ -36,4 +42,11 @@ public class Disciplina {
 		this.nome = nome;
 	}
 
+	public List<Professor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<Professor> professores) {
+		this.professores = professores;
+	}
 }
